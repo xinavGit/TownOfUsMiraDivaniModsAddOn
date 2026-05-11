@@ -34,8 +34,7 @@ gameplay fixes and polish updates for
 - **Shuffle** button is now hidden when dead.
 - **Thief** no longer receives more than one button modifier.
 - **Shuffle** is now correctly listed as a button modifier.
-- Improved modifier options so they are more grouped, matching source
-  TOU Mira more closely.
+- Improved modifier options so they are more grouped, matching source TOU Mira more closely.
 - Added icons from Atony (Mira Dev).
 
 ## Known bug(s)
