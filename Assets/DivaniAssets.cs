@@ -70,3 +70,9 @@ public static class DivaniAssets
 
     // Beacon on map (550 ppu – source image is ~1024px so high ppu keeps it small in-game)
     public static LoadableAsset<Sprite> BeaconSprite { get; } = new LoadableResourceAsset($"{ShortPath}.BeaconAsset.png", 550);
+
+    // Announcement badge: PPU between Mira default (~100, reads huge) and very high PPU (tiny).
+    // TOU uses AuAvengersSprite at 290; we sit a bit under that plus slightly lower patch scale.
+    public static LoadableAsset<Sprite> ModNewsLogo { get; } =
+        new LoadableResourceAsset($"{ShortPath}.Banners.DivaniModNewsLogo.png", 220f);
+}

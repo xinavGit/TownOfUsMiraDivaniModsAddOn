@@ -147,7 +147,10 @@
     <EmbeddedResource Include="Resources\BearTrapActivate.wav" Condition="Exists('Resources\BearTrapActivate.wav')" />
     <EmbeddedResource Include="Resources\DoorOpen.wav" />
     <EmbeddedResource Include="Resources\DoorClose.wav" />
+    <EmbeddedResource Include="Resources\Banners\DivaniModNewsLogo.png" />
+    <EmbeddedResource Include="Resources\Banners\DivaniModsLogo.png" Condition="Exists('Resources\Banners\DivaniModsLogo.png')" />
     <EmbeddedResource Include="Resources\OpportunistIntro.wav" />
+    <EmbeddedResource Include="Resources\Announcements\modNews-en_US.json" />
   </ItemGroup>
 
   <Target Name="CopyToPlugins" AfterTargets="Build">
