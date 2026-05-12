@@ -52,6 +52,15 @@ For the simplest install, make sure your Town Of Us Mira installation is working
 
 Full role and modifier write-ups live on the **[project wiki](https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki)**.
 
+## Source inspiration
+
+Some Divani roles and modifiers take design cues from other Among Us mod communities. These pages were useful references (not 1:1 ports):
+
+- **Opportunist** — [TOHE: Collector](https://tohe.weareten.ca/options/Neutrals/Chaos/Collector.html) (vote-collection win pattern)
+- **Innocent** — [TOHE: Innocent](https://tohe.weareten.ca/options/Neutrals/Evil/Innocent.html)
+- **Plague Doctor** — [TheOtherRoles GMIA wiki — Neutral roles](https://github.com/GMIA-Nexus/TheOtherRolesGMIA/wiki/Neutral-Roles#plague-doctor)
+- **Bear Trap** (modifier) — [TOHE: Beartrap](https://tohe.weareten.ca/options/Addons/Helpful/Beartrap.html)
+
 ---
 
 # Releases

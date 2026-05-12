@@ -75,7 +75,7 @@
         "\n- Plague Doctor UI is shown to the Plague Doctor (not only to dead observers), and win / task behaviour is tracked more reliably.",
         "\n- Plague Doctor can no longer complete crew tasks while playing that role.",
         "\n- Shuffle no longer yanks ghosts out of their tasks.",
-        "\n- Misvote now lines up correctly when combined with Mayor multi-votes, Knighted extras, and Prosecutor prosecutions.",
+        "\n- Misvote now lines up correctly when combined with Mayor multi-votes, Knighted extras, and Prosecutor prosecutions."
       ]
     },
     {
@@ -107,7 +107,10 @@
         "\n\n\r<size=108%><b>Controls</b></size>",
         "\n\n- Keybind support for Divani Mods action buttons (where applicable).",
         "\n\n\r<size=108%><b>Balance & fixes</b></size>",
-        "\n\n- Ruthless now kills through First Death Shield.",
+        "\n\n- New Plague Doctor inherits infection state from the previous Plague Doctor (e.g. Amnesiac).",
+        "\n- Misvote now correctly picks a random target from all alive players.",
+        "\n- Added better checks for button modifiers.",
+        "\n- Ruthless now kills through First Death Shield.",
         "\n- Lockdown should no longer leave tasks in a bad state.",
         "\n- Misvote: if a Misvote player never submits a vote, they still contribute random votes at tally time.",
         "\n- Immovable now interacts sensibly with portals and Shuffle.",
@@ -116,8 +119,9 @@
         "\n- Shuffle is correctly categorized as a button modifier in the UI.",
         "\n- Modifier lobby options are grouped more like base Town Of Us – Mira.",
         "\n- New / updated role and modifier art from Atony (Mira Dev).",
-        "\n\n\r<size=108%><b>Known issue</b></size>",
+        "\n\n\r<size=108%><b>Known issues</b></size>",
         "\n\n- Sentinel “uses left” display can be wrong (visual only).",
+        "\n- Previous Plague Doctor is not removed from the winners screen when Amnesiac inherits PD (TOU end-game display).",
         "\n\n\r<size=108%><b>Compatibility</b></size>",
         "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us – Mira."
       ]
