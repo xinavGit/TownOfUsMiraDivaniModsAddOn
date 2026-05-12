@@ -148,7 +148,7 @@
     <EmbeddedResource Include="Resources\DoorOpen.wav" />
     <EmbeddedResource Include="Resources\DoorClose.wav" />
     <EmbeddedResource Include="Resources\Banners\DivaniModNewsLogo.png" />
-    <EmbeddedResource Include="Resources\Banners\DivaniModsLogo.png" Condition="Exists('Resources\Banners\DivaniModsLogo.png')" />
+    <EmbeddedResource Include="Resources\Banners\DivaniModsLogoNew.png" Condition="Exists('Resources\Banners\DivaniModsLogoNew.png')" />
     <EmbeddedResource Include="Resources\OpportunistIntro.wav" />
     <EmbeddedResource Include="Resources\Announcements\modNews-en_US.json" />
   </ItemGroup>
