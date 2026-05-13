@@ -1,25 +1,57 @@
-# Divani Mods &mdash; v1.0.2
+# Divani Mods &mdash; v1.1.0
 
+Divani Mods 1.1.0 adds new roles, new modifiers, keybind support, and several
+gameplay fixes and polish updates for
+[Town Of Us &ndash; Mira](https://github.com/AU-Avengers/TOU-Mira).
 
+## Added
 
-## New Roles
+### Roles
+- **Frag** (Impostor Killing) &mdash; Starts a hot-potato time bomb that can
+  be passed between players before it explodes.
+- **Silencer** (Impostor Killing) &mdash; Cuts meeting voting time with each
+  kill, down to a configurable minimum voting time.
+- **Innocent** (Neutral Evil) &mdash; Taunts another player into killing them,
+  then wins if that killer is voted out in the next meeting.
+- **Opportunist** (Neutral Outlier) &mdash; Collects votes from targets they
+  vote for and wins after reaching the configured vote threshold.
 
-- --Sentinel-- (Crewmate Support) &mdash; Place beacons to monitor rooms
+### Modifiers
+- **Bear Trap** (Crewmate Postmortem) &mdash; Freezes the killer after the
+  Bear Trap holder dies and prevents them from reporting the body while frozen.
+- **Sniper** (Neutral Killing modifier) &mdash; Lets Neutral Killing roles kill
+  from farther away without teleporting to the target.
+
+### Controls
+- Added keybind support for Divani Mods buttons.
+
+### Misc
+- Added Mod News
 
 ## Bug Fixes
 
-- PortalMaker range now set to 1.0 without tracking Line of Sight
-- PortalMaker and Sentry buttons no longer appear during meetings
-- Plague Doctor icons clip no longer clip through the map when viewed in a meeting
-- Plague Doctor icons now also show during the game
-- Default Sentinel show meeting info = false during meetings
-- Default Plague Doctor infect killer on death win while dead = false
-- Plague Doctor now always shows the infection status
-- Shuffle no longer pulls ghosts out of their tasks
-- Plague doctor can no longer do tasks and it's win condition is properly tracked
-- Plague doctor UI is now shows to the PD, not only dead players
-- All votes should misvote at the same time (Mayor, Knighted, Prosecutor)
+- New **Plague Doctor** inherits infection state from the previous Plague Doctor
+  (e.g. when **Amnesiac** remembers a dead PD).
+- **Misvote** now correctly picks a random target from all alive players.
+- Added better checks for button modifiers.
+- **Ruthless** now kills through First Death Shield.
+- Fixed some task behaviours when **Lockdown** is called.
+- **Misvote** now also counts a random vote if the player does not vote.
+- **Immovable** now works with portals and **Shuffle**.
+- **Shuffle** button is now hidden when dead.
+- **Thief** no longer receives more than one button modifier.
+- **Shuffle** is now correctly listed as a button modifier.
+- Improved modifier options so they are more grouped, matching source TOU Mira more closely.
 
+## Credits
+
+- Added icons from Atony (Mira Dev).
+
+## Known bug(s)
+
+- Uses left on Sentinel is not always correct (visual bug).
+- Previous Plague Doctor is not removed from the winners screen when **Amnesiac**
+  inherits PD (Town Of Us end-game display).
 
 ## Compatibility
 

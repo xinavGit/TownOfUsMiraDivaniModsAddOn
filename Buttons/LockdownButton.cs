@@ -7,6 +7,7 @@ using DivaniMods.Assets;
 using DivaniMods.Options;
 using DivaniMods.Roles;
 using System.Collections;
+using TownOfUs.Buttons;
 using UnityEngine;
 
 namespace DivaniMods.Buttons;
@@ -17,9 +18,10 @@ public class LockdownButton : CustomActionButton
     public override float Cooldown => OptionGroupSingleton<DeadlockOptions>.Instance.LockdownCooldown;
     public override float EffectDuration => OptionGroupSingleton<DeadlockOptions>.Instance.LockdownDuration;
     public override int MaxUses => (int)OptionGroupSingleton<DeadlockOptions>.Instance.InitialCharges;
-    public override LoadableAsset<Sprite>? Sprite => DivaniAssets.LockdownButton;
+    public override LoadableAsset<Sprite>? Sprite => DivaniAssets.DeadlockLockdownButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight;
     public override Color TextOutlineColor => Palette.ImpostorRed;
+    public override BaseKeybind Keybind => Keybinds.SecondaryAction;
     
     public static bool IsLockdownActive { get; private set; }
     public static float LockdownTimeRemaining { get; private set; }

@@ -8,7 +8,7 @@
     
     <AssemblyName>DivaniMods</AssemblyName>
     <RootNamespace>DivaniMods</RootNamespace>
-    <Version>1.0.2</Version>
+    <Version>1.1.0</Version>
     <!--
       TownOfUs + TouMiraRolesExtension live in-repo for reference only. Do not compile them here:
       this project already references TownOfUsMira.dll from BepInEx. Compiling sources duplicates
@@ -48,6 +48,10 @@
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>$(BepInExPath)\interop\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>$(BepInExPath)\interop\UnityEngine.AnimationModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.Physics2DModule">
@@ -104,21 +108,29 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\ShuffleButton.png" />
-    <EmbeddedResource Include="Resources\ThiefIcon.png" />
-    <EmbeddedResource Include="Resources\BlindspotIcon.png" />
-    <EmbeddedResource Include="Resources\FragileIcon.png" />
-    <EmbeddedResource Include="Resources\DeadlockIcon.png" />
-    <EmbeddedResource Include="Resources\LockdownButton.png" />
-    <EmbeddedResource Include="Resources\PortalmakerIcon.png" />
+    <EmbeddedResource Include="Resources\PickPocketButton.png" />
     <EmbeddedResource Include="Resources\PortalSprite.png" />
-    <EmbeddedResource Include="Resources\RuthlessIcon.png" />
-    <EmbeddedResource Include="Resources\PlagueDoctorIcon.png" />
-    <EmbeddedResource Include="Resources\InfectButton.png" />
-    <EmbeddedResource Include="Resources\InfectedIcon.png" />
-    <EmbeddedResource Include="Resources\SentinelIcon.png" />
+    <EmbeddedResource Include="Resources\PDVent.png" />
     <EmbeddedResource Include="Resources\BeaconAsset.png" />
-    <EmbeddedResource Include="Resources\MisvoteIcon.png" Condition="Exists('Resources\MisvoteIcon.png')" />
+    <EmbeddedResource Include="Resources\FragGive.png" Condition="Exists('Resources\FragGive.png')" />
+    <EmbeddedResource Include="Resources\FragPass.png" Condition="Exists('Resources\FragPass.png')" />
+    <!-- Role / modifier icons (logical name DivaniMods.Resources.Icons.* — see DivaniAssets.IconPath) -->
+    <EmbeddedResource Include="Resources\Icons\Thief.png" />
+    <EmbeddedResource Include="Resources\Icons\Blindspot.png" />
+    <EmbeddedResource Include="Resources\Icons\Fragile.png" />
+    <EmbeddedResource Include="Resources\Icons\Deadlock.png" />
+    <EmbeddedResource Include="Resources\Icons\PortalMaker.png" />
+    <EmbeddedResource Include="Resources\Icons\Ruthless.png" />
+    <EmbeddedResource Include="Resources\Icons\PlagueDoctor.png" />
+    <EmbeddedResource Include="Resources\Icons\Innocent.png" />
+    <EmbeddedResource Include="Resources\Icons\Sentinel.png" />
+    <EmbeddedResource Include="Resources\Icons\Frag.png" />
+    <EmbeddedResource Include="Resources\Icons\Misvote.png" />
+    <EmbeddedResource Include="Resources\Icons\Sniper.png" />
+    <EmbeddedResource Include="Resources\Icons\Silencer.png" />
+    <EmbeddedResource Include="Resources\Icons\Opportunist.png" />
+    <EmbeddedResource Include="Resources\Icons\Shuffle.png" />
+    <EmbeddedResource Include="Resources\Icons\Beartrap.png" />
     <!-- Audio clips must be WAV - loaded via MiraAPI's LoadableAudioResourceAsset,
          matching how TouMiraRolesExtension ships its sounds. -->
     <EmbeddedResource Include="Resources\FragileBreak.wav" />
@@ -128,8 +140,17 @@
     <EmbeddedResource Include="Resources\PortalMakerIntro.wav" />
     <EmbeddedResource Include="Resources\DeadlockIntro.wav" />
     <EmbeddedResource Include="Resources\PlacePortalSound.wav" />
+    <EmbeddedResource Include="Resources\FragHeartbeat.wav" Condition="Exists('Resources\FragHeartbeat.wav')" />
+    <EmbeddedResource Include="Resources\FragIntro.wav" Condition="Exists('Resources\FragIntro.wav')" />
+    <EmbeddedResource Include="Resources\SilencerIntro.wav" Condition="Exists('Resources\SilencerIntro.wav')" />
+    <EmbeddedResource Include="Resources\FragGive.wav" Condition="Exists('Resources\FragGive.wav')" />
+    <EmbeddedResource Include="Resources\BearTrapActivate.wav" Condition="Exists('Resources\BearTrapActivate.wav')" />
     <EmbeddedResource Include="Resources\DoorOpen.wav" />
     <EmbeddedResource Include="Resources\DoorClose.wav" />
+    <EmbeddedResource Include="Resources\Banners\DivaniModNewsLogo.png" />
+    <EmbeddedResource Include="Resources\Banners\DivaniModsLogoNew.png" Condition="Exists('Resources\Banners\DivaniModsLogoNew.png')" />
+    <EmbeddedResource Include="Resources\OpportunistIntro.wav" />
+    <EmbeddedResource Include="Resources\Announcements\modNews-en_US.json" />
   </ItemGroup>
 
   <Target Name="CopyToPlugins" AfterTargets="Build">

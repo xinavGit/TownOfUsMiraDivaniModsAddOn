@@ -4,6 +4,7 @@ using MiraAPI.Utilities.Assets;
 using DivaniMods.Assets;
 using DivaniMods.Options;
 using DivaniMods.Roles;
+using TownOfUs.Buttons;
 using UnityEngine;
 
 namespace DivaniMods.Buttons;
@@ -14,8 +15,9 @@ public class PlaceBeaconButton : CustomActionButton
     public override float Cooldown => OptionGroupSingleton<SentinelOptions>.Instance.PlaceBeaconCooldown;
     public override float EffectDuration => 0f;
     public override int MaxUses => 0;
-    public override LoadableAsset<Sprite>? Sprite => DivaniAssets.SentinelIcon;
+    public override LoadableAsset<Sprite>? Sprite => DivaniAssets.SentinelPlaceBeaconButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight;
+    public override BaseKeybind Keybind => Keybinds.PrimaryAction;
 
     private static readonly Color SentinelColor = SentinelRole.SentinelColor;
     public override Color TextOutlineColor => SentinelColor;
@@ -79,7 +81,7 @@ public class PlaceBeaconButton : CustomActionButton
             message,
             Color.white,
             new Vector3(0f, 1f, -20f),
-            spr: DivaniAssets.SentinelIcon.LoadAsset());
+            spr: DivaniAssets.SentinelPlaceBeaconButton.LoadAsset());
 
         DivaniPlugin.Instance.Log.LogInfo($"Sentinel: Placed beacon {label} in {roomName}");
     }

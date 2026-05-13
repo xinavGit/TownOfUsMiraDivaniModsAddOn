@@ -21,7 +21,7 @@ namespace DivaniMods;
 public class DivaniPlugin : BasePlugin, IMiraPlugin
 {
     public const string Id = "com.divani.mods";
-    public const string Version = "1.0.2";
+    public const string Version = "1.1.0";
     
     public static DivaniPlugin Instance { get; private set; } = null!;
     public new ManualLogSource Log => base.Log;
@@ -39,6 +39,7 @@ public class DivaniPlugin : BasePlugin, IMiraPlugin
         RuthlessEventHandler.Initialize(Harmony);
         DutchMemeSoundpackPatch.Register(Harmony);
         VersionDisplay.Register();
+        DivaniModAnnouncementPatch.EnsureLoaded();
         Log.LogInfo("Divani Mods loaded successfully!");
     }
 }

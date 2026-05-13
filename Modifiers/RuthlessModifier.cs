@@ -19,15 +19,15 @@ public class RuthlessModifier : TouGameModifier, IColoredModifier, IWikiDiscover
     public Color ModifierColor => Palette.ImpostorRed;
     public override LoadableAsset<Sprite>? ModifierIcon => DivaniAssets.RuthlessIcon;
     
-    public override string GetDescription() => "Your kills bypass Medic shields, GA protection, and Survivor vests.";
+    public override string GetDescription() => "Your kills bypass shields. Veteran alerts still kill you.";
 
     public string GetAdvancedDescription() => GetDescription() + MiscUtils.AppendOptionsText(GetType());
     
-    public override int GetAssignmentChance() => 
-        (int)OptionGroupSingleton<RuthlessOptions>.Instance.RuthlessChance.Value;
+    public override int GetAssignmentChance() =>
+        (int)OptionGroupSingleton<ImpostorModifierOptions>.Instance.RuthlessChance.Value;
     
-    public override int GetAmountPerGame() => 
-        (int)OptionGroupSingleton<RuthlessOptions>.Instance.RuthlessAmount;
+    public override int GetAmountPerGame() =>
+        (int)OptionGroupSingleton<ImpostorModifierOptions>.Instance.RuthlessAmount;
     
     public override bool IsModifierValidOn(RoleBehaviour role)
     {

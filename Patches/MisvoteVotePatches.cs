@@ -27,7 +27,9 @@ namespace DivaniMods.Patches;
 ///   - Knighted bonus votes when "Show Knighted Votes" is off (via ProcessVotesEvent,
 ///     rewriting the extras KnightedEvents duplicates),
 ///   - Prosecutor's 5 prosecute votes (via CheckForEndVotingEvent, replacing the
-///     votes ProsecutorEvents casts).
+///     votes ProsecutorEvents casts),
+///   - players who never submitted a vote at all (via ProcessVotesEvent, adding
+///     their full weighted vote count to random targets).
 ///
 /// Prosecutor punishment still relies on <c>ProsecutorEvents.WrapUpEvent</c>,
 /// which checks the player who actually got exiled - not the intended victim -
@@ -100,12 +102,7 @@ public static class MisvoteVotePatches
     {
         try
         {
-            if (KnightedEvents.ExtraKnightVotes.Count == 0)
-            {
-                return;
-            }
-
-            var anyChanged = false;
+            var anyChanged = AddRandomVotesForNonVotingMisvotedPlayers(@event.Votes);
             for (var i = 0; i < KnightedEvents.ExtraKnightVotes.Count; i++)
             {
                 var extra = KnightedEvents.ExtraKnightVotes[i];
@@ -135,7 +132,7 @@ public static class MisvoteVotePatches
             @event.ExiledPlayer = VotingUtils.GetExiled(fullVotes, out _);
 
             DivaniPlugin.Instance.Log.LogInfo(
-                "Misvote: re-rolled Knighted bonus votes; exiled=" +
+                "Misvote: finalized random votes; exiled=" +
                 (@event.ExiledPlayer != null ? @event.ExiledPlayer.PlayerName : "<none>") + ".");
         }
         catch (Exception ex)
@@ -234,19 +231,98 @@ public static class MisvoteVotePatches
         return 1;
     }
 
+    private static int GetVoteCountForNonVotingVoter(PlayerControl voter)
+    {
+        if (voter.Data.Role is MayorRole mayor && mayor.Revealed)
+        {
+            return 3;
+        }
+
+        if (voter.HasModifier<KnightedModifier>())
+        {
+            var knightCount = voter.GetModifiers<KnightedModifier>()?.Count() ?? 0;
+            if (knightCount <= 0)
+            {
+                knightCount = 1;
+            }
+
+            var votesPerKnight = (int)OptionGroupSingleton<MonarchOptions>.Instance.VotesPerKnight;
+            return 1 + (knightCount * votesPerKnight);
+        }
+
+        return 1;
+    }
+
+    private static bool AddRandomVotesForNonVotingMisvotedPlayers(List<CustomVote> votes)
+    {
+        var anyChanged = false;
+        var votedPlayerIds = votes
+            .Select(vote => vote.Voter)
+            .Concat(KnightedEvents.ExtraKnightVotes.Select(vote => vote.Voter))
+            .ToHashSet();
+
+        // Do not use AllPlayerControls.ToArray() + LINQ here: on Il2Cpp that enumeration
+        // can truncate, so Misvote would only ever see the first few players (e.g. slots 0–1).
+        foreach (var voter in PlayerControl.AllPlayerControls)
+        {
+            if (voter == null || voter.Data == null || voter.Data.IsDead || voter.Data.Disconnected)
+            {
+                continue;
+            }
+
+            if (!voter.HasModifier<MisvoteModifier>() || votedPlayerIds.Contains(voter.PlayerId))
+            {
+                continue;
+            }
+
+            var voteCount = GetVoteCountForNonVotingVoter(voter);
+            for (var i = 0; i < voteCount; i++)
+            {
+                var targetId = PickRandomAliveTargetId();
+                if (targetId == byte.MaxValue)
+                {
+                    break;
+                }
+
+                votes.Add(new CustomVote(voter.PlayerId, targetId));
+                anyChanged = true;
+            }
+
+            DivaniPlugin.Instance.Log.LogInfo(
+                "Misvote: " + voter.Data.PlayerName + " did not vote -> added " +
+                voteCount + " random vote(s).");
+        }
+
+        return anyChanged;
+    }
+
     private static PlayerControl? GetPlayer(byte playerId)
     {
-        return PlayerControl.AllPlayerControls.ToArray()
-            .FirstOrDefault(p => p != null && p.PlayerId == playerId);
+        foreach (var p in PlayerControl.AllPlayerControls)
+        {
+            if (p != null && p.PlayerId == playerId)
+            {
+                return p;
+            }
+        }
+
+        return null;
     }
 
     private static byte PickRandomAliveTargetId()
     {
-        var candidates = PlayerControl.AllPlayerControls.ToArray()
-            .Where(p => p != null && p.Data != null
-                        && !p.Data.IsDead && !p.Data.Disconnected)
-            .Select(p => p.PlayerId)
-            .ToList();
+        // Build candidates with plain foreach — AllPlayerControls.ToArray() + LINQ can fail to
+        // include every Il2Cpp player, which made random votes hit only the first 1–2 players.
+        var candidates = new List<byte>();
+        foreach (var p in PlayerControl.AllPlayerControls)
+        {
+            if (p == null || p.Data == null || p.Data.IsDead || p.Data.Disconnected)
+            {
+                continue;
+            }
+
+            candidates.Add(p.PlayerId);
+        }
 
         if (candidates.Count == 0)
         {

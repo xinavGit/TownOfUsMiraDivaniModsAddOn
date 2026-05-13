@@ -1,4 +1,6 @@
 using MiraAPI.GameOptions;
+using MiraAPI.Modifiers;
+using MiraAPI.Modifiers.Types;
 using MiraAPI.Utilities.Assets;
 using DivaniMods.Assets;
 using DivaniMods.Options;
@@ -10,13 +12,15 @@ using UnityEngine;
 
 namespace DivaniMods.Modifiers;
 
-public class ShuffleModifier : TouGameModifier, IColoredModifier, IWikiDiscoverable
+public class ShuffleModifier : UniversalGameModifier, IColoredModifier, IWikiDiscoverable, IButtonModifier
 {
+    public static readonly Color ShuffleColor = new Color32(0, 255, 30, 255);
+
     public override string ModifierName => "Shuffle";
     public override string LocaleKey => "Shuffle";
     public override ModifierFaction FactionType => ModifierFaction.UniversalUtility;
-    public override Color FreeplayFileColor => new Color32(0, 255, 30, 255);
-    public Color ModifierColor => new Color32(0, 255, 30, 255);
+    public override Color FreeplayFileColor => ShuffleColor;
+    public Color ModifierColor => ShuffleColor;
     public override LoadableAsset<Sprite>? ModifierIcon => DivaniAssets.ShuffleIcon;
     
     private int _usesRemaining = -1;
@@ -38,15 +42,16 @@ public class ShuffleModifier : TouGameModifier, IColoredModifier, IWikiDiscovera
 
     public string GetAdvancedDescription() => "Shuffle all players' positions!" + MiscUtils.AppendOptionsText(GetType());
     
-    public override int GetAssignmentChance() => 
-        (int)OptionGroupSingleton<ShuffleOptions>.Instance.ShuffleChance.Value;
+    public override int GetAssignmentChance() =>
+        (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.ShuffleChance.Value;
     
-    public override int GetAmountPerGame() => 
-        (int)OptionGroupSingleton<ShuffleOptions>.Instance.ShuffleAmount;
+    public override int GetAmountPerGame() =>
+        (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.ShuffleAmount;
     
     public override bool IsModifierValidOn(RoleBehaviour role)
     {
-        return base.IsModifierValidOn(role);
+        return base.IsModifierValidOn(role) &&
+            !role.Player.GetModifierComponent().HasModifier<GameModifier>(true, x => x is IButtonModifier);
     }
     
     public override void OnActivate()

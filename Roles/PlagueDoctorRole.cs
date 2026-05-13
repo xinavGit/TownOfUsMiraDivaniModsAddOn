@@ -11,7 +11,9 @@ using Reactor.Networking.Attributes;
 using DivaniMods.Assets;
 using DivaniMods.Buttons;
 using DivaniMods.Options;
+using DivaniMods.Patches;
 using TownOfUs;
+using TownOfUs.Assets;
 using TownOfUs.Extensions;
 using TownOfUs.Modules.Localization;
 using TownOfUs.Modules.Wiki;
@@ -89,11 +91,20 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
     {
         RoleBehaviourStubs.Initialize(this, targetPlayer);
         
-        // Set PlagueDoctorPlayer on ALL clients so everyone knows who the PD is
-        if (PlagueDoctorPlayer == null)
+        // Always set — if we only set when null, Amnesiac (or any successor) inheriting PD keeps the
+        // stale pointer to the previous (often dead) PD and infection / HUD never tracks the new holder.
+        var previous = PlagueDoctorPlayer;
+        PlagueDoctorPlayer = targetPlayer;
+        if (previous == null || previous.PlayerId != targetPlayer.PlayerId)
         {
-            PlagueDoctorPlayer = targetPlayer;
-            DivaniPlugin.Instance.Log.LogInfo($"PlagueDoctor: Player {targetPlayer.PlayerId} initialized as Plague Doctor (AmOwner: {targetPlayer.AmOwner})");
+            DivaniPlugin.Instance.Log.LogInfo(
+                $"PlagueDoctor: Player {targetPlayer.PlayerId} is now Plague Doctor (AmOwner: {targetPlayer.AmOwner})");
+        }
+
+        if (Player.AmOwner)
+        {
+            HudManager.Instance.ImpostorVentButton.graphic.sprite = DivaniAssets.PlagueDoctorVentButton.LoadAsset();
+            HudManager.Instance.ImpostorVentButton.buttonLabelText.SetOutlineColor(PlagueDoctorColor);
         }
     }
 
@@ -101,6 +112,11 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
     {
         RoleBehaviourStubs.Deinitialize(this, targetPlayer);
         TouRoleUtils.ClearTaskHeader(Player);
+        if (Player.AmOwner)
+        {
+            HudManager.Instance.ImpostorVentButton.graphic.sprite = TouAssets.VentSprite.LoadAsset();
+            HudManager.Instance.ImpostorVentButton.buttonLabelText.SetOutlineColor(TownOfUsColors.Impostor);
+        }
     }
 
     public override bool CanUse(IUsable usable)
@@ -129,7 +145,8 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
             UnityEngine.Object.Destroy(StatusText.gameObject);
             StatusText = null;
         }
-        
+
+        PlagueDoctorPatch.ResetInfectionSpreadThrottle();
         DivaniPlugin.Instance.Log.LogInfo("PlagueDoctor: Static data cleared");
     }
 
@@ -442,5 +459,8 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
         InfectionProgress[targetId] = progress;
     }
 
-    public override bool DidWin(GameOverReason gameOverReason) => WinConditionMet();
+    public override bool DidWin(GameOverReason gameOverReason)
+    {
+        return WinConditionMet() && PlagueDoctorPlayer != null && Player == PlagueDoctorPlayer;
+    }
 }
