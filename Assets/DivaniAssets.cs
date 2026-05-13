@@ -15,8 +15,8 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> PickpocketButton { get; } = new LoadableResourceAsset($"{ShortPath}.PickPocketButton.png");
     public static LoadableAsset<Sprite> PlagueDoctorVentButton { get; } = new LoadableResourceAsset($"{ShortPath}.PDVent.png", 1024);
     // Frag button art is 512x512; lower ppu = larger on HUD.
-    public static LoadableAsset<Sprite> FragGiveButton { get; } = new LoadableResourceAsset($"{ShortPath}.FragGive.png", 360);
-    public static LoadableAsset<Sprite> FragPassButton { get; } = new LoadableResourceAsset($"{ShortPath}.FragPass.png", 360);
+    public static LoadableAsset<Sprite> FragGiveButton { get; } = new LoadableResourceAsset($"{ShortPath}.FragGive.png", 250f);
+    public static LoadableAsset<Sprite> FragPassButton { get; } = new LoadableResourceAsset($"{ShortPath}.FragPass.png", 250f);
 
     public static LoadableAsset<Sprite> ThiefIcon { get; } = new LoadableResourceAsset($"{IconPath}.Thief.png", 200);
     public static LoadableAsset<Sprite> DeadlockIcon { get; } = new LoadableResourceAsset($"{IconPath}.Deadlock.png", 200);
@@ -28,11 +28,11 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> SilencerIcon { get; } = new LoadableResourceAsset($"{IconPath}.Silencer.png", 200);
     public static LoadableAsset<Sprite> PlagueDoctorIcon { get; } = new LoadableResourceAsset($"{IconPath}.PlagueDoctor.png", 200);
     /// Same art as PlagueDoctorIcon; higher PPU so Infect reads smaller on the ability bar.
-    public static LoadableAsset<Sprite> PlagueDoctorInfectButton { get; } = new LoadableResourceAsset($"{IconPath}.PlagueDoctor.png", 340f);
+    public static LoadableAsset<Sprite> PlagueDoctorInfectButton { get; } = new LoadableResourceAsset($"{IconPath}.PlagueDoctor.png", 250f);
     public static LoadableAsset<Sprite> InnocentIcon { get; } = new LoadableResourceAsset($"{IconPath}.Innocent.png", 200);
     public static LoadableAsset<Sprite> OpportunistIcon { get; } = new LoadableResourceAsset($"{IconPath}.Opportunist.png", 200);
     public static LoadableAsset<Sprite> SentinelIcon { get; } = new LoadableResourceAsset($"{IconPath}.Sentinel.png", 200);
-    public static LoadableAsset<Sprite> SentinelPlaceBeaconButton { get; } = new LoadableResourceAsset($"{IconPath}.Sentinel.png", 340f);
+    public static LoadableAsset<Sprite> SentinelPlaceBeaconButton { get; } = new LoadableResourceAsset($"{IconPath}.Sentinel.png", 250f);
 
     // Audio clips - loaded lazily by MiraAPI from embedded WAVs, same approach
     // TouMiraRolesExtension uses. Drop WAV files into Resources/ and embed them
@@ -61,7 +61,7 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> FragileIcon { get; } = new LoadableResourceAsset($"{IconPath}.Fragile.png", 200);
     public static LoadableAsset<Sprite> ShuffleIcon { get; } = new LoadableResourceAsset($"{IconPath}.Shuffle.png", 200);
     /// Same art as ShuffleIcon; higher PPU for the Shuffle ability button only.
-    public static LoadableAsset<Sprite> ShuffleAbilityButton { get; } = new LoadableResourceAsset($"{IconPath}.Shuffle.png", 340f);
+    public static LoadableAsset<Sprite> ShuffleAbilityButton { get; } = new LoadableResourceAsset($"{IconPath}.Shuffle.png", 250f);
     public static LoadableAsset<Sprite> MisvoteIcon { get; } = new LoadableResourceAsset($"{IconPath}.Misvote.png", 200);
     public static LoadableAsset<Sprite> SniperIcon { get; } = new LoadableResourceAsset($"{IconPath}.Sniper.png", 200);
     public static LoadableAsset<Sprite> BearTrapIcon { get; } = new LoadableResourceAsset($"{IconPath}.Beartrap.png", 200);

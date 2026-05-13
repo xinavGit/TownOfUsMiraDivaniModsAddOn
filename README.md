@@ -24,7 +24,6 @@ new roles and modifiers on top of [Town Of Us &ndash; Mira](https://github.com/A
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#silencer"><img width="10%" src="./Resources/Icons/Silencer.png" alt="Silencer"/></a>
   <img src="./Resources/Headers/NeutKilling.png" alt="Neutral Killing"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#plague-doctor"><img width="10%" src="./Resources/Icons/PlagueDoctor.png" alt="Plague Doctor"/></a>
-  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#sniper"><img width="10%" src="./Resources/Icons/Sniper.png" alt="Sniper"/></a>
   <img src="./Resources/Headers/NeutEvil.png" alt="Neutral Evil"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#innocent"><img width="10%" src="./Resources/Icons/Innocent.png" alt="Innocent"/></a>
   <img src="./Resources/Headers/NeutOutlier.png" alt="Neutral Outlier"/>
@@ -34,6 +33,8 @@ new roles and modifiers on top of [Town Of Us &ndash; Mira](https://github.com/A
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#bear-trap"><img width="10%" src="./Resources/Icons/Beartrap.png" alt="Bear Trap"/></a>
   <img src="./Resources/Headers/ImpMods.png" alt="Impostor modifiers"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#ruthless"><img width="10%" src="./Resources/Icons/Ruthless.png" alt="Ruthless"/></a>
+  <img src="./Resources/Headers/NeutMods.png" alt="Neutral modifiers"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#sniper"><img width="10%" src="./Resources/Icons/Sniper.png" alt="Sniper"/></a>
   <img src="./Resources/Headers/UniMods.png" alt="Universal modifiers"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#fragile"><img width="10%" src="./Resources/Icons/Fragile.png" alt="Fragile"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#shuffle"><img width="10%" src="./Resources/Icons/Shuffle.png" alt="Shuffle"/></a>
