@@ -12,13 +12,13 @@ using UnityEngine;
 
 namespace DivaniMods.Buttons.Impostor.ImpostorSupport;
 
-public class LockdownButton : CustomActionButton
+public class LockdownButton : TownOfUsButton
 {
     public override string Name => "Lockdown";
     public override float Cooldown => OptionGroupSingleton<DeadlockOptions>.Instance.LockdownCooldown;
     public override float EffectDuration => OptionGroupSingleton<DeadlockOptions>.Instance.LockdownDuration;
     public override int MaxUses => (int)OptionGroupSingleton<DeadlockOptions>.Instance.InitialCharges;
-    public override LoadableAsset<Sprite>? Sprite => DivaniAssets.DeadlockLockdownButton;
+    public override LoadableAsset<Sprite> Sprite => DivaniAssets.DeadlockLockdownButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight;
     public override Color TextOutlineColor => Palette.ImpostorRed;
     public override BaseKeybind Keybind => Keybinds.SecondaryAction;
@@ -58,9 +58,15 @@ public class LockdownButton : CustomActionButton
     {
         var player = PlayerControl.LocalPlayer;
         if (player == null || player.Data == null || player.Data.IsDead) return false;
-        
+
+        // Inherit TownOfUsButton's meeting / chat / vent / disabled-modifier guards
+        // so keybinds can't fire mid-meeting. Don't fold the Timer/EffectActive logic
+        // below into base.CanUse() — base just checks `Timer <= 0`, but Lockdown allows
+        // the button to fire again while EffectActive (early-cancel) which we want to keep.
+        if (!base.CanUse()) return false;
+
         SetUses(CurrentCharges);
-        
+
         bool hasCharges = CurrentCharges > 0 || MaxUses == 0;
         return hasCharges && ((Timer <= 0 && !EffectActive) || (EffectActive && Timer <= EffectDuration - 2f));
     }

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace DivaniMods.Buttons.Impostor.ImpostorKilling;
 
-public class FragGiveBombButton : CustomActionButton<PlayerControl>
+public class FragGiveBombButton : TownOfUsTargetButton<PlayerControl>
 {
     private static bool _cooldownQueued;
     /// <summary>True while we drive <see cref="Timer"/> from <see cref="FragBombState"/> for the on-button fuse.</summary>

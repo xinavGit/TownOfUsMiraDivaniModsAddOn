@@ -31,7 +31,7 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> PlagueDoctorInfectButton { get; } = new LoadableResourceAsset($"{IconPath}.PlagueDoctor.png", 250f);
     public static LoadableAsset<Sprite> InnocentIcon { get; } = new LoadableResourceAsset($"{IconPath}.Innocent.png", 200);
     public static LoadableAsset<Sprite> OpportunistIcon { get; } = new LoadableResourceAsset($"{IconPath}.Opportunist.png", 200);
-    public static LoadableAsset<Sprite> RecruiterIcon { get; } = new LoadableResourceAsset($"{ShortPath}.RecruiterIcon.png");
+    public static LoadableAsset<Sprite> RecruiterIcon { get; } = new LoadableResourceAsset($"{IconPath}.Recruiter.png");
     public static LoadableAsset<Sprite> SentinelIcon { get; } = new LoadableResourceAsset($"{IconPath}.Sentinel.png", 200);
     public static LoadableAsset<Sprite> SentinelPlaceBeaconButton { get; } = new LoadableResourceAsset($"{IconPath}.Sentinel.png", 250f);
 

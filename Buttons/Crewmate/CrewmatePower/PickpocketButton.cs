@@ -22,13 +22,13 @@ using UnityEngine;
 
 namespace DivaniMods.Buttons.Crewmate.CrewmatePower;
 
-public class PickpocketButton : CustomActionButton<PlayerControl>
+public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
 {
     public override string Name => "Pickpocket";
     public override float Cooldown => OptionGroupSingleton<ThiefOptions>.Instance.PickpocketCooldown;
     public override float EffectDuration => 0f;
     public override int MaxUses => (int)OptionGroupSingleton<ThiefOptions>.Instance.MaxStolenModifiers;
-    public override LoadableAsset<Sprite>? Sprite => DivaniAssets.PickpocketButton;
+    public override LoadableAsset<Sprite> Sprite => DivaniAssets.PickpocketButton;
     public override float Distance => OptionGroupSingleton<ThiefOptions>.Instance.PickpocketRange * 1.5f;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight;
     public override Color TextOutlineColor => new Color(0.5f, 0.3f, 0.1f);

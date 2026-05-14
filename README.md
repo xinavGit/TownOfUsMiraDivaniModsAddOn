@@ -19,6 +19,7 @@ new roles and modifiers on top of [Town Of Us &ndash; Mira](https://github.com/A
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#sentinel"><img width="10%" src="./Resources/Icons/Sentinel.png" alt="Sentinel"/></a>
   <img src="./Resources/Headers/ImpSupport.png" alt="Impostor Support"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#deadlock"><img width="10%" src="./Resources/Icons/Deadlock.png" alt="Deadlock"/></a>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#recruiter"><img width="10%" src="./Resources/Icons/Recruiter.png" alt="Recruiter"/></a>
   <img src="./Resources/Headers/ImpKilling.png" alt="Impostor Killing"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#frag"><img width="10%" src="./Resources/Icons/Frag.png" alt="Frag"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#silencer"><img width="10%" src="./Resources/Icons/Silencer.png" alt="Silencer"/></a>
@@ -30,6 +31,7 @@ new roles and modifiers on top of [Town Of Us &ndash; Mira](https://github.com/A
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#opportunist"><img width="10%" src="./Resources/Icons/Opportunist.png" alt="Opportunist"/></a>
   <img src="./Resources/Headers/CrewMods.png" alt="Crewmate modifiers"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#blindspot"><img width="10%" src="./Resources/Icons/Blindspot.png" alt="Blindspot"/></a>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#bloody"><img width="10%" src="./Resources/Icons/Bloody.png" alt="Bloody"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#bear-trap"><img width="10%" src="./Resources/Icons/Beartrap.png" alt="Bear Trap"/></a>
   <img src="./Resources/Headers/ImpMods.png" alt="Impostor modifiers"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#ruthless"><img width="10%" src="./Resources/Icons/Ruthless.png" alt="Ruthless"/></a>
@@ -61,6 +63,7 @@ Full role and modifier write-ups live on the **[project wiki](https://github.com
 
 | Game Version      | Mod Version | Town Of Us: Mira | Download link |
 | ----------------- | ----------- | ---------------- | ------------- |
+| 17.3 (2026.3.31)  | 1.1.1       | 1.6.0+           | [v1.1.1](https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.1.1) |
 | 17.3 (2026.3.31)  | 1.1.0       | 1.6.0+           | [v1.1.0](https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.1.0) |
 | Steam             | 1.0.2       | —                | [v1.0.2](https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.0.2) |
 | Steam             | 1.0.1       | —                | [v1.0.1](https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.0.1) |

@@ -24,9 +24,7 @@ public sealed class RecruiterRole(IntPtr cppPtr)
     public string RoleName => "Recruiter";
     public string RoleDescription => "Recruit a non-Impostor during the first meeting!";
     public string RoleLongDescription =>
-        "During the first meeting only, tap the crewmate icon on each nameplate to mark who you recruit.\n" +
-        "Your choice shows as the red Impostor icon. Only one player can be marked.\n" +
-        "When the meeting ends, they become a vanilla Impostor.";
+        "During the first meeting only, recruit a non-Impostor to become an Impostor.";
     public Color RoleColor => Palette.ImpostorRed;
     public ModdedRoleTeams Team => ModdedRoleTeams.Impostor;
     public RoleAlignment RoleAlignment => RoleAlignment.ImpostorSupport;

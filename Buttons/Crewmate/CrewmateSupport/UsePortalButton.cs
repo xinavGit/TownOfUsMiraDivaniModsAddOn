@@ -9,13 +9,13 @@ using UnityEngine;
 
 namespace DivaniMods.Buttons.Crewmate.CrewmateSupport;
 
-public class UsePortalButton : CustomActionButton
+public class UsePortalButton : TownOfUsButton
 {
     public override string Name => "Use Portal";
     public override float Cooldown => OptionGroupSingleton<PortalmakerOptions>.Instance.UsePortalCooldown;
     public override float EffectDuration => 0f;
     public override int MaxUses => 0;
-    public override LoadableAsset<Sprite>? Sprite => DivaniAssets.UsePortalButton;
+    public override LoadableAsset<Sprite> Sprite => DivaniAssets.UsePortalButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomLeft;
     public override Color TextOutlineColor => new Color(0.047f, 0.420f, 0.961f);
     public override BaseKeybind Keybind => Keybinds.TertiaryAction;

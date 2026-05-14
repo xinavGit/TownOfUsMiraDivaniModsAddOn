@@ -34,7 +34,7 @@ public sealed class BloodyOptions : AbstractOptionGroup<BloodyModifier>
 
     public ModdedNumberOption FootprintIntervalTime { get; } = new(
         "Bloody Footprint Interval (Time)",
-        1f, 0.5f, 6f, 0.5f, MiraNumberSuffixes.Seconds)
+        4f, 0.5f, 6f, 0.5f, MiraNumberSuffixes.Seconds)
     {
         Visible = () =>
             (BloodyPrintMode)OptionGroupSingleton<BloodyOptions>.Instance.FootprintMode.Value is BloodyPrintMode.Time
@@ -50,11 +50,11 @@ public sealed class BloodyOptions : AbstractOptionGroup<BloodyModifier>
 
     /// <summary>How long each footprint sprite stays on the map (Investigator-style).</summary>
     public ModdedNumberOption SingleFootprintFadeSeconds { get; } = new(
-        "Single Footprint Fade", 10f, 1f, 15f, 0.5f, MiraNumberSuffixes.Seconds);
+        "Single Footprint Fade", 4f, 1f, 15f, 0.5f, MiraNumberSuffixes.Seconds);
 
     /// <summary>How long the killer keeps leaving footprints after slaying a Bloody crewmate.</summary>
     public ModdedNumberOption KillerTrailDurationSeconds { get; } = new(
-        "Footprint Duration", 10f, 1f, 15f, 1f, MiraNumberSuffixes.Seconds);
+        "Footprint Duration", 4f, 1f, 15f, 1f, MiraNumberSuffixes.Seconds);
 
     [ModdedToggleOption("Bloody Footprints While In Vent Area")]
     public bool ShowFootprintVent { get; set; } = false;

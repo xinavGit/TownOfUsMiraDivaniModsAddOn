@@ -16,7 +16,7 @@ using UnityEngine;
 
 namespace DivaniMods.Buttons.Modifiers;
 
-public class ShuffleButton : CustomActionButton
+public class ShuffleButton : TownOfUsButton
 {
     private static ManualLogSource Log => DivaniPlugin.Instance.Log;
     
@@ -24,10 +24,11 @@ public class ShuffleButton : CustomActionButton
     public override float Cooldown => OptionGroupSingleton<ShuffleOptions>.Instance.ShuffleCooldown.Value;
     public override float EffectDuration => 0f;
     public override int MaxUses => (int)OptionGroupSingleton<ShuffleOptions>.Instance.ShuffleUses.Value;
-    public override LoadableAsset<Sprite>? Sprite => DivaniAssets.ShuffleAbilityButton;
+    public override LoadableAsset<Sprite> Sprite => DivaniAssets.ShuffleAbilityButton;
     public override Color TextOutlineColor => new Color32(0, 255, 30, 255);
     public override BaseKeybind Keybind => Keybinds.ModifierAction;
-
+    public override ButtonLocation Location => ButtonLocation.BottomLeft;
+    
     public override bool Enabled(RoleBehaviour? role)
     {
         var player = PlayerControl.LocalPlayer;

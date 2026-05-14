@@ -9,13 +9,13 @@ using UnityEngine;
 
 namespace DivaniMods.Buttons.Crewmate.CrewmateSupport;
 
-public class PlaceBeaconButton : CustomActionButton
+public class PlaceBeaconButton : TownOfUsButton
 {
     public override string Name => "Place Beacon";
     public override float Cooldown => OptionGroupSingleton<SentinelOptions>.Instance.PlaceBeaconCooldown;
     public override float EffectDuration => 0f;
     public override int MaxUses => 0;
-    public override LoadableAsset<Sprite>? Sprite => DivaniAssets.SentinelPlaceBeaconButton;
+    public override LoadableAsset<Sprite> Sprite => DivaniAssets.SentinelPlaceBeaconButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight;
     public override BaseKeybind Keybind => Keybinds.PrimaryAction;
 

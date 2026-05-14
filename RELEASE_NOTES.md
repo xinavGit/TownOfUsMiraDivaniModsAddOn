@@ -1,51 +1,26 @@
-# Divani Mods &mdash; v1.1.0
+# Divani Mods v1.1.1
 
-Divani Mods 1.1.0 adds new roles, new modifiers, keybind support, and several
-gameplay fixes and polish updates for
-[Town Of Us &ndash; Mira](https://github.com/AU-Avengers/TOU-Mira).
+**Recruiter joins the squad, plus meeting-safe Divani buttons.**
+
+Divani Mods 1.1.1 adds **Recruiter** (Impostor Support), who converts one non-Impostor during the **first meeting** into a vanilla Impostor, and **Bloody** (Crewmate modifier), which leaves a **trail of red footprints** on the killer for a configurable time after they slay a Bloody crewmate. The source tree is tidier thanks to clearer folder layout, and Divani ability **keybinds** no longer fire during meetings or while chat is open. Abilities now inherit the Town Of Us Mira button stack (`TownOfUsButton` / `TownOfUsTargetButton`), with **Lockdown** chaining `base.CanUse()` so it follows the same guards.
 
 ## Added
 
 ### Roles
-- **Frag** (Impostor Killing) &mdash; Starts a hot-potato time bomb that can
-  be passed between players before it explodes.
-- **Silencer** (Impostor Killing) &mdash; Cuts meeting voting time with each
-  kill, down to a configurable minimum voting time.
-- **Innocent** (Neutral Evil) &mdash; Taunts another player into killing them,
-  then wins if that killer is voted out in the next meeting.
-- **Opportunist** (Neutral Outlier) &mdash; Collects votes from targets they
-  vote for and wins after reaching the configured vote threshold.
+
+- **Recruiter** (Impostor Support): During the first meeting only, mark one valid non-Impostor on the vote board; when the meeting ends, they become a vanilla Impostor (optional **Impostor Assassin** follow-up via options).
 
 ### Modifiers
-- **Bear Trap** (Crewmate Postmortem) &mdash; Freezes the killer after the
-  Bear Trap holder dies and prevents them from reporting the body while frozen.
-- **Sniper** (Neutral Killing modifier) &mdash; Lets Neutral Killing roles kill
-  from farther away without teleporting to the target.
 
-### Controls
-- Added keybind support for Divani Mods buttons.
+- **Bloody** (Crewmate): Killing a Bloody crewmate makes the killer leave **impostor-red footprints** for a configurable duration, with spacing by distance or time, fade length, size, and optional prints in vent areas.
 
-### Misc
-- Added Mod News
+## Improvements
 
-## Bug Fixes
+- Tidier codebase layout (more structured folders).
 
-- New **Plague Doctor** inherits infection state from the previous Plague Doctor
-  (e.g. when **Amnesiac** remembers a dead PD).
-- **Misvote** now correctly picks a random target from all alive players.
-- Added better checks for button modifiers.
-- **Ruthless** now kills through First Death Shield.
-- Fixed some task behaviours when **Lockdown** is called.
-- **Misvote** now also counts a random vote if the player does not vote.
-- **Immovable** now works with portals and **Shuffle**.
-- **Shuffle** button is now hidden when dead.
-- **Thief** no longer receives more than one button modifier.
-- **Shuffle** is now correctly listed as a button modifier.
-- Improved modifier options so they are more grouped, matching source TOU Mira more closely.
+## Bug fixes
 
-## Credits
-
-- Added icons from Atony (Mira Dev).
+- **Keybinds:** Divani ability keybinds could fire during meetings; they now respect meeting, chat, rewind, and related Town Of Us Mira button checks.
 
 ## Known bug(s)
 
@@ -53,10 +28,4 @@ gameplay fixes and polish updates for
 - Previous Plague Doctor is not removed from the winners screen when **Amnesiac**
   inherits PD (Town Of Us end-game display).
 
-## Compatibility
-
-- Requires Among Us (Steam).
-- Requires [BepInEx IL2CPP](https://builds.bepinex.dev/projects/bepinex_be) 6.x.
-- Requires [Reactor](https://github.com/NuclearPowered/Reactor),
-  [MiraAPI](https://github.com/All-Of-Us-Mods/MiraAPI), and
-  [TOU&ndash;Mira](https://github.com/AU-Avengers/TOU-Mira).
+---

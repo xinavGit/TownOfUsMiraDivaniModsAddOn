@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace DivaniMods.Buttons.Impostor.ImpostorKilling;
 
-public class FragBombButton : CustomActionButton<PlayerControl>
+public class FragBombButton : TownOfUsTargetButton<PlayerControl>
 {
     public static FragBombButton? Instance { get; private set; }
 
