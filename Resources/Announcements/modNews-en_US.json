@@ -129,6 +129,33 @@
       ]
     },
     {
+      "Date": "2026-05-15T22:00:00Z",
+      "Number": "10005",
+      "ShortTitle": "Divani Mods v1.1.2",
+      "Title": "Thief steals Lovers; Ruthless & placement tuning",
+      "SubTitle": "Alliance stealing, heartbreak option, first-death-shield toggle, 3s portal/beacon place",
+      "Text": [
+        "\r<size=110%><b>Divani Mods v1.1.2</b></size>",
+        "\n\n<b>Thief</b> can steal <b>Alliance</b> modifiers including <b>Lover</b>, re&ndash;pairing the Thief with the other partner. Optional <b>Stealing Lover Breaks Their Heart</b> kills the player who lost Lover after the swap.",
+        "\n\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.1.2>Download v1.1.2</link>",
+        "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases>All releases</link>",
+        "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki>Wiki</link>",
+        "\n\n\r<size=108%><b>Added</b></size>",
+        "\n\n<b>Thief:</b> Steal <b>Lover</b> (and other Alliance modifiers); optional heartbreak for the old lover.",
+        "\n\n<b>Ruthless:</b> <b>Bypass First Death Shield</b> toggle (default on).",
+        "\n\n\r<size=108%><b>Improvements</b></size>",
+        "\n\n- <b>Portalmaker</b> & <b>Sentinel:</b> 3&ndash;second placement delay; position locked on button press (like Sentry).",
+        "\n- <b>Portalmaker:</b> Use Portal and placement fixes.",
+        "\n\n\r<size=108%><b>Bug fixes</b></size>",
+        "\n\n- <b>Thief / Lover:</b> Heartbreak and death info sync correctly on all clients; no extra chain deaths.",
+        "\n\n\r<size=108%><b>Known issues</b></size>",
+        "\n\n- Sentinel “uses left” is not always correct (visual bug).",
+        "\n- Previous Plague Doctor is not removed from the winners screen when <b>Amnesiac</b> inherits PD (Town Of Us end-game display).",
+        "\n\n\r<size=108%><b>Compatibility</b></size>",
+        "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us – Mira."
+      ]
+    },
+    {
       "Date": "2026-05-14T18:00:00Z",
       "Number": "10004",
       "ShortTitle": "Divani Mods v1.1.1",
