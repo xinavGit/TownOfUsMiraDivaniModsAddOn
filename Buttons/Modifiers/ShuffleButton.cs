@@ -38,6 +38,8 @@ public class ShuffleButton : TownOfUsButton
 
     public override bool CanUse()
     {
+        if (!base.CanUse()) return false;
+
         var player = PlayerControl.LocalPlayer;
         if (player == null || player.Data == null || player.Data.IsDead) return false;
         var modifier = player.GetModifier<ShuffleModifier>();
@@ -53,6 +55,8 @@ public class ShuffleButton : TownOfUsButton
 
     protected override void OnClick()
     {
+        if (MeetingHud.Instance || ExileController.Instance) return;
+
         var player = PlayerControl.LocalPlayer;
         if (player == null) return;
         

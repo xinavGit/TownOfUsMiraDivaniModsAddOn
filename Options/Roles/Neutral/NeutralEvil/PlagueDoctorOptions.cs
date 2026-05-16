@@ -27,6 +27,9 @@ public class PlagueDoctorOptions : AbstractOptionGroup<PlagueDoctorRole>
     [ModdedToggleOption("Can Use Vents")]
     public bool CanVent { get; set; } = false;
 
+    [ModdedToggleOption("Turn into Amnesiac when cannot win")]
+    public bool TurnIntoAmne { get; set; } = true;
+
     [ModdedToggleOption("Can Win While Dead")]
     public bool CanWinDead { get; set; } = false;
 

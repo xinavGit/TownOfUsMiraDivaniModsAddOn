@@ -9,7 +9,7 @@ using DivaniMods.Roles.Neutral.NeutralKilling;
 using TownOfUs.Buttons;
 using UnityEngine;
 
-namespace DivaniMods.Buttons.Impostor.ImpostorKilling;
+namespace DivaniMods.Buttons.Neutral.NeutralKilling;
 
 public class FragGiveBombButton : TownOfUsTargetButton<PlayerControl>
 {
@@ -111,6 +111,12 @@ public class FragGiveBombButton : TownOfUsTargetButton<PlayerControl>
     {
         var instance = Instance;
         if (instance?.Button == null) return;
+
+        if (MeetingHud.Instance != null || ExileController.Instance != null)
+        {
+            instance.Button.ToggleVisible(false);
+            return;
+        }
 
         ApplyQueuedCooldown();
 

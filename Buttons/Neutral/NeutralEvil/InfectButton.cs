@@ -9,7 +9,7 @@ using DivaniMods.Roles.Neutral.NeutralEvil;
 using TownOfUs.Buttons;
 using UnityEngine;
 
-namespace DivaniMods.Buttons.Neutral.NeutralKilling;
+namespace DivaniMods.Buttons.Neutral.NeutralEvil;
 
 public class InfectButton : TownOfUsTargetButton<PlayerControl>
 {

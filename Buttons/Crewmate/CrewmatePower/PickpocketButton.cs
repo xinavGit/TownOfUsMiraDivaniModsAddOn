@@ -12,7 +12,7 @@ using MiraAPI.Utilities.Assets;
 using Reactor.Networking.Attributes;
 using Reactor.Utilities;
 using DivaniMods.Assets;
-using DivaniMods.Buttons.Impostor.ImpostorKilling;
+using DivaniMods.Buttons.Neutral.NeutralKilling;
 using DivaniMods.Options;
 using DivaniMods.Patches;
 using DivaniMods.Roles.Crewmate.CrewmatePower;

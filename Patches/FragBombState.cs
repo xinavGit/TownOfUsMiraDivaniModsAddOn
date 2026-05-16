@@ -9,7 +9,7 @@ using MiraAPI.Networking;
 using MiraAPI.Utilities;
 using Reactor.Utilities;
 using DivaniMods.Assets;
-using DivaniMods.Buttons.Impostor.ImpostorKilling;
+using DivaniMods.Buttons.Neutral.NeutralKilling;
 using DivaniMods.Roles.Neutral.NeutralKilling;
 using DivaniMods.Utilities;
 using TownOfUs.Modules;

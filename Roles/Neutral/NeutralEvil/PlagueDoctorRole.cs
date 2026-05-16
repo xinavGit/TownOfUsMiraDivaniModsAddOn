@@ -8,6 +8,7 @@ using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
+using Reactor.Utilities;
 using Reactor.Networking.Attributes;
 using DivaniMods.Assets;
 using DivaniMods.Options;
@@ -357,6 +358,7 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
     public static void HandleMeetingStart()
     {
         MeetingFlag = true;
+        TryTurnIntoAmnesiacWhenCannotWin();
     }
 
     public static void OnMeetingEnd()
@@ -370,6 +372,46 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
         }
 
         DivaniPlugin.Instance.Log.LogInfo("PlagueDoctor: Meeting ended (ejection starting)");
+    }
+
+    private static void TryTurnIntoAmnesiacWhenCannotWin()
+    {
+        if (!OptionGroupSingleton<PlagueDoctorOptions>.Instance.TurnIntoAmne)
+        {
+            return;
+        }
+
+        var plagueDoctor = PlayerControl.LocalPlayer;
+        if (plagueDoctor == null || plagueDoctor.Data == null || plagueDoctor.Data.IsDead)
+        {
+            return;
+        }
+
+        if (plagueDoctor.Data.Role is not PlagueDoctorRole || PlagueDoctorPlayer != plagueDoctor)
+        {
+            return;
+        }
+
+        if (NumInfectionsRemaining > 0 || HasLivingInfectedPlayer())
+        {
+            return;
+        }
+
+        RpcTurnIntoAmnesiacWhenCannotWin(plagueDoctor, plagueDoctor.PlayerId);
+    }
+
+    private static bool HasLivingInfectedPlayer()
+    {
+        foreach (var infectedId in InfectedPlayers.Keys.ToList())
+        {
+            var infected = GetPlayerById(infectedId);
+            if (infected != null && !infected.HasDied())
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -463,6 +505,40 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
     public static void RpcUpdateInfectionProgress(PlayerControl sender, byte targetId, float progress)
     {
         InfectionProgress[targetId] = progress;
+    }
+
+    [MethodRpc((uint)DivaniRpcCalls.PlagueDoctorTurnIntoAmnesiac)]
+    public static void RpcTurnIntoAmnesiacWhenCannotWin(PlayerControl sender, byte plagueDoctorId)
+    {
+        var plagueDoctor = GetPlayerById(plagueDoctorId);
+        if (plagueDoctor == null || plagueDoctor.Data == null || plagueDoctor.Data.IsDead)
+        {
+            return;
+        }
+
+        if (plagueDoctor.Data.Role is not PlagueDoctorRole)
+        {
+            return;
+        }
+
+        DivaniPlugin.Instance.Log.LogInfo(
+            $"PlagueDoctor: Player {plagueDoctorId} cannot win; turning into Amnesiac");
+
+        ClearAndReload();
+        plagueDoctor.ChangeRole(RoleId.Get<AmnesiacRole>());
+
+        if (!plagueDoctor.AmOwner)
+        {
+            return;
+        }
+
+        Coroutines.Start(MiscUtils.CoFlash(TownOfUsColors.Amnesiac));
+        var notification = MiraAPI.Utilities.Helpers.CreateAndShowNotification(
+            $"There are no longer any living infected players, and you have no infections left. You have become an {TownOfUsColors.Amnesiac.ToTextColor()}Amnesiac</color>.",
+            Color.white,
+            new Vector3(0f, 1f, -20f),
+            spr: TouRoleIcons.Amnesiac.LoadAsset());
+        notification.AdjustNotification();
     }
 
     public override bool DidWin(GameOverReason gameOverReason)
