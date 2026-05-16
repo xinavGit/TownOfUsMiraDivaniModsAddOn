@@ -7,6 +7,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
 using MiraAPI.Utilities;
+using MiraAPI.Utilities.Assets;
 using Reactor.Networking.Attributes;
 using DivaniMods.Assets;
 using DivaniMods.Options;
@@ -22,7 +23,7 @@ using TownOfUs.Roles.Neutral;
 using TownOfUs.Utilities;
 using UnityEngine;
 
-namespace DivaniMods.Roles.Neutral.NeutralKilling;
+namespace DivaniMods.Roles.Neutral.NeutralEvil;
 
 public sealed class PlagueDoctorRole(IntPtr cppPtr)
     : NeutralRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IDoomable, ICrewVariant
@@ -49,6 +50,7 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
     public static int NumInfectionsRemaining { get; set; }
     public static bool MeetingFlag { get; set; }
     public static float ImmunityTimer { get; set; }
+    public static bool InfectionWarningShown { get; set; }
 
     public string RoleName => "Plague Doctor";
     public string RoleDescription => "Infect everyone to win!";
@@ -58,7 +60,7 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
         "Win by infecting all living players!";
     public Color RoleColor => PlagueDoctorColor;
     public ModdedRoleTeams Team => ModdedRoleTeams.Custom;
-    public RoleAlignment RoleAlignment => RoleAlignment.NeutralKilling;
+    public RoleAlignment RoleAlignment => RoleAlignment.NeutralEvil;
 
     public string GetAdvancedDescription() => RoleLongDescription + MiscUtils.AppendOptionsText(GetType());
 
@@ -138,6 +140,7 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
         NumInfectionsRemaining = (int)OptionGroupSingleton<PlagueDoctorOptions>.Instance.MaxInfections;
         MeetingFlag = false;
         ImmunityTimer = 0f;
+        InfectionWarningShown = false;
 
         if (StatusText != null)
         {
@@ -158,7 +161,7 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
 
         ImportantTextTask orCreateTask = PlayerTask.GetOrCreateTask<ImportantTextTask>(playerControl, 0);
         orCreateTask.Text =
-            $"{TownOfUsColors.Neutral.ToTextColor()}{TouLocale.GetParsed("NeutralKillingTaskHeader")}</color>";
+            $"{TownOfUsColors.Neutral.ToTextColor()}{TouLocale.GetParsed("NeutralEvilTaskHeader")}</color>";
         orCreateTask.name = "NeutralRoleText";
     }
 
@@ -339,14 +342,16 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
     {
         if (Player == null) return false;
         if (!CanWinWhileDead && Player.HasDied()) return false;
+        return HasInfectedAllLivingPlayers(Player);
+    }
 
+    private static bool HasInfectedAllLivingPlayers(PlayerControl player)
+    {
         var livingPlayers = PlayerControl.AllPlayerControls.ToArray()
-            .Where(p => p != null && p.Data != null && !p.HasDied() && p != Player)
+            .Where(p => p != null && p.Data != null && !p.HasDied() && p != player)
             .ToList();
 
-        if (livingPlayers.Count == 0) return false;
-
-        return livingPlayers.All(p => InfectedPlayers.ContainsKey(p.PlayerId));
+        return livingPlayers.Count > 0 && livingPlayers.All(p => InfectedPlayers.ContainsKey(p.PlayerId));
     }
 
     public static void HandleMeetingStart()
@@ -450,6 +455,8 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
             InfectedPlayers[targetId] = true;
             DivaniPlugin.Instance.Log.LogInfo($"PlagueDoctor: Player {targetId} infected");
         }
+
+        TryShowInfectionWarning();
     }
 
     [MethodRpc((uint)DivaniRpcCalls.PlagueDoctorUpdateProgress)]
@@ -461,5 +468,28 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
     public override bool DidWin(GameOverReason gameOverReason)
     {
         return WinConditionMet() && PlagueDoctorPlayer != null && Player == PlagueDoctorPlayer;
+    }
+
+    private static void TryShowInfectionWarning()
+    {
+        var options = OptionGroupSingleton<PlagueDoctorOptions>.Instance;
+        if (!options.NotifyPlayersWhenInfectionClose || InfectionWarningShown) return;
+        if (PlagueDoctorPlayer == null) return;
+
+        var uninfectedLeft = PlayerControl.AllPlayerControls.ToArray()
+            .Count(p => p != null &&
+                        p.Data != null &&
+                        !p.HasDied() &&
+                        p != PlagueDoctorPlayer &&
+                        !InfectedPlayers.ContainsKey(p.PlayerId));
+
+        if (uninfectedLeft <= 0 || uninfectedLeft > options.NotifyWhenUninfectedLeft.Value) return;
+
+        InfectionWarningShown = true;
+        MiraAPI.Utilities.Helpers.CreateAndShowNotification(
+            $"<b><color=#FFC000>A plague is spreading. {uninfectedLeft} player(s) remain uninfected.</color></b>",
+            Color.white,
+            new Vector3(0f, 1f, -20f),
+            spr: DivaniAssets.PlagueDoctorIcon.LoadAsset());
     }
 }

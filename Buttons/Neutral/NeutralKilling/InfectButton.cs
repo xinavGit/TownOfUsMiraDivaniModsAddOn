@@ -5,7 +5,7 @@ using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using DivaniMods.Assets;
 using DivaniMods.Options;
-using DivaniMods.Roles.Neutral.NeutralKilling;
+using DivaniMods.Roles.Neutral.NeutralEvil;
 using TownOfUs.Buttons;
 using UnityEngine;
 
