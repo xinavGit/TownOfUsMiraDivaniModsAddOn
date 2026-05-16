@@ -129,7 +129,7 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
         if (targetModifiers.Count > 0)
         {
             var thiefHasButtonModifier = HasButtonModifier(player);
-            var stolen = PickTargetModifier(targetModifiers, random, preferNonButtonModifier: thiefHasButtonModifier);
+            var stolen = PickTargetModifier(targetModifiers, random, preferNonButtonModifier: thiefHasButtonModifier, thief: player);
             var canUseModifier = CanThiefUseModifier(stolen, player);
             
             // Pre-pick the fallback random id on the sender so every client applies the
@@ -161,15 +161,24 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
     private static BaseModifier PickTargetModifier(
         List<BaseModifier> targetModifiers,
         System.Random random,
-        bool preferNonButtonModifier)
+        bool preferNonButtonModifier,
+        PlayerControl thief)
     {
+        var thiefModifierIds = thief.GetModifiers<BaseModifier>()
+            .Select(m => m.TypeId)
+            .ToHashSet();
+        var nonDuplicateModifiers = targetModifiers
+            .Where(m => !thiefModifierIds.Contains(m.TypeId))
+            .ToList();
+        var baseCandidates = nonDuplicateModifiers.Count > 0 ? nonDuplicateModifiers : targetModifiers;
+
         if (!preferNonButtonModifier)
         {
-            return targetModifiers[random.Next(targetModifiers.Count)];
+            return baseCandidates[random.Next(baseCandidates.Count)];
         }
 
-        var nonButtonModifiers = targetModifiers.Where(x => !IsButtonModifier(x)).ToList();
-        var candidates = nonButtonModifiers.Count > 0 ? nonButtonModifiers : targetModifiers;
+        var nonButtonModifiers = baseCandidates.Where(x => !IsButtonModifier(x)).ToList();
+        var candidates = nonButtonModifiers.Count > 0 ? nonButtonModifiers : baseCandidates;
         return candidates[random.Next(candidates.Count)];
     }
 
@@ -187,7 +196,8 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
     private static List<BaseModifier> GetTargetModifiers(PlayerControl target)
     {
         return target.GetModifiers<BaseModifier>()
-            .Where(m => !IsExcludedFromStealing(m) && !IsNonStealableVisualModifier(m))
+            .Where(m => !IsExcludedFromStealing(m) &&
+                        !IsNonStealableVisualModifier(m))
             .ToList();
     }
 
@@ -237,6 +247,9 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
     
     private static bool CanThiefUseModifier(BaseModifier modifier, PlayerControl thief)
     {
+        if (thief.GetModifiers<BaseModifier>().Any(m => m.TypeId == modifier.TypeId))
+            return false;
+
         var modNamespace = modifier.GetType().Namespace;
         if (modNamespace != null && ExcludedNamespaces.Any(ns => modNamespace.StartsWith(ns, StringComparison.OrdinalIgnoreCase)))
             return false;
