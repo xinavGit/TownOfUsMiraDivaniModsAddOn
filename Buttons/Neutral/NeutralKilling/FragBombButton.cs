@@ -23,7 +23,7 @@ public class FragBombButton : TownOfUsTargetButton<PlayerControl>
     public override int MaxUses => 0;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.FragPassButton;
     public override float Distance => 1.5f;
-    public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight;
+    public override ButtonLocation Location { get; set; } = ButtonLocation.BottomLeft;
     public override Color TextOutlineColor => FragRole.FragColor;
     public override BaseKeybind Keybind => Keybinds.SecondaryAction;
 
