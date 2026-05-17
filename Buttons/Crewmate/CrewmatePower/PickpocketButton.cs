@@ -351,7 +351,10 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
             
             if (IsShieldModifier(modifier))
                 continue;
-            
+
+            if (modifier is AllianceGameModifier)
+                continue;
+
             if (modTypeName.StartsWith("Test", StringComparison.OrdinalIgnoreCase))
                 continue;
             
