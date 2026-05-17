@@ -220,6 +220,22 @@
         "\n- Portalmaker can portal to both portals from anywhere option.",
         "\n- Some new roles/modifiers."
       ]
+    },
+    {
+      "Date": "2026-05-17T11:45:00Z",
+      "Number": "10007",
+      "ShortTitle": "Divani Mods v1.2.1",
+      "Title": "Thief random pool fix",
+      "SubTitle": "Alliance modifiers excluded from Thief random pool",
+      "Text": [
+        "\r<size=110%><b>Divani Mods v1.2.1</b></size>",
+        "\n\nSmall fix for the Thief random modifier pool.",
+        "\n\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.2.1>Download v1.2.1</link>",
+        "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases>All releases</link>",
+        "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki>Wiki</link>",
+        "\n\n\r<size=108%><b>Bug fixes</b></size>",
+        "\n\n- <b>Thief</b>: Alliance modifiers (e.g. Lover, Crewpostor, Egotist) are no longer in the random modifier pool when Thief steals from a target with nothing to steal."
+      ]
     }
   ]
 }
