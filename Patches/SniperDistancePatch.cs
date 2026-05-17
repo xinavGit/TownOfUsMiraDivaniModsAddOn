@@ -43,7 +43,7 @@ public static class SniperArsonistIgniteRadiusPatch
     {
         if (!SniperModifier.LocalPlayerHasSniper() ||
             OptionGroupSingleton<ArsonistOptions>.Instance.LegacyArsonist ||
-            ShipStatus.Instance == null)
+            !ShipStatus.Instance)
         {
             return;
         }

@@ -1,7 +1,7 @@
 using Il2CppInterop.Runtime.Attributes;
 using Il2CppSystem.Text;
 using Reactor.Utilities.Attributes;
-using DivaniMods.Roles.Neutral.NeutralOutlier;
+using DivaniMods.Roles.Neutral.NeutralEvil;
 using DivaniMods.Utilities;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace DivaniMods.Patches;
 /// <summary>
 /// Vanilla <see cref="SabotageTask"/> on each client while Terrorist sabotage is
 /// active — implements <see cref="IHudOverrideTask"/> (blocks meetings). Emergency
-/// table UX is handled in <see cref="TerroristPatch"/> like vanilla sabos.
+/// table UX is handled in <see cref="TerroristPatches"/> like vanilla sabos.
 /// </summary>
 [RegisterInIl2Cpp]
 public sealed class TerroristSabotageTask(nint cppPtr) : SabotageTask(cppPtr)

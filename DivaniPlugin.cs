@@ -21,7 +21,7 @@ namespace DivaniMods;
 public class DivaniPlugin : BasePlugin, IMiraPlugin
 {
     public const string Id = "com.divani.mods";
-    public const string Version = "1.2.1";
+    public const string Version = "1.2.2";
     
     public static DivaniPlugin Instance { get; private set; } = null!;
     public new ManualLogSource Log => base.Log;
@@ -35,11 +35,13 @@ public class DivaniPlugin : BasePlugin, IMiraPlugin
     {
         Instance = this;
         Harmony.PatchAll();
+        TerroristPatches.Register(Log);
+        TerroristNumpad.Register(Harmony, Log);
         FragileTownOfUsButtonPatch.Initialize(Harmony);
         RuthlessEventHandler.Initialize(Harmony);
         DutchMemeSoundpackPatch.Register(Harmony);
         VersionDisplay.Register();
         DivaniModAnnouncementPatch.EnsureLoaded();
-        Log.LogInfo("Divani Mods loaded successfully!");
+        Log.LogInfo($"Divani Mods v{Version} loaded successfully!");
     }
 }

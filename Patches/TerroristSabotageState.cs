@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using BepInEx.Unity.IL2CPP.Utils.Collections;
 
 using MiraAPI.GameOptions;
+using MiraAPI.Networking;
 
 using Reactor.Networking.Attributes;
 
@@ -12,12 +13,12 @@ using Reactor.Utilities;
 using Reactor.Utilities.Extensions;
 
 using DivaniMods.Assets;
-
+using DivaniMods.Buttons.Neutral.NeutralEvil;
 using DivaniMods.Utilities;
 
 using DivaniMods.Options;
 
-using DivaniMods.Roles.Neutral.NeutralOutlier;
+using DivaniMods.Roles.Neutral.NeutralEvil;
 
 using TownOfUs.Utilities;
 
@@ -118,6 +119,7 @@ public static class TerroristSabotageState
         DisabledUtilities.Clear();
 
         TerroristUtilityConsoles.InvalidateCache();
+        TerroristNumpad.Controller.ResetAll();
 
     }
 
@@ -146,18 +148,13 @@ public static class TerroristSabotageState
 
 
 
-    /// <summary>True when a vanilla impostor global sabotage is running (not Terrorist).</summary>
-    public static bool IsImpostorSabotageActive()
+    /// <summary>
+    /// Vanilla critical sabotage is live. Matches Grenadier flash (non–SabotageFlashing): <c>system is {{ AnyActive: true }}</c>.
+    /// </summary>
+    public static bool IsCriticalVanillaSabotageActive()
     {
-        if (IsActive)
-        {
-            return false;
-        }
-
-        if (ShipStatus.Instance == null) return false;
-        if (!ShipStatus.Instance.Systems.TryGetValue(SystemTypes.Sabotage, out var sys)) return false;
-        var sabSystem = sys?.TryCast<SabotageSystemType>();
-        return sabSystem != null && sabSystem.AnyActive;
+        var system = ShipStatus.Instance.Systems[SystemTypes.Sabotage].Cast<SabotageSystemType>();
+        return system is { AnyActive: true };
     }
 
     public static bool TryGetPlantedWorldPosition(out Vector3 worldPos)
@@ -168,30 +165,18 @@ public static class TerroristSabotageState
 
 
     [MethodRpc((uint)DivaniRpcCalls.TerroristPlantSabotage)]
-
     public static void RpcPlantSabotage(
-        PlayerControl sender, float x, float y, float duration, int consoleKey, byte utilityKind)
-
+        PlayerControl sender, byte terroristId, float x, float y, float duration, int consoleKey, byte utilityKind)
     {
-
-        if (sender == null) return;
-
-        PlantSabotage(sender.PlayerId, new Vector2(x, y), duration, consoleKey, (TerroristUtilityKind)utilityKind);
-
+        var resolvedTerroristId = sender != null ? sender.PlayerId : terroristId;
+        PlantSabotage(resolvedTerroristId, new Vector2(x, y), duration, consoleKey, (TerroristUtilityKind)utilityKind);
     }
 
-
-
     [MethodRpc((uint)DivaniRpcCalls.TerroristDefuseSabotage)]
-
-    public static void RpcDefuseSabotage(PlayerControl sender)
-
+    public static void RpcDefuseSabotage(PlayerControl sender, byte defuserId)
     {
-
-        if (sender == null) return;
-
-        DefuseSabotage(sender.PlayerId);
-
+        var resolvedDefuserId = sender != null ? sender.PlayerId : defuserId;
+        DefuseSabotage(resolvedDefuserId);
     }
 
 
@@ -234,8 +219,6 @@ public static class TerroristSabotageState
         FlashPulseIndex = 0;
 
         TerroristUtilityConsoles.InvalidateCache();
-
-        ForceImpSabotageCooldown();
 
         CreateArrowToTarget();
 
@@ -288,7 +271,7 @@ public static class TerroristSabotageState
             spr: DivaniAssets.TerroristSabotageButton.LoadAsset());
 
         ClearActiveSabotage();
-
+        TerroristPlantButton.SyncAfterSabotageEnded(startCooldown: true);
     }
 
     private static void ExpireSabotage()
@@ -339,13 +322,86 @@ public static class TerroristSabotageState
 
             RegisterDisabledUtility(consoleKey, kind);
 
+            EjectFromExplodedUtility(kind);
+
         }
 
-        ClearActiveSabotage();
+        KillLocalIfDefusing();
 
+        ClearActiveSabotage();
+        TerroristPlantButton.SyncAfterSabotageEnded(startCooldown: true);
     }
 
+    /// <summary>
+    /// If the local player is mid-defuse when the sabotage expires and the option is on,
+    /// kill them as a suicide. Each client checks locally so only the actual defuser dies.
+    /// </summary>
+    private static void KillLocalIfDefusing()
+    {
+        if (!OptionGroupSingleton<TerroristOptions>.Instance.ExplosionKillsDefusers)
+        {
+            return;
+        }
 
+        if (!TerroristDefuseButton.IsLocalDefusing)
+        {
+            return;
+        }
+
+        var local = PlayerControl.LocalPlayer;
+        if (local == null || local.Data == null || local.Data.IsDead)
+        {
+            return;
+        }
+
+        if (TerroristNumpad.Controller.InProgress)
+        {
+            TerroristNumpad.Controller.CancelActive();
+        }
+
+        local.RpcCustomMurder(local, MeetingCheck.OutsideMeeting);
+    }
+
+    /// <summary>
+    /// Force-close any open minigame matching the exploded utility kind. Runs on every client
+    /// (each closes their own open minigame), so anyone inside the console is ejected.
+    /// </summary>
+    private static void EjectFromExplodedUtility(TerroristUtilityKind kind)
+    {
+        switch (kind)
+        {
+            case TerroristUtilityKind.Admin:
+                var map = MapBehaviour.Instance;
+                if (map != null && map.IsOpen)
+                {
+                    map.Close();
+                }
+                break;
+            case TerroristUtilityKind.Cameras:
+            case TerroristUtilityKind.Vitals:
+            case TerroristUtilityKind.DoorLog:
+                var mg = Minigame.Instance;
+                if (mg == null)
+                {
+                    return;
+                }
+
+                var matches = kind switch
+                {
+                    TerroristUtilityKind.Cameras => mg.TryCast<SurveillanceMinigame>() != null
+                        || mg.TryCast<PlanetSurveillanceMinigame>() != null,
+                    TerroristUtilityKind.Vitals => mg.TryCast<VitalsMinigame>() != null,
+                    TerroristUtilityKind.DoorLog => mg.TryCast<SecurityLogGame>() != null,
+                    _ => false,
+                };
+
+                if (matches)
+                {
+                    mg.Close();
+                }
+                break;
+        }
+    }
 
     private static void ClearActiveSabotage()
 
@@ -424,8 +480,6 @@ public static class TerroristSabotageState
 
 
 
-        ForceImpSabotageCooldown();
-
         UpdateArrow();
 
     }
@@ -454,26 +508,6 @@ public static class TerroristSabotageState
 
         return TerroristUtilityConsoles.IsAtPlantedUtility(
             local, PlantedUtilityKind, PlantedPosition, PlantedConsoleKey);
-
-    }
-
-
-
-    private static void ForceImpSabotageCooldown()
-
-    {
-
-        if (ShipStatus.Instance == null) return;
-
-        if (!ShipStatus.Instance.Systems.TryGetValue(SystemTypes.Sabotage, out var sys)) return;
-
-        var sabSystem = sys?.TryCast<SabotageSystemType>();
-
-        if (sabSystem == null) return;
-
-        if (sabSystem.AnyActive) return;
-
-        if (sabSystem.Timer < 30f) sabSystem.Timer = 30f;
 
     }
 
@@ -661,7 +695,7 @@ public static class TerroristSabotageState
 
         StopSabotageAlarm();
 
-        if (SoundManager.Instance == null || ShipStatus.Instance == null) return;
+        if (!SoundManager.Instance || !ShipStatus.Instance) return;
 
 
 
@@ -731,7 +765,7 @@ public static class TerroristSabotageState
 
         StopFlash();
 
-        if (HudManager.Instance == null) return;
+        if (!HudManager.Instance) return;
 
         FlashPulseIndex = 0;
 
@@ -745,7 +779,7 @@ public static class TerroristSabotageState
 
     {
 
-        if (_flashRoutine != null && HudManager.Instance != null)
+        if (_flashRoutine != null && HudManager.Instance)
 
         {
 
@@ -807,7 +841,7 @@ public static class TerroristSabotageState
 
     {
 
-        if (HudManager.Instance == null)
+        if (!HudManager.Instance)
 
         {
 
@@ -831,7 +865,7 @@ public static class TerroristSabotageState
 
     {
 
-        if (SoundManager.Instance == null)
+        if (!SoundManager.Instance)
 
         {
 

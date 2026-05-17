@@ -50,7 +50,7 @@ public static class TerroristUtilityConsoles
         position = Vector2.zero;
         kind = TerroristUtilityKind.None;
 
-        if (player == null || player.Data == null || ShipStatus.Instance == null)
+        if (player == null || player.Data == null || !ShipStatus.Instance)
         {
             return false;
         }
@@ -203,19 +203,19 @@ public static class TerroristUtilityConsoles
             TerroristUtilityKind.Admin => TryGetAdminConsole(plantedPosition, ConsoleSearchRadius, out var admin)
                 && admin != null
                 && MatchesPlantedConsole(plantedKind, plantedPosition, plantedConsoleKey, admin.transform.position)
-                && IsInConsoleUseRange(admin, player, TerroristUtilityKind.Admin, forTerroristPlant: false),
+                && IsInConsoleUseRange(admin, player, TerroristUtilityKind.Admin, forTerroristPlant: true),
             TerroristUtilityKind.Cameras => TryGetCameraConsole(out var cam)
                 && cam != null
                 && MatchesPlantedConsole(plantedKind, plantedPosition, plantedConsoleKey, cam.transform.position)
-                && IsInConsoleUseRange(cam, player, TerroristUtilityKind.Cameras, forTerroristPlant: false),
+                && IsInConsoleUseRange(cam, player, TerroristUtilityKind.Cameras, forTerroristPlant: true),
             TerroristUtilityKind.Vitals => TryGetVitalsConsole(out var vitals)
                 && vitals != null
                 && MatchesPlantedConsole(plantedKind, plantedPosition, plantedConsoleKey, vitals.transform.position)
-                && IsInConsoleUseRange(vitals, player, TerroristUtilityKind.Vitals, forTerroristPlant: false),
+                && IsInConsoleUseRange(vitals, player, TerroristUtilityKind.Vitals, forTerroristPlant: true),
             TerroristUtilityKind.DoorLog => TryGetDoorLogConsole(out var door)
                 && door != null
                 && MatchesPlantedConsole(plantedKind, plantedPosition, plantedConsoleKey, door.transform.position)
-                && IsInConsoleUseRange(door, player, TerroristUtilityKind.DoorLog, forTerroristPlant: false),
+                && IsInConsoleUseRange(door, player, TerroristUtilityKind.DoorLog, forTerroristPlant: true),
             _ => false,
         };
     }
@@ -332,9 +332,18 @@ public static class TerroristUtilityConsoles
         }
 
         var consolePos = (Vector2)console.transform.position;
+        var playerPos = player.GetTruePosition();
+        var dist = Vector2.Distance(playerPos, consolePos);
+        var maxReach = GetUsableDistance(console) + 0.1f;
+        if (dist > maxReach)
+        {
+            return false;
+        }
+
+        var usableD = GetUsableDistance(console);
         var canUseDistance = QueryCanUseDistance(console, player, out var couldUse);
 
-        if (couldUse)
+        if (couldUse && canUseDistance <= usableD + 0.15f)
         {
             return true;
         }
@@ -350,8 +359,9 @@ public static class TerroristUtilityConsoles
             return false;
         }
 
-        // Console disabled after explosion: still use vanilla UsableDistance, not couldUse.
-        return canUseDistance <= GetUsableDistance(console) + 0.01f;
+        // Disabled consoles: our CanUse patch returns float.MaxValue — cannot use CanUse distance here.
+        // Proximity was already validated against UsableDistance + slack above.
+        return true;
     }
 
     private static float QueryCanUseDistance(Component console, PlayerControl player, out bool couldUse)
@@ -367,6 +377,11 @@ public static class TerroristUtilityConsoles
             return sys.CanUse(player.Data, out _, out couldUse);
         }
 
+        if (console.TryCast<global::Console>() is global::Console plain)
+        {
+            return plain.CanUse(player.Data, out _, out couldUse);
+        }
+
         return float.MaxValue;
     }
 
@@ -378,7 +393,7 @@ public static class TerroristUtilityConsoles
             return 1f;
         }
 
-        if (console.TryCast<Console>() is Console c)
+        if (console.TryCast<global::Console>() is global::Console c)
         {
             return c.UsableDistance;
         }
@@ -552,6 +567,230 @@ public static class TerroristUtilityConsoles
         }
 
         return false;
+    }
+
+    private static Minigame? _cachedKeypadAssetPrefab;
+
+    public static bool TryGetO2KeypadPrefab(out Minigame? prefab)
+    {
+        prefab = null;
+
+        // Prefer a non-scene asset so an imp O2 sabo cannot leave animating/done stuck on the prefab we clone.
+        if (_cachedKeypadAssetPrefab && _cachedKeypadAssetPrefab.gameObject)
+        {
+            prefab = _cachedKeypadAssetPrefab;
+            return true;
+        }
+
+        _cachedKeypadAssetPrefab = null;
+
+        if (TryGetKeypadPrefabFromResources(out prefab) && prefab != null)
+        {
+            _cachedKeypadAssetPrefab = prefab;
+            return true;
+        }
+
+        Minigame? fallback = null;
+
+        // O2 fix uses Console (not always SystemConsole) on Skeld; FindObjectsOfType can miss some loads.
+        foreach (var console in EnumerateGameplayConsoles())
+        {
+            var minigame = TryGetMinigamePrefabFromTaskConsole(console);
+            if (minigame == null)
+            {
+                continue;
+            }
+
+            if (minigame.TryCast<KeypadGame>() == null)
+            {
+                continue;
+            }
+
+            fallback ??= minigame;
+            if (ConsoleHasTaskType(console, TaskTypes.RestoreOxy))
+            {
+                prefab = minigame;
+                return true;
+            }
+        }
+
+        foreach (var console in GetCachedSystemConsoles())
+        {
+            if (console == null || console.MinigamePrefab == null)
+            {
+                continue;
+            }
+
+            if (console.MinigamePrefab.TryCast<KeypadGame>() == null)
+            {
+                continue;
+            }
+
+            fallback ??= console.MinigamePrefab;
+            var name = console.gameObject.name;
+            if (name.Contains("o2", System.StringComparison.OrdinalIgnoreCase)
+                || name.Contains("oxygen", System.StringComparison.OrdinalIgnoreCase)
+                || name.Contains("LifeSupp", System.StringComparison.OrdinalIgnoreCase))
+            {
+                prefab = console.MinigamePrefab;
+                return true;
+            }
+        }
+
+        prefab = fallback;
+        if (prefab != null)
+        {
+            _cachedKeypadAssetPrefab = prefab;
+            return true;
+        }
+
+        return false;
+    }
+
+    public static void InvalidateKeypadPrefabCache()
+    {
+        _cachedKeypadAssetPrefab = null;
+    }
+
+    /// <summary>
+    /// Last resort when no in-scene console exposes a <see cref="KeypadGame"/> prefab (e.g. odd map load order).
+    /// </summary>
+    private static bool TryGetKeypadPrefabFromResources(out Minigame? prefab)
+    {
+        prefab = null;
+        try
+        {
+            var arr = Resources.FindObjectsOfTypeAll(Il2CppType.From(typeof(KeypadGame)));
+            if (arr == null)
+            {
+                return false;
+            }
+
+            foreach (var obj in arr)
+            {
+                if (obj == null)
+                {
+                    continue;
+                }
+
+                var kg = obj.TryCast<KeypadGame>();
+                if (kg == null || kg.gameObject == null)
+                {
+                    continue;
+                }
+
+                // Never clone an in-scene keypad (e.g. after imp O2 sabo) — it can keep animating/done stuck.
+                var scene = kg.gameObject.scene;
+                if (scene.IsValid() && scene.isLoaded)
+                {
+                    continue;
+                }
+
+                prefab = kg;
+                return true;
+            }
+        }
+        catch
+        {
+            return false;
+        }
+
+        return false;
+    }
+
+    private static Minigame? TryGetMinigamePrefabFromTaskConsole(global::Console console)
+    {
+        if (console == null)
+        {
+            return null;
+        }
+
+        try
+        {
+            var prop = console.GetType().GetProperty(
+                "MinigamePrefab",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            return prop?.GetValue(console) as Minigame;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private static bool ConsoleHasTaskType(global::Console console, TaskTypes taskType)
+    {
+        try
+        {
+            var tasks = console.TaskTypes;
+            if (tasks == null)
+            {
+                return false;
+            }
+
+            var len = tasks.Length;
+            for (var i = 0; i < len; i++)
+            {
+                if (tasks[i] == taskType)
+                {
+                    return true;
+                }
+            }
+        }
+        catch
+        {
+            return false;
+        }
+
+        return false;
+    }
+
+    private static IEnumerable<global::Console> EnumerateGameplayConsoles()
+    {
+        var seen = new HashSet<int>();
+        foreach (var console in Object.FindObjectsOfType<global::Console>())
+        {
+            if (console == null || !console || console.gameObject == null)
+            {
+                continue;
+            }
+
+            var id = console.gameObject.GetInstanceID();
+            if (!seen.Add(id))
+            {
+                continue;
+            }
+
+            yield return console;
+        }
+
+        var allObjects = Resources.FindObjectsOfTypeAll(Il2CppType.From(typeof(global::Console)));
+        if (allObjects == null)
+        {
+            yield break;
+        }
+
+        foreach (var obj in allObjects)
+        {
+            if (obj == null)
+            {
+                continue;
+            }
+
+            var console = obj.TryCast<global::Console>();
+            if (console == null || console.gameObject == null || !console.gameObject.scene.isLoaded)
+            {
+                continue;
+            }
+
+            var id = console.gameObject.GetInstanceID();
+            if (!seen.Add(id))
+            {
+                continue;
+            }
+
+            yield return console;
+        }
     }
 
     private static bool TryGetCameraConsole(out SystemConsole? console)
@@ -775,5 +1014,6 @@ public static class TerroristUtilityConsoles
         _cachedCameraConsole = null;
         _cachedDoorLogConsole = null;
         _cachedConsoleFrame = -1;
+        InvalidateKeypadPrefabCache();
     }
 }
