@@ -44,6 +44,5 @@ public sealed class BearTrapModifier : TouGameModifier, IColoredModifier, IWikiD
 
     public override void OnActivate()
     {
-        DivaniPlugin.Instance.Log.LogInfo("Bear Trap modifier activated!");
     }
 }

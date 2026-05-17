@@ -63,7 +63,6 @@ public class ShuffleButton : TownOfUsButton
         var modifier = player.GetModifier<ShuffleModifier>();
         if (modifier == null || modifier.UsesRemaining <= 0) return;
         
-        Log.LogInfo("Shuffle activated!");
         modifier.UsesRemaining--;
         
         var targets = PlayerControl.AllPlayerControls.ToArray()
@@ -72,7 +71,6 @@ public class ShuffleButton : TownOfUsButton
         
         if (targets.Count < 2)
         {
-            Log.LogInfo("Not enough players to shuffle");
             return;
         }
         
@@ -98,7 +96,6 @@ public class ShuffleButton : TownOfUsButton
                     originalPositions.Add((Vector2)body.transform.position);
                 }
             }
-            Log.LogInfo($"Including {deadBodies.Count} dead bodies in shuffle");
         }
         
         var shuffledPositions = new List<Vector2>(originalPositions);
@@ -146,14 +143,12 @@ public class ShuffleButton : TownOfUsButton
         
         string data = string.Join(";", parts);
         
-        Log.LogInfo($"Sending shuffle data: {data}");
         RpcShuffle(player, data);
     }
 
     [MethodRpc((uint)DivaniRpcCalls.DoShuffle)]
     public static void RpcShuffle(PlayerControl sender, string data)
     {
-        DivaniPlugin.Instance.Log.LogInfo($"RpcShuffle received: {data}");
         
         var entries = data.Split(';');
         var playerCoordinates = new Dictionary<byte, Vector2>();
@@ -185,7 +180,6 @@ public class ShuffleButton : TownOfUsButton
             }
         }
         
-        DivaniPlugin.Instance.Log.LogInfo($"Parsed {playerCoordinates.Count} player positions and {bodyCoordinates.Count} body positions");
         
         // Only close minigames/vents for living players who are being shuffled
         var localPlayer = PlayerControl.LocalPlayer;
@@ -234,7 +228,6 @@ public class ShuffleButton : TownOfUsButton
             if (body != null)
             {
                 body.transform.position = new Vector3(kvp.Value.x, kvp.Value.y, body.transform.position.z);
-                DivaniPlugin.Instance.Log.LogInfo($"Moved body {kvp.Key} to {kvp.Value}");
             }
         }
         
@@ -269,7 +262,6 @@ public class ShuffleButton : TownOfUsButton
             new Vector3(0f, 1f, -20f), 
             spr: DivaniAssets.ShuffleAbilityButton.LoadAsset());
         
-        DivaniPlugin.Instance.Log.LogInfo($"Shuffled {playerCoordinates.Count} players and {bodyCoordinates.Count} bodies!");
     }
     
     private static PlayerControl? PlayerById(byte id)

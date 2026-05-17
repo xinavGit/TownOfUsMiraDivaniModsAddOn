@@ -98,7 +98,6 @@ public static class PlagueDoctorPatch
 
         if (infectKiller)
         {
-            DivaniPlugin.Instance.Log.LogInfo($"PlagueDoctorPatch: Infecting killer {killer.PlayerId} on PD death");
             PlagueDoctorRole.RpcSetInfected(localPlayer, killer.PlayerId);
         }
     }

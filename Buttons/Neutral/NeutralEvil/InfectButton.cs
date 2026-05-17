@@ -92,17 +92,14 @@ public class InfectButton : TownOfUsTargetButton<PlayerControl>
 
         if (PlagueDoctorRole.NumInfectionsRemaining <= 0)
         {
-            DivaniPlugin.Instance.Log.LogInfo("PlagueDoctor: No infections remaining!");
             return;
         }
 
         if (PlagueDoctorRole.InfectedPlayers.ContainsKey(Target.PlayerId))
         {
-            DivaniPlugin.Instance.Log.LogInfo($"PlagueDoctor: Target {Target.Data?.PlayerName} is already infected!");
             return;
         }
 
-        DivaniPlugin.Instance.Log.LogInfo($"PlagueDoctor: Infecting {Target.Data?.PlayerName}");
         PlagueDoctorRole.RpcSetInfected(player, Target.PlayerId);
         PlagueDoctorRole.NumInfectionsRemaining--;
 

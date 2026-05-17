@@ -40,6 +40,5 @@ public class BlindspotModifier : TouGameModifier, IColoredModifier, IWikiDiscove
     
     public override void OnActivate()
     {
-        DivaniPlugin.Instance.Log.LogInfo("Blindspot modifier activated!");
     }
 }

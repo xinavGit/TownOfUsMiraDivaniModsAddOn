@@ -99,8 +99,6 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
         PlagueDoctorPlayer = targetPlayer;
         if (previous == null || previous.PlayerId != targetPlayer.PlayerId)
         {
-            DivaniPlugin.Instance.Log.LogInfo(
-                $"PlagueDoctor: Player {targetPlayer.PlayerId} is now Plague Doctor (AmOwner: {targetPlayer.AmOwner})");
         }
 
         if (Player.AmOwner)
@@ -150,7 +148,6 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
         }
 
         PlagueDoctorPatch.ResetInfectionSpreadThrottle();
-        DivaniPlugin.Instance.Log.LogInfo("PlagueDoctor: Static data cleared");
     }
 
     public override void SpawnTaskHeader(PlayerControl playerControl)
@@ -371,7 +368,6 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
             StatusText = null;
         }
 
-        DivaniPlugin.Instance.Log.LogInfo("PlagueDoctor: Meeting ended (ejection starting)");
     }
 
     private static void TryTurnIntoAmnesiacWhenCannotWin()
@@ -425,7 +421,6 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
         ImmunityTimer = immunityTime;
         MeetingFlag = false;
 
-        DivaniPlugin.Instance.Log.LogInfo($"PlagueDoctor: Round started, ImmunityTimer={immunityTime}");
     }
 
     /// <summary>
@@ -461,18 +456,15 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
     public static void OnPlagueDoctorDeath(PlayerControl? killer)
     {
         var localPlayer = PlayerControl.LocalPlayer;
-        DivaniPlugin.Instance.Log.LogInfo($"PlagueDoctor.OnDeath - LocalPlayer: {localPlayer?.PlayerId}, PDPlayer: {PlagueDoctorPlayer?.PlayerId}, Killer: {killer?.PlayerId}");
         
         if (localPlayer == null) return;
         if (killer == null) return;
         if (PlagueDoctorPlayer == null || localPlayer != PlagueDoctorPlayer) return;
 
         var infectKiller = OptionGroupSingleton<PlagueDoctorOptions>.Instance.InfectKiller;
-        DivaniPlugin.Instance.Log.LogInfo($"PlagueDoctor.OnDeath - InfectKiller option: {infectKiller}");
         
         if (infectKiller)
         {
-            DivaniPlugin.Instance.Log.LogInfo($"PlagueDoctor.OnDeath - Calling RpcSetInfected for killer {killer.PlayerId}");
             RpcSetInfected(localPlayer, killer.PlayerId);
         }
     }
@@ -495,7 +487,6 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
         if (!InfectedPlayers.ContainsKey(targetId))
         {
             InfectedPlayers[targetId] = true;
-            DivaniPlugin.Instance.Log.LogInfo($"PlagueDoctor: Player {targetId} infected");
         }
 
         TryShowInfectionWarning();
@@ -521,8 +512,6 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
             return;
         }
 
-        DivaniPlugin.Instance.Log.LogInfo(
-            $"PlagueDoctor: Player {plagueDoctorId} cannot win; turning into Amnesiac");
 
         ClearAndReload();
         plagueDoctor.ChangeRole(RoleId.Get<AmnesiacRole>());
