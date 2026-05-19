@@ -21,7 +21,7 @@ namespace DivaniMods.Roles.Neutral.NeutralKilling;
 public sealed class FragRole(IntPtr cppPtr)
     : NeutralRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IDoomable, ICrewVariant
 {
-    public static readonly Color FragColor = new Color32(255, 110, 60, 255);
+    public static readonly Color FragColor = new Color32(232, 168, 124, 255);
 
     public string RoleName => "Frag";
     public string RoleDescription => "Start a hot-potato time bomb!";
