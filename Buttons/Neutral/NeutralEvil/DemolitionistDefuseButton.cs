@@ -15,7 +15,7 @@ namespace DivaniMods.Buttons.Neutral.NeutralEvil;
 /// <summary>
 /// Defuse at the planted utility while Demolitionist sabotage is active (demolitionist or crew).
 /// </summary>
-public class DemolitionistDefuseButton : CustomActionButton
+public class DemolitionistDefuseButton : TownOfUsButton
 {
     public override string Name => "Defuse";
     public override float Cooldown => 1f;
@@ -23,6 +23,9 @@ public class DemolitionistDefuseButton : CustomActionButton
         ? OptionGroupSingleton<DemolitionistOptions>.Instance.DefuseTime.Value
         : 0f;
     public override int MaxUses => 0;
+    // TownOfUsButton defaults ZeroIsInfinite to false; without this MaxUses=0 reads as "0 uses left"
+    // and CanUse is always false (button permanently greyed). True = unlimited uses.
+    public override bool ZeroIsInfinite { get; set; } = true;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.DemolitionistSabotageButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomLeft;
     public override Color TextOutlineColor => DemolitionistRole.DemolitionistColor;
@@ -91,6 +94,7 @@ public class DemolitionistDefuseButton : CustomActionButton
 
         EffectActive = true;
         Timer = defuseTime;
+        Button?.OverrideText("DEFUSING");
 
         MiraAPI.Utilities.Helpers.CreateAndShowNotification(
             $"<b><color=#{colorHex}>Defusing...</color></b>",
@@ -161,12 +165,14 @@ public class DemolitionistDefuseButton : CustomActionButton
         EffectActive = false;
         Timer = Cooldown;
         _isDefusing = false;
+        Button?.OverrideText(Name.ToUpperInvariant());
     }
 
     private IEnumerator DefuseNumpadCoroutine(PlayerControl player)
     {
+        // No EffectActive during the keypad: TownOfUsButton would draw the clamped Timer (-1) as text.
+        // _isDefusing + the numpad InProgress check keep the button disabled.
         _isDefusing = true;
-        EffectActive = true;
 
         if (!DemolitionistNumpad.Controller.OpenDefuse(player))
         {
@@ -192,6 +198,13 @@ public class DemolitionistDefuseButton : CustomActionButton
         _isDefusing = false;
     }
 
+    // TownOfUsButton.FixedUpdate force-activates the button every frame (based on Use/Pet button),
+    // which would override UpdateDefuseButton's proximity hiding and leave the defuse button
+    // occupying a HUD slot when it should be gone. Empty override = visibility is solely the patch's.
+    protected override void FixedUpdate(PlayerControl playerControl)
+    {
+    }
+
     private void AbortDefuse()
     {
         if (DemolitionistNumpad.Controller.InProgress)
@@ -202,5 +215,6 @@ public class DemolitionistDefuseButton : CustomActionButton
         EffectActive = false;
         Timer = Cooldown;
         _isDefusing = false;
+        Button?.OverrideText(Name.ToUpperInvariant());
     }
 }

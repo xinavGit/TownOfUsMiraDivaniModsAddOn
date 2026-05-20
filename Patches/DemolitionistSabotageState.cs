@@ -68,8 +68,6 @@ public static class DemolitionistSabotageState
 
     public static bool LocalDefuseInProgress { get; set; }
 
-
-
     public static readonly Color SecondaryColor = new Color32(0xF9, 0xA1, 0x23, 255);
 
     private static readonly Color DefuseFlashColor = Palette.AcceptedGreen;

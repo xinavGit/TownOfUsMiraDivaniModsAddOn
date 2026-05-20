@@ -18,14 +18,23 @@ namespace DivaniMods.Buttons.Neutral.NeutralEvil;
 /// console (admin / cameras / vitals / door log). Hold duration fills the button
 /// ring like Sentinel beacon placement.
 /// </summary>
-public class DemolitionistPlantButton : CustomActionButton
+public class DemolitionistPlantButton : TownOfUsButton
 {
     public override string Name => "Plant";
     public override float Cooldown => OptionGroupSingleton<DemolitionistOptions>.Instance.PlantCooldown;
-    public override float EffectDuration => OptionGroupSingleton<DemolitionistOptions>.Instance.IsTimedSabotageStyle
-        ? OptionGroupSingleton<DemolitionistOptions>.Instance.PlantTime.Value
-        : 0f;
+    /// <summary>
+    /// While arming (after a successful plant) this is the Plant→Sabotage delay so the button's
+    /// effect ring counts that down and shakes. Otherwise it's the timed-style plant hold time.
+    /// </summary>
+    public override float EffectDuration => _arming
+        ? OptionGroupSingleton<DemolitionistOptions>.Instance.PlantToSabotageDelay
+        : OptionGroupSingleton<DemolitionistOptions>.Instance.IsTimedSabotageStyle
+            ? OptionGroupSingleton<DemolitionistOptions>.Instance.PlantTime.Value
+            : 0f;
     public override int MaxUses => 0;
+    // TownOfUsButton defaults ZeroIsInfinite to false; without this MaxUses=0 means "0 uses left"
+    // and CanUse is always false (button permanently greyed). True = unlimited uses.
+    public override bool ZeroIsInfinite { get; set; } = true;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.DemolitionistSabotageButton;
     /// <summary>BottomRight conflicts with impostor vent when <see cref="DemolitionistOptions.CanVent"/> is on — use left row for plant in that case.</summary>
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight; 
@@ -38,6 +47,7 @@ public class DemolitionistPlantButton : CustomActionButton
     private int _capturedConsoleKey;
     private DemolitionistUtilityKind _capturedKind;
     private bool _isPlanting;
+    private bool _arming;
 
     public override bool Enabled(RoleBehaviour? role)
     {
@@ -84,7 +94,9 @@ public class DemolitionistPlantButton : CustomActionButton
         }
 
         plant._isPlanting = false;
+        plant._arming = false;
         plant.EffectActive = false;
+        plant.Button?.OverrideText(plant.Name.ToUpperInvariant());
         if (startCooldown)
         {
             plant.Timer = plant.Cooldown;
@@ -139,6 +151,7 @@ public class DemolitionistPlantButton : CustomActionButton
 
         EffectActive = true;
         Timer = plantTime;
+        Button?.OverrideText("PLANTING");
 
         MiraAPI.Utilities.Helpers.CreateAndShowNotification(
             $"<b><color=#{colorHex}>Planting sabotage...</color></b>",
@@ -190,25 +203,15 @@ public class DemolitionistPlantButton : CustomActionButton
             yield break;
         }
 
-        var duration = OptionGroupSingleton<DemolitionistOptions>.Instance.SabotageDuration;
-        DemolitionistSabotageState.RpcPlantSabotage(
-            player,
-            player.PlayerId,
-            _capturedPosition.x,
-            _capturedPosition.y,
-            duration,
-            _capturedConsoleKey,
-            (byte)_capturedKind);
-
-        EffectActive = false;
-        Timer = 0f;
-        _isPlanting = false;
+        StartArming();
     }
 
     private IEnumerator PlantNumpadCoroutine(PlayerControl player)
     {
+        // Do NOT set EffectActive during the keypad: TownOfUsButton draws Timer as the button text
+        // whenever EffectActive, and Timer clamps to -1, so an ugly "-1" shows. _isPlanting + the
+        // numpad InProgress check already keep the button disabled.
         _isPlanting = true;
-        EffectActive = true;
 
         if (!DemolitionistNumpad.Controller.OpenPlant(player, _capturedPosition, _capturedConsoleKey, _capturedKind))
         {
@@ -230,9 +233,91 @@ public class DemolitionistPlantButton : CustomActionButton
             yield return null;
         }
 
-        EffectActive = false;
-        Timer = 0f;
         _isPlanting = false;
+
+        // Numpad closed: if the code was correct, begin arming; otherwise reset the button.
+        if (DemolitionistNumpad.Controller.ConsumePlantSuccess())
+        {
+            StartArming();
+        }
+        else
+        {
+            EffectActive = false;
+            Timer = 0f;
+        }
+    }
+
+    /// <summary>
+    /// Begin the arming effect after a successful plant. The button shakes and counts down the
+    /// Plant→Sabotage delay (MiraAPI effect ring), then <see cref="OnEffectEnd"/> starts the
+    /// sabotage. Mirrors the Pickpocket button's post-click effect.
+    /// </summary>
+    private void StartArming()
+    {
+        _isPlanting = false;
+        _arming = true;
+
+        var delay = OptionGroupSingleton<DemolitionistOptions>.Instance.PlantToSabotageDelay;
+        var colorHex = ColorUtility.ToHtmlStringRGB(DemolitionistRole.DemolitionistColor);
+        MiraAPI.Utilities.Helpers.CreateAndShowNotification(
+            $"<b><color=#{colorHex}>Bomb arming in {delay:0}s...</color></b>",
+            Color.white,
+            new Vector3(0f, 1f, -20f),
+            spr: DivaniAssets.DemolitionistSabotageButton.LoadAsset());
+
+        Button?.OverrideText("ARMING");
+
+        if (delay > 0f)
+        {
+            // Same as Pickpocket: EffectActive + Timer drives the native ability-button effect
+            // (fill ring + countdown text). No custom position shake — pickpocket has none either.
+            EffectActive = true;
+            Timer = delay;
+        }
+        else
+        {
+            FireSabotage();
+        }
+    }
+
+    /// <summary>MiraAPI calls this when the arming effect timer expires.</summary>
+    public override void OnEffectEnd()
+    {
+        if (!_arming)
+        {
+            return;
+        }
+
+        FireSabotage();
+    }
+
+    private void FireSabotage()
+    {
+        _arming = false;
+        EffectActive = false;
+        Button?.OverrideText(Name.ToUpperInvariant());
+
+        var player = PlayerControl.LocalPlayer;
+        if (player == null || player.Data == null || player.Data.IsDead)
+        {
+            SyncAfterSabotageEnded(startCooldown: false);
+            return;
+        }
+
+        var duration = OptionGroupSingleton<DemolitionistOptions>.Instance.SabotageDuration;
+        DemolitionistSabotageState.RpcPlantSabotage(
+            player,
+            player.PlayerId,
+            _capturedPosition.x,
+            _capturedPosition.y,
+            duration,
+            _capturedConsoleKey,
+            (byte)_capturedKind);
+
+        // Park the timer so no cooldown number ticks during the sabotage — the button just sits
+        // disabled (CanUse is false while IsActive), same look as planting. The real cooldown is
+        // started by SyncAfterSabotageEnded when the bomb is defused/explodes.
+        Timer = 0f;
     }
 
     private void AbortPlant()
@@ -245,5 +330,7 @@ public class DemolitionistPlantButton : CustomActionButton
         EffectActive = false;
         Timer = 0f;
         _isPlanting = false;
+        _arming = false;
+        Button?.OverrideText(Name.ToUpperInvariant());
     }
 }

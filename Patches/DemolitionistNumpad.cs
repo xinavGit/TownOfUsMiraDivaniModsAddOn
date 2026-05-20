@@ -43,8 +43,22 @@ internal static class DemolitionistNumpad
         private static DemolitionistUtilityKind _plantKind;
         private static bool _numpadSessionCancelled;
         private static int _openNumpadSessionId;
+        private static bool _plantSucceeded;
         public static bool InProgress => _task != null;
         public static bool DefuseInProgress => _task != null && _action == DemolitionistNumpadAction.Defuse;
+
+        /// <summary>Read-and-clear the "numpad plant just succeeded" flag so the plant button can
+        /// begin its arming effect after the minigame closes. The button owns the arming countdown.</summary>
+        public static bool ConsumePlantSuccess()
+        {
+            if (!_plantSucceeded)
+            {
+                return false;
+            }
+
+            _plantSucceeded = false;
+            return true;
+        }
 
         internal static int ActiveOpenNumpadSessionId => _openNumpadSessionId;
 
@@ -52,6 +66,7 @@ internal static class DemolitionistNumpad
         {
             CleanupTaskAndMinigame();
             _numpadSessionCancelled = false;
+            _plantSucceeded = false;
             _action = DemolitionistNumpadAction.None;
             _plantPosition = Vector2.zero;
             _plantConsoleKey = 0;
@@ -108,6 +123,7 @@ internal static class DemolitionistNumpad
             }
 
             CleanupTaskAndMinigame();
+            _plantSucceeded = false;
             _plantPosition = position;
             _plantConsoleKey = consoleKey;
             _plantKind = kind;
@@ -137,21 +153,12 @@ internal static class DemolitionistNumpad
             }
 
             var action = _action;
-            var plantPos = _plantPosition;
-            var plantKey = _plantConsoleKey;
-            var plantKind = _plantKind;
 
             if (action == DemolitionistNumpadAction.Plant)
             {
-                var duration = OptionGroupSingleton<DemolitionistOptions>.Instance.SabotageDuration;
-                DemolitionistSabotageState.RpcPlantSabotage(
-                    local,
-                    local.PlayerId,
-                    plantPos.x,
-                    plantPos.y,
-                    duration,
-                    plantKey,
-                    (byte)plantKind);
+                // Defer the actual sabotage to the plant button's arming effect (countdown + shake).
+                // The button already holds the captured plant position/kind from OnClick.
+                _plantSucceeded = true;
             }
             else if (action == DemolitionistNumpadAction.Defuse)
             {

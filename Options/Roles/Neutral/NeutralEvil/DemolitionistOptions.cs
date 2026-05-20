@@ -22,6 +22,10 @@ public class DemolitionistOptions : AbstractOptionGroup<DemolitionistRole>, IWik
     [ModdedNumberOption("Plant Cooldown", 10f, 60f, 5f, MiraNumberSuffixes.Seconds)]
     public float PlantCooldown { get; set; } = 30f;
 
+    /// <summary>Delay between a successful Plant and the sabotage actually starting.</summary>
+    [ModdedNumberOption("Plant To Sabotage Delay", 1f, 10f, 1f, MiraNumberSuffixes.Seconds)]
+    public float PlantToSabotageDelay { get; set; } = 3f;
+
     /// <summary>Sabotage duration on The Skeld / Dleks.</summary>
     public ModdedNumberOption SabotageDurationSkeld { get; } =
         new("Sabotage Duration (Skeld)", 30f, 10f, 120f, 5f, MiraNumberSuffixes.Seconds)
@@ -62,7 +66,7 @@ public class DemolitionistOptions : AbstractOptionGroup<DemolitionistRole>, IWik
 
     public ModdedEnumOption SabotageStyle { get; } = new(
         "Sabotage Style",
-        (int)DemolitionistSabotageStyle.Timed,
+        (int)DemolitionistSabotageStyle.Numpad,
         typeof(DemolitionistSabotageStyle));
 
     /// <summary>Time the Demolitionist must hold to finish the Plant action.</summary>

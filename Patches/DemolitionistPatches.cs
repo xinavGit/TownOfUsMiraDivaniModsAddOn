@@ -145,33 +145,20 @@ public static class DemolitionistPatches
                 return;
             }
 
+            // Always visible for the live Demolitionist (hidden only when dead / in a meeting).
+            // Usability (near a console, not arming, no active sabotage) is handled by CanUse, so
+            // the button just greys out instead of disappearing — matches the Pickpocket button.
+            // Do NOT call SyncAfterSabotageEnded here: it runs every frame and would wipe the
+            // arming effect (EffectActive/_arming) before the bomb can fire.
             var player = PlayerControl.LocalPlayer;
-            if (player == null || player.Data == null || player.Data.IsDead || !IsDemolitionist(player))
-            {
-                plant.Button.gameObject.SetActive(false);
-                return;
-            }
+            var show = player != null
+                && player.Data != null
+                && !player.Data.IsDead
+                && IsDemolitionist(player)
+                && !MeetingHud.Instance
+                && !ExileController.Instance;
 
-            if (MeetingHud.Instance || ExileController.Instance)
-            {
-                plant.Button.gameObject.SetActive(false);
-                return;
-            }
-
-            if (DemolitionistSabotageState.IsActive || DemolitionistSabotageState.IsCriticalVanillaSabotageActive())
-            {
-                plant.Button.gameObject.SetActive(false);
-                return;
-            }
-
-            var nearUtility = DemolitionistUtilityConsoles.TryGetClosest(player, out _, out _, forDemolitionistPlant: true);
-            plant.Button.gameObject.SetActive(nearUtility);
-            if (!nearUtility)
-            {
-                return;
-            }
-
-            DemolitionistPlantButton.SyncAfterSabotageEnded(startCooldown: false);
+            plant.Button.gameObject.SetActive(show);
         }
 
         private static void UpdateDefuseButton()
