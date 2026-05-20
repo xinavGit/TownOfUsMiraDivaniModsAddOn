@@ -10,7 +10,7 @@ public class SilencerOptions : AbstractOptionGroup<SilencerRole>
     public override string GroupName => "Silencer";
 
     [ModdedNumberOption("Seconds Cut Per Kill", 10, 40, 5, MiraNumberSuffixes.Seconds)]
-    public float SecondsPerKill { get; set; } = 15;
+    public float SecondsPerKill { get; set; } = 25;
 
     [ModdedNumberOption("Minimum Voting Time", 5, 25, 5, MiraNumberSuffixes.Seconds)]
     public float MinimumVotingTime { get; set; } = 10;

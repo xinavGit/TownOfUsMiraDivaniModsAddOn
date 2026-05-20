@@ -16,10 +16,10 @@ public class PlagueDoctorOptions : AbstractOptionGroup<PlagueDoctorRole>
     public float MaxInfections { get; set; } = 2;
 
     [ModdedNumberOption("Infection Distance", 0.4f, 2f, 0.2f, MiraNumberSuffixes.Multiplier)]
-    public float InfectDistance { get; set; } = 0.6f;
+    public float InfectDistance { get; set; } = 1f;
 
     [ModdedNumberOption("Infection Duration", 1, 30, 1, MiraNumberSuffixes.Seconds)]
-    public float InfectDuration { get; set; } = 5;
+    public float InfectDuration { get; set; } = 10;
 
     [ModdedNumberOption("Post-Meeting Immunity", 0, 30, 2.5f, MiraNumberSuffixes.Seconds)]
     public float ImmunityTime { get; set; } = 10;

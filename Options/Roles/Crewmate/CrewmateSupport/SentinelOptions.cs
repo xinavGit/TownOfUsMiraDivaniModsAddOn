@@ -19,5 +19,5 @@ public class SentinelOptions : AbstractOptionGroup<SentinelRole>
     public float PlaceBeaconDuration { get; set; } = 3f;
 
     [ModdedToggleOption("Show Room Activity In Chat")]
-    public bool ShowChatReport { get; set; } = false;
+    public bool ShowChatReport { get; set; } = true;
 }
