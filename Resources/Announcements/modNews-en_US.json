@@ -5,10 +5,10 @@
       "Number": "10000",
       "ShortTitle": "Divani Mods v1.0.0",
       "Title": "Initial public release",
-      "SubTitle": "First public build: roles, modifiers, and audio for Town Of Us – Mira",
+      "SubTitle": "First public build: roles, modifiers, and audio for Town Of Us - Mira",
       "Text": [
         "\r<size=110%><b>Divani Mods v1.0.0</b></size>",
-        "\n\nThis is the first public release of Divani Mods, a content add-on for <b>Town Of Us – Mira</b>.",
+        "\n\nThis is the first public release of Divani Mods, a content add-on for <b>Town Of Us - Mira</b>.",
         "\n\nIt adds several new roles and modifiers on top of the base mod, plus custom intro sounds and ability SFX where it makes sense.",
         "\n\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.0.0>Download v1.0.0</link>",
         "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki>Wiki & role guide</link>",
@@ -30,7 +30,7 @@
         "\n\nRole intros for Thief, Portalmaker, Deadlock, and Plague Doctor.",
         "\nInfect SFX for Plague Doctor, glass-break for Fragile, and a place-portal sound for Portalmaker.",
         "\n\n\r<size=108%><b>Compatibility</b></size>",
-        "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us – Mira."
+        "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us - Mira."
       ]
     },
     {
@@ -51,7 +51,7 @@
         "\n\n<b>Dutch Meme Soundpack</b> (optional lobby option)",
         "\nReplaces normal door open/close sounds with the pack’s clips when the toggle is enabled.",
         "\n\n\r<size=108%><b>Compatibility</b></size>",
-        "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us – Mira."
+        "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us - Mira."
       ]
     },
     {
@@ -125,7 +125,7 @@
         "\n\n- Sentinel “uses left” is not always correct (visual bug).",
         "\n- Previous Plague Doctor is not removed from the winners screen when <b>Amnesiac</b> inherits PD (Town Of Us end-game display).",
         "\n\n\r<size=108%><b>Compatibility</b></size>",
-        "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us – Mira."
+        "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us - Mira."
       ]
     },
     {
@@ -136,7 +136,7 @@
       "SubTitle": "Alliance stealing, heartbreak option, first-death-shield toggle, 3s portal/beacon place",
       "Text": [
         "\r<size=110%><b>Divani Mods v1.1.2</b></size>",
-        "\n\n<b>Thief</b> can steal <b>Alliance</b> modifiers including <b>Lover</b>, re&ndash;pairing the Thief with the other partner. Optional <b>Stealing Lover Breaks Their Heart</b> kills the player who lost Lover after the swap.",
+        "\n\n<b>Thief</b> can steal <b>Alliance</b> modifiers including <b>Lover</b>, re-pairing the Thief with the other partner. Optional <b>Stealing Lover Breaks Their Heart</b> kills the player who lost Lover after the swap.",
         "\n\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.1.2>Download v1.1.2</link>",
         "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases>All releases</link>",
         "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki>Wiki</link>",
@@ -144,14 +144,14 @@
         "\n\n<b>Thief:</b> Steal <b>Lover</b> (and other Alliance modifiers); optional heartbreak for the old lover.",
         "\n\n<b>Ruthless:</b> <b>Bypass First Death Shield</b> toggle (default on).",
         "\n\n\r<size=108%><b>Improvements</b></size>",
-        "\n\n- <b>Portalmaker</b> & <b>Sentinel:</b> 3&ndash;second placement delay; position locked on button press (like Sentry).",
+        "\n\n- <b>Portalmaker</b> & <b>Sentinel:</b> 3-second placement delay; position locked on button press (like Sentry).",
         "\n\n\r<size=108%><b>Bug fixes</b></size>",
         "\n- <b>Portalmaker:</b> Use Portal and placement fixes.",
         "\n\n\r<size=108%><b>Known issues</b></size>",
         "\n\n- Sentinel “uses left” is not always correct (visual bug).",
         "\n- Previous Plague Doctor is not removed from the winners screen when <b>Amnesiac</b> inherits PD (Town Of Us end-game display).",
         "\n\n\r<size=108%><b>Compatibility</b></size>",
-        "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us – Mira."
+        "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us - Mira."
       ]
     },
     {
@@ -168,7 +168,7 @@
         "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki>Wiki</link>",
         "\n\n\r<size=108%><b>Added</b></size>",
         "\n\n<b>New role: Recruiter</b> (Impostor Support)",
-        "\nDuring the <b>first meeting</b> only, recruit one non&ndash;Impostor: tap the toggle on a nameplate to mark them; when the meeting ends, they become a <b>vanilla Impostor</b> (optional <b>Impostor Assassin</b> behaviour in options).",
+        "\nDuring the <b>first meeting</b> only, recruit one non-Impostor: tap the toggle on a nameplate to mark them; when the meeting ends, they become a <b>vanilla Impostor</b> (optional <b>Impostor Assassin</b> behaviour in options).",
         "\n\n<b>New modifier: Bloody</b> (Crewmate)",
         "\nIf someone kills a Bloody crewmate, the killer leaves a <b>trail of red footprints</b> for a configurable time, with spacing by distance or time and other tuning in options.",
         "\n\n\r<size=108%><b>Improvements</b></size>",
@@ -179,7 +179,7 @@
         "\n\n- Sentinel “uses left” is not always correct (visual bug).",
         "\n- Previous Plague Doctor is not removed from the winners screen when <b>Amnesiac</b> inherits PD (Town Of Us end-game display).",
         "\n\n\r<size=108%><b>Compatibility</b></size>",
-        "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us – Mira."
+        "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us - Mira."
       ]
     },
     {
@@ -235,6 +235,35 @@
         "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki>Wiki</link>",
         "\n\n\r<size=108%><b>Bug fixes</b></size>",
         "\n\n- <b>Thief</b>: Alliance modifiers (e.g. Lover, Crewpostor, Egotist) are no longer in the random modifier pool when Thief steals from a target with nothing to steal."
+      ]
+    },
+    {
+      "Date": "2026-05-21T18:00:00Z",
+      "Number": "10008",
+      "ShortTitle": "Divani Mods v1.2.2",
+      "Title": "Demolitionist, Cleric fixes and a cleaner Plague Doctor",
+      "SubTitle": "New role, Cleric now cleanses Bloody & Plague Doctor infections, plus tuning and a fresh Bloody icon",
+      "Text": [
+        "\r<size=110%><b>Divani Mods v1.2.2</b></size>",
+        "\n\nThis update adds the Demolitionist, lets Cleric cleanse two Divani effects, and reworks how Plague Doctor infections are tracked.",
+        "\n\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.2.2>Download v1.2.2</link>",
+        "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases>All releases</link>",
+        "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki>Wiki</link>",
+        "\n\n\r<size=108%><b>Added</b></size>",
+        "\n\n<b>New role: Demolitionist</b> (Neutral Evil)",
+        "\nPlant a sabotage at admin, security, vitals, or door log to win. If the crew defuses it in time, the plant fails.",
+        "\n\n<b>Cleric counters</b>",
+        "\nCleric can now cleanse two Divani effects: the <b>Bloody</b> killer footprint trail and <b>Plague Doctor</b> infection. Cleansing an infected player removes the infection and resets them to 0% (they can be infected again).",
+        "\n\n<b>Configurable effect durations</b>",
+        "\nThief, Sentinel, and Portalmaker now have configurable channel/effect durations in options.",
+        "\n\n\r<size=108%><b>Changes</b></size>",
+        "\n\n- <b>Plague Doctor</b> reworked: infection now runs through a hidden modifier instead of bespoke tracking. Much cleaner, and it is what lets Cleric cure it.",
+        "\n- <b>Frag</b> color adjusted to match its icon.",
+        "\n\n\r<size=108%><b>Improvements</b></size>",
+        "\n\n- Stability and performance improvements.",
+        "\n- Updated <b>Bloody</b> icon (art by @jaydoeswitchcraft).",
+        "\n\n\r<size=108%><b>Compatibility</b></size>",
+        "\n\nAmong Us (Steam), BepInEx IL2CPP 6.x, Reactor, MiraAPI, and Town Of Us - Mira."
       ]
     }
   ]

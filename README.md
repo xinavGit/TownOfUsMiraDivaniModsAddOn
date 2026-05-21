@@ -17,17 +17,18 @@ new roles and modifiers on top of [Town Of Us &ndash; Mira](https://github.com/A
   <img src="./Resources/Headers/CrewSupport.png" alt="Crewmate Support"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#portalmaker"><img width="10%" src="./Resources/Icons/PortalMaker.png" alt="Portalmaker"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#sentinel"><img width="10%" src="./Resources/Icons/Sentinel.png" alt="Sentinel"/></a>
+  <img src="./Resources/Headers/ImpKilling.png" alt="Impostor Killing"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#silencer"><img width="10%" src="./Resources/Icons/Silencer.png" alt="Silencer"/></a>
   <img src="./Resources/Headers/ImpSupport.png" alt="Impostor Support"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#deadlock"><img width="10%" src="./Resources/Icons/Deadlock.png" alt="Deadlock"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#recruiter"><img width="10%" src="./Resources/Icons/Recruiter.png" alt="Recruiter"/></a>
-  <img src="./Resources/Headers/ImpKilling.png" alt="Impostor Killing"/>
-  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#silencer"><img width="10%" src="./Resources/Icons/Silencer.png" alt="Silencer"/></a>
-  <img src="./Resources/Headers/NeutKilling.png" alt="Neutral Killing"/>
-  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#frag"><img width="10%" src="./Resources/Icons/Frag.png" alt="Frag"/></a>
   <img src="./Resources/Headers/NeutEvil.png" alt="Neutral Evil"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#innocent"><img width="10%" src="./Resources/Icons/Innocent.png" alt="Innocent"/></a>
-    <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#plague-doctor"><img width="10%" src="./Resources/Icons/PlagueDoctor.png" alt="Plague Doctor"/></a>
-  <img src="./Resources/Headers/NeutOutlier.png" alt="Neutral Outlier"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#plague-doctor"><img width="10%" src="./Resources/Icons/PlagueDoctor.png" alt="Plague Doctor"/></a>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#demolitionist"><img width="10%" src="./Resources/Icons/Demolitionist.png" alt="Demolitionist"/></a>
+  <img src="./Resources/Headers/NeutKilling.png" alt="Neutral Killing"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#frag"><img width="10%" src="./Resources/Icons/Frag.png" alt="Frag"/></a>
+    <img src="./Resources/Headers/NeutOutlier.png" alt="Neutral Outlier"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#opportunist"><img width="10%" src="./Resources/Icons/Opportunist.png" alt="Opportunist"/></a>
   <img src="./Resources/Headers/CrewMods.png" alt="Crewmate modifiers"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#blindspot"><img width="10%" src="./Resources/Icons/Blindspot.png" alt="Blindspot"/></a>
@@ -84,6 +85,7 @@ Full role and modifier write-ups live on the **[project wiki](https://github.com
 ## Asset credits
 
 - Thank you to [@AtonyGit](https://github.com/AtonyGit) for making most role icons based of [Town Of Us: Mira](https://github.com/AU-Avengers/TOU-Mira).
+- Bloody and Demolitionist icons by @jaydoeswitchcraft (Discord).
 - Glass&ndash;break SFX from [Freesound](https://freesound.org/) (community).
 
 # Source inspiration
