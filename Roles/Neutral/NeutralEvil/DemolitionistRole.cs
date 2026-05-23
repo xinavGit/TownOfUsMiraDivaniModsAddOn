@@ -29,9 +29,9 @@ public sealed class DemolitionistRole(IntPtr cppPtr)
     public static readonly Color DemolitionistColor = new Color32(0x28, 0x36, 0x7D, 255);
 
     public string RoleName => "Demolitionist";
-    public string RoleDescription => "Plant sabotages to win!";
+    public string RoleDescription => "Plant Bombs at consoles to win!";
     public string RoleLongDescription =>
-        "Plant at admin, security, vitals, or door log.\n" +
+        "Plant Bombs at consoles to win!\n" +
         "If the crew defuses in time, it fails.";
     public Color RoleColor => DemolitionistColor;
     public ModdedRoleTeams Team => ModdedRoleTeams.Custom;
