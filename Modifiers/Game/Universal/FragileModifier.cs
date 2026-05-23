@@ -16,6 +16,7 @@ public class FragileModifier : UniversalGameModifier, IColoredModifier, IWikiDis
 
     public override string ModifierName => "Fragile";
     public override string LocaleKey => "Fragile";
+    public override string IntroInfo => "You have a chance to break if someone interacts...";
     public override ModifierFaction FactionType => ModifierFaction.UniversalPassive;
     public override Color FreeplayFileColor => FragileColor;
     public Color ModifierColor => FragileColor;

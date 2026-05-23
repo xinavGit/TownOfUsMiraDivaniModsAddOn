@@ -52,9 +52,6 @@ public sealed class DemolitionistRole(IntPtr cppPtr)
         IntroSound = DivaniAssets.DemolitionistIntroSound,
         MaxRoleCount = 1,
         CanUseVent = OptionGroupSingleton<DemolitionistOptions>.Instance.CanVent,
-        // Required so on death the role swaps to NeutralGhostRole and the solo
-        // win condition keeps tracking the planted-sabotage counter; mirrors the
-        // pattern Frag / Plague Doctor / Opportunist already use.
         GhostRole = (RoleTypes)RoleId.Get<NeutralGhostRole>(),
     };
 
@@ -84,11 +81,9 @@ public sealed class DemolitionistRole(IntPtr cppPtr)
     {
         RoleBehaviourStubs.Initialize(this, targetPlayer);
 
-        // Match GlitchRole: always wire the real ImpostorVentButton + hide FakeVentButton for the local player.
-        // Actual vent permission still comes from <see cref="CustomRoleConfiguration.CanUseVent"/> (Saboteur Can Vent).
         if (Player.AmOwner)
         {
-            HudManager.Instance.ImpostorVentButton.graphic.sprite = TouAssets.VentSprite.LoadAsset();
+            HudManager.Instance.ImpostorVentButton.graphic.sprite = DivaniAssets.DemolitionistVentButton.LoadAsset();
             HudManager.Instance.ImpostorVentButton.buttonLabelText.SetOutlineColor(DemolitionistColor);
             CustomButtonSingleton<FakeVentButton>.Instance.Show = false;
         }
@@ -103,7 +98,7 @@ public sealed class DemolitionistRole(IntPtr cppPtr)
 
         if (Player.AmOwner)
         {
-            HudManager.Instance.ImpostorVentButton.graphic.sprite = TouAssets.VentSprite.LoadAsset();
+            HudManager.Instance.ImpostorVentButton.graphic.sprite = TouAssets.VentSprite.LoadAsset();  
             HudManager.Instance.ImpostorVentButton.buttonLabelText.SetOutlineColor(TownOfUsColors.Impostor);
             CustomButtonSingleton<FakeVentButton>.Instance.Show = true;
         }

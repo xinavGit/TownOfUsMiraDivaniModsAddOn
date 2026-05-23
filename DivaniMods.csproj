@@ -135,7 +135,9 @@
     <EmbeddedResource Include="Resources\Icons\Bloody.png" />
     <EmbeddedResource Include="Resources\Icons\Demolitionist.png" />
     <EmbeddedResource Include="Resources\Icons\Memento.png" />
-    <EmbeddedResource Include="Resources\DemolitionistSabotageButton.png" />
+    <EmbeddedResource Include="Resources\DemolitionistPlant.png" />
+    <EmbeddedResource Include="Resources\DemolitionistDefuse.png" />
+    <EmbeddedResource Include="Resources\DemolitionistVent.png" />
     <!-- Audio clips must be WAV - loaded via MiraAPI's LoadableAudioResourceAsset,
          matching how TouMiraRolesExtension ships its sounds. -->
     <EmbeddedResource Include="Resources\FragileBreak.wav" />

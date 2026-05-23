@@ -22,6 +22,7 @@ public sealed class RecruiterRole(IntPtr cppPtr)
     : ImpostorRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IDoomable, ICrewVariant
 {
     public string RoleName => "Recruiter";
+    public string LocaleKey => "Recruiter";
     public string RoleDescription => "Recruit a non-Impostor during the first meeting!";
     public string RoleLongDescription =>
         "During the first meeting only, recruit a non-Impostor to become an Impostor.";

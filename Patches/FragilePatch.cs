@@ -8,6 +8,7 @@ using MiraAPI.Networking;
 using DivaniMods.Assets;
 using DivaniMods.Modifiers.Game.Universal;
 using DivaniMods.Options;
+using TownOfUs.Networking;
 using UnityEngine;
 
 namespace DivaniMods.Patches;
@@ -52,9 +53,20 @@ public static class FragileInteraction
 
         _lastFragileKillFrame = Time.frameCount;
         _lastFragileKillVictimId = target.PlayerId;
-
-        target.RpcCustomMurder(target, MeetingCheck.OutsideMeeting);
         PlayFragileBreakSound();
+        target.RpcSpecialMurder(
+            target,
+            MeetingCheck.OutsideMeeting,
+            isIndirect: true,
+            ignoreShield: false,
+            didSucceed: true,
+            resetKillTimer: false,
+            createDeadBody: true,
+            teleportMurderer: false,
+            showKillAnim: false,
+            playKillSound: true,
+            causeOfDeath: "Fragile");
+        
         return true;
     }
 

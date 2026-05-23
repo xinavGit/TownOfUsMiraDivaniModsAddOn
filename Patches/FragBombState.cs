@@ -32,6 +32,7 @@ public static class FragBombState
     public static byte ImmuneId { get; private set; } = NoPlayer;
     public static float TimeRemaining { get; private set; }
     private static float ArmingRemaining;
+    public static float ArmingDuration { get; private set; }
 
     private static bool _tickRunning;
     private static bool _explosionTriggered;
@@ -49,7 +50,7 @@ public static class FragBombState
     public static float GetSecondsUntilExplosionForDisplay()
     {
         if (!IsActive) return 0f;
-        if (!IsArmed) return ArmingRemaining + TimeRemaining;
+        if (!IsArmed) return ArmingRemaining;
         return TimeRemaining;
     }
 
@@ -69,6 +70,7 @@ public static class FragBombState
             FragId = sender.PlayerId;
             TimeRemaining = duration;
             ArmingRemaining = Mathf.Clamp(armingDelay, 2f, 7f);
+            ArmingDuration = ArmingRemaining;
             IsArmed = false;
             _explosionTriggered = false;
         }
@@ -118,11 +120,6 @@ public static class FragBombState
 
     public static void ClearForMeeting()
     {
-        // Calling a meeting (or reporting a body) detonates the bomb on the current
-        // holder. We capture the IDs, clear bomb state immediately so the countdown/HUD
-        // stops, and schedule a coroutine that fires the murder via RpcCustomMurder
-        // shortly after the meeting intro animation completes. The RPC syncs to every
-        // client and TouMira's HandleMeetingMurder plays the kill animation in-cabin.
         var holderIdCapture = HolderId;
         var fragIdCapture = FragId;
         var shouldKill = IsActive;
@@ -137,9 +134,6 @@ public static class FragBombState
 
     private static IEnumerator CoExplodeInMeeting(byte holderIdCapture, byte fragIdCapture)
     {
-        // Wait until the meeting cabin's intro animation finishes so the kill
-        // plays as a proper in-meeting murder (Assassin-style cabin animation
-        // is wired up by TouMira's HandleMeetingMurder via AfterMurderEvent).
         while (MeetingHud.Instance &&
                MeetingHud.Instance.state == MeetingHud.VoteStates.Animating)
         {
@@ -150,7 +144,6 @@ public static class FragBombState
 
         yield return new WaitForSeconds(0.25f);
 
-        // Only the host kicks off the RPC so the kill resolves exactly once.
         if (!AmongUsClient.Instance.AmHost) yield break;
 
         var holder = PlayerById(holderIdCapture);
@@ -159,21 +152,11 @@ public static class FragBombState
         var frag = PlayerById(fragIdCapture);
         var source = (frag != null && frag.Data != null && !frag.Data.IsDead) ? frag : holder;
 
-        // TouMira's HandleMeetingMurder hides the guess-crosshair button for the
-        // dead player on every screen *except* the murderer's, because assassins
-        // normally call HideSingle themselves inside their guess click handler.
-        // Frag's bomb doesn't go through that flow, so do it explicitly on the
-        // source's client so they can't still target the player they just bombed.
         if (source.AmOwner)
         {
             MeetingMenu.Instances.Do(x => x.HideSingle(holder.PlayerId));
         }
 
-        // MeetingCheck.ForMeeting matches Assassin's guess kill — required so the
-        // RPC isn't cancelled by MiraAPI's CustomMurder meeting filter. The cabin
-        // death animation is driven by TouMira's HandleMeetingMurder, so we skip
-        // showKillAnim/teleport here and just make sure the body is created for
-        // post-meeting reports.
         source.RpcSpecialMurder(
             holder,
             MeetingCheck.ForMeeting,
@@ -185,7 +168,7 @@ public static class FragBombState
             teleportMurderer: false,
             showKillAnim: false,
             playKillSound: true,
-            causeOfDeath: "BomberBomb");
+            causeOfDeath: "Frag");
     }
 
     public static void DestroyHud() => DivaniTimers.Remove(TimerId);
@@ -223,9 +206,6 @@ public static class FragBombState
                 {
                     IsArmed = true;
                     ArmingRemaining = 0f;
-                    // Refresh now so the Pass button appears the same frame the
-                    // heartbeat and HUD turn on. This is the synchronization
-                    // step the user explicitly asked for.
                     RefreshFragButtons();
                 }
             }
@@ -262,30 +242,18 @@ public static class FragBombState
             Clear(startGiveCooldown: false);
             return;
         }
-
-        // RpcSpecialMurder can skip the normal BeforeMurder pipeline. Run the
-        // same cancelable event TownOfUs uses for melee kills so every shield
-        // (BaseShieldModifier subclasses like Medic + Warden fortify, Cleric
-        // barrier, first-dead shield, GA, etc.) applies its RPC, flash, and
-        // cooldown reset without maintaining a fragile per-modifier list here.
         if (TryBlockExplosionIfBeforeMurderCancelled(frag, holder))
         {
             return;
         }
 
         _explosionTriggered = true;
-
-        // RpcSpecialMurder routes through TouMira's CustomMurder so the kill
-        // counts toward Frag's impostor stats and the death handler shows
-        // "Bombed By <FragName>".
         frag.RpcSpecialMurder(
             holder,
             isIndirect: true,
             teleportMurderer: false,
-            causeOfDeath: "BomberBomb");
+            causeOfDeath: "Frag");
 
-        // OnAfterMurder will Clear() once the kill resolves on every client. If
-        // the holder is already dead on this frame, don't leave UI stuck.
         if (PlayerById(HolderId)?.Data?.IsDead == true)
         {
             Clear(startGiveCooldown: true);
@@ -311,11 +279,6 @@ public static class FragBombState
             _beforeMurderShieldProbeDepth--;
         }
     }
-
-    // --------------------------------------------------------------------
-    // Heartbeat
-    // --------------------------------------------------------------------
-
     private static void UpdateHeartbeat()
     {
         var localPlayer = PlayerControl.LocalPlayer;
@@ -353,9 +316,7 @@ public static class FragBombState
                 return;
             }
 
-            // Keep the known-working PlaySound path, then force the returned
-            // Unity source to loop. Some builds don't reliably start playback
-            // when the loop flag is passed into SoundManager directly.
+
             _heartbeatSource = SoundManager.Instance.PlaySound(clip, false, 0.75f);
             if (_heartbeatSource != null)
             {
@@ -373,7 +334,7 @@ public static class FragBombState
         }
     }
 
-    private static void StopHeartbeat()
+    internal static void StopHeartbeat()
     {
         if (_heartbeatSource != null)
         {
@@ -402,10 +363,6 @@ public static class FragBombState
         }
     }
 
-    // --------------------------------------------------------------------
-    // HUD: shared <see cref="DivaniTimers"/> row (same prefab as Thief / Sentinel
-    // toasts), stacked under lockdown when both are active.
-    // --------------------------------------------------------------------
 
     private static Sprite? GetFragRoleIcon()
     {
@@ -441,10 +398,6 @@ public static class FragBombState
             useLocalTimeDelta: false,
             priority: TimerPriority);
     }
-
-    // --------------------------------------------------------------------
-    // Helpers / events
-    // --------------------------------------------------------------------
 
     private static PlayerControl? PlayerById(byte id)
     {
@@ -487,8 +440,7 @@ public static class FragBombState
         if (!IsActive || evt.Target == null) return;
         if (evt.Target.PlayerId != HolderId) return;
 
-        // If the bomb wasn't the cause, the holder was murdered by something
-        // else mid-bomb. Spec: in that case both Frag cooldowns restart.
+
         var killedExternally = !_explosionTriggered;
 
         Clear(startGiveCooldown: true);
@@ -554,12 +506,6 @@ public static class FragBombPatches
         FragBombState.ClearForMeeting();
     }
 
-    // We deliberately do NOT patch Console.CanUse here. Several normal tasks
-    // (trash chute, download upload, divert power, etc.) ship with an empty
-    // TaskTypes array, so a "TaskTypes empty == emergency button" check would
-    // also block those tasks. The two minigame prefixes below are enough to
-    // stop the bomb holder from actually opening the emergency-meeting UI,
-    // and they leave every task console fully usable.
     [HarmonyPatch(typeof(EmergencyMinigame), nameof(EmergencyMinigame.Begin))]
     [HarmonyPrefix]
     public static bool EmergencyMinigameBeginPrefix(EmergencyMinigame __instance)
@@ -575,9 +521,7 @@ public static class FragBombPatches
     [HarmonyPrefix]
     public static bool MinigameBeginPrefix(Minigame __instance, PlayerTask task)
     {
-        // Normal task minigames always arrive with a task. Emergency button
-        // opens a non-task minigame, so this keeps the safety net narrow and
-        // matches the existing LockdownPatch signature for this Harmony target.
+
         if (task != null) return true;
 
         var localPlayer = PlayerControl.LocalPlayer;
@@ -594,6 +538,7 @@ public static class FragBombPatches
     {
         FragBombState.Clear();
         FragBombState.DestroyHud();
+        FragBombState.StopHeartbeat();
     }
 
     [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.CoBegin))]

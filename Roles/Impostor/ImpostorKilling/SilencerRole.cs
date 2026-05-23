@@ -16,6 +16,7 @@ public sealed class SilencerRole(IntPtr cppPtr)
     : ImpostorRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IDoomable, ICrewVariant
 {
     public string RoleName => "Silencer";
+    public string LocaleKey => "Silencer";
     public string RoleDescription => "Cut meeting voting time with every kill!";
     public string RoleLongDescription =>
         "Each kill you make shaves seconds\n" +

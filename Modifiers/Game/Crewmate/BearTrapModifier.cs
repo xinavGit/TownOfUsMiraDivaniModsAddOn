@@ -15,6 +15,7 @@ public sealed class BearTrapModifier : TouGameModifier, IColoredModifier, IWikiD
     public static readonly Color BearTrapColor = new Color32(210, 125, 45, 255);
 
     public override string ModifierName => "Bear Trap";
+    public override string IntroInfo => "Trap your killer upon death.";
     public override string LocaleKey => "BearTrap";
     public override ModifierFaction FactionType => ModifierFaction.CrewmatePostmortem;
     public override Color FreeplayFileColor => BearTrapColor;

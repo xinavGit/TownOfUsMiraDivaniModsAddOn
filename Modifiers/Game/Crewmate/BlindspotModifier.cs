@@ -16,6 +16,7 @@ public class BlindspotModifier : TouGameModifier, IColoredModifier, IWikiDiscove
 
     public override string ModifierName => "Blindspot";
     public override string LocaleKey => "Blindspot";
+    public override string IntroInfo => "You watch camera's without lights.";
     public override ModifierFaction FactionType => ModifierFaction.CrewmateUtility;
     public override Color FreeplayFileColor => BlindspotColor;
     public Color ModifierColor => BlindspotColor;

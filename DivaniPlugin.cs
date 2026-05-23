@@ -8,6 +8,7 @@ using Reactor;
 using Reactor.Networking;
 using Reactor.Networking.Attributes;
 using DivaniMods.Assets;
+using DivaniMods.Modules.Localization;
 using DivaniMods.Patches;
 
 namespace DivaniMods;
@@ -42,6 +43,7 @@ public class DivaniPlugin : BasePlugin, IMiraPlugin
         DutchMemeSoundpackPatch.Register(Harmony);
         VersionDisplay.Register();
         DivaniModAnnouncementPatch.EnsureLoaded();
+        DivaniLocale.Register();
         DivaniWikiTermsPatch.RegisterLocale();
         Log.LogInfo($"Divani Mods v{Version} loaded successfully!");
     }

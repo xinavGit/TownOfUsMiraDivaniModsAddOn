@@ -20,6 +20,7 @@ public class MementoModifier : UniversalGameModifier, IColoredModifier, IWikiDis
 
     public override string ModifierName => "Memento";
     public override string LocaleKey => "Memento";
+    public override string IntroInfo => "Your role is revealed to everyone in meetings upon death.";
     public override ModifierFaction FactionType => ModifierFaction.UniversalPostmortem;
     public override Color FreeplayFileColor => MementoColor;
     public Color ModifierColor => MementoColor;

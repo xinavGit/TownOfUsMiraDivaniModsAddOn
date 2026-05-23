@@ -22,7 +22,9 @@ public class FragGiveBombButton : TownOfUsTargetButton<PlayerControl>
     public override float Cooldown => OptionGroupSingleton<FragOptions>.Instance.GiveBombCooldown;
 
     public override float EffectDuration =>
-        Mathf.Max(OptionGroupSingleton<FragOptions>.Instance.BombTimer + 7f, 1f);
+        FragBombState.IsActive && !FragBombState.IsArmed
+            ? Mathf.Max(FragBombState.ArmingDuration, 1f)
+            : Mathf.Max(OptionGroupSingleton<FragOptions>.Instance.BombTimer, 1f);
     public override int MaxUses => 0;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.FragGiveButton;
     public override float Distance => 1.5f;
@@ -122,7 +124,7 @@ public class FragGiveBombButton : TownOfUsTargetButton<PlayerControl>
 
         if (showBombOnButton)
         {
-            instance.OverrideName("ARMED");
+            instance.OverrideName(FragBombState.IsArmed ? "ARMED" : "ARMING");
             _bombCountdownOnButton = true;
             instance.TimerPaused = true;
             instance.EffectActive = true;

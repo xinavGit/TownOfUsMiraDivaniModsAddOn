@@ -74,7 +74,7 @@ public class DemolitionistOptions : AbstractOptionGroup<DemolitionistRole>, IWik
     [ModdedToggleOption("Demolitionist Can Vent")]
     public bool CanVent { get; set; } = false;
 
-    [ModdedToggleOption("Disable Exploded Utility For Game")]
+    [ModdedToggleOption("Successful Explosion Disables Utility Console")]
     public bool DisableExplodedConsoles { get; set; } = true;
 
     [ModdedToggleOption("Explosion Kills Active Defusers")]

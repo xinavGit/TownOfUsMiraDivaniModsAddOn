@@ -20,6 +20,8 @@ using DivaniMods.Options;
 
 using DivaniMods.Roles.Neutral.NeutralEvil;
 
+using TownOfUs.Networking;
+
 using TownOfUs.Utilities;
 
 using UnityEngine;
@@ -234,7 +236,7 @@ public static class DemolitionistSabotageState
 
             new Vector3(0f, 1f, -20f),
 
-            spr: DivaniAssets.DemolitionistSabotageButton.LoadAsset());
+            spr: DivaniAssets.DemolitionistIcon.LoadAsset());
 
         EnsureTickRunning();
 
@@ -262,7 +264,7 @@ public static class DemolitionistSabotageState
 
             new Vector3(0f, 1f, -20f),
 
-            spr: DivaniAssets.DemolitionistSabotageButton.LoadAsset());
+            spr: DivaniAssets.DemolitionistIcon.LoadAsset());
 
         ClearActiveSabotage();
         DemolitionistPlantButton.SyncAfterSabotageEnded(startCooldown: true);
@@ -308,7 +310,7 @@ public static class DemolitionistSabotageState
 
             new Vector3(0f, 1f, -20f),
 
-            spr: DivaniAssets.DemolitionistSabotageButton.LoadAsset());
+            spr: DivaniAssets.DemolitionistIcon.LoadAsset());
 
         if (OptionGroupSingleton<DemolitionistOptions>.Instance.DisableExplodedConsoles)
 
@@ -349,7 +351,18 @@ public static class DemolitionistSabotageState
             DemolitionistNumpad.Controller.CancelActive();
         }
 
-        local.RpcCustomMurder(local, MeetingCheck.OutsideMeeting);
+        local.RpcSpecialMurder(
+            local,
+            MeetingCheck.OutsideMeeting,
+            isIndirect: true,
+            ignoreShield: false,
+            didSucceed: true,
+            resetKillTimer: false,
+            createDeadBody: true,
+            teleportMurderer: false,
+            showKillAnim: false,
+            playKillSound: true,
+            causeOfDeath: "Demolitionist");
     }
 
     private static void EjectFromExplodedUtility(DemolitionistUtilityKind kind)

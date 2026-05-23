@@ -15,6 +15,7 @@ public class RuthlessModifier : TouGameModifier, IColoredModifier, IWikiDiscover
     public static readonly Color RuthlessColor = Palette.ImpostorRoleHeaderRed;
     public override string ModifierName => "Ruthless";
     public override string LocaleKey => "Ruthless";
+    public override string IntroInfo => "Your kills bypass shields.";
     public override ModifierFaction FactionType => ModifierFaction.ImpostorPassive;
     public override Color FreeplayFileColor => RuthlessColor;
     public Color ModifierColor => RuthlessColor;

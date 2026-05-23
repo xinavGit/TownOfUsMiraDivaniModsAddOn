@@ -1,0 +1,28 @@
+using AmongUs.GameOptions;
+using TownOfUs.Modules.Localization;
+
+namespace DivaniMods.Modules.Localization;
+
+public static class DivaniLocale
+{
+    public static void Register()
+    {
+        if (!TouLocale.TouLocalization.TryGetValue(SupportedLangs.English, out var en))
+        {
+            return;
+        }
+
+        RegisterDeathCauses(en);
+    }
+
+    private static void RegisterDeathCauses(Dictionary<string, string> en)
+    {
+        en.TryAdd("DiedToSilencer", "Silenced");
+        en.TryAdd("DiedToDeadlock", "Deadlocked");
+        en.TryAdd("DiedToRecruiter", "Recruited");
+        en.TryAdd("DiedToFrag", "Fragged");
+        en.TryAdd("DiedToFragile", "Shattered");
+        en.TryAdd("DiedToTalkedTrash", "Provoked");
+        en.TryAdd("DiedToDemolitionist", "Sabotaged");
+    }
+}

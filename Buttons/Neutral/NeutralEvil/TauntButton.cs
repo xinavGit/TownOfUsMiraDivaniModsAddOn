@@ -9,6 +9,7 @@ using DivaniMods.Roles.Neutral.NeutralEvil;
 using TownOfUs.Assets;
 using TownOfUs.Buttons;
 using TownOfUs.Events;
+using TownOfUs.Networking;
 using UnityEngine;
 
 namespace DivaniMods.Buttons.Neutral.NeutralEvil;
@@ -107,10 +108,11 @@ public sealed class TauntButton : TownOfUsTargetButton<PlayerControl>
 
         if (AmongUsClient.Instance.AmHost)
         {
-            killer.RpcCustomMurder(
+            killer.RpcSpecialMurder(
                 innocent,
                 MeetingCheck.OutsideMeeting,
-                resetKillTimer: false);
+                resetKillTimer: false,
+                causeOfDeath: "TalkedTrash");
         }
     }
 }

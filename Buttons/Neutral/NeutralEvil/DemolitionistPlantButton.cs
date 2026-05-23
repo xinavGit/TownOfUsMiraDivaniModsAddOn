@@ -23,10 +23,8 @@ public class DemolitionistPlantButton : TownOfUsButton
             ? OptionGroupSingleton<DemolitionistOptions>.Instance.PlantTime.Value
             : 0f;
     public override int MaxUses => 0;
-    // TownOfUsButton defaults ZeroIsInfinite to false; without this MaxUses=0 means "0 uses left"
-    // and CanUse is always false (button permanently greyed). True = unlimited uses.
     public override bool ZeroIsInfinite { get; set; } = true;
-    public override LoadableAsset<Sprite> Sprite => DivaniAssets.DemolitionistSabotageButton;
+    public override LoadableAsset<Sprite> Sprite => DivaniAssets.DemolitionistPlantButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight; 
     public override Color TextOutlineColor => DemolitionistRole.DemolitionistColor;
     public override BaseKeybind Keybind => Keybinds.PrimaryAction;
@@ -143,7 +141,7 @@ public class DemolitionistPlantButton : TownOfUsButton
             $"<b><color=#{colorHex}>Planting sabotage...</color></b>",
             Color.white,
             new Vector3(0f, 1f, -20f),
-            spr: DivaniAssets.DemolitionistSabotageButton.LoadAsset());
+            spr: DivaniAssets.DemolitionistIcon.LoadAsset());
 
         var elapsed = 0f;
         while (elapsed < plantTime)
@@ -162,7 +160,7 @@ public class DemolitionistPlantButton : TownOfUsButton
                     $"<b><color=#{colorHex}>Plant aborted — too far from console!</color></b>",
                     Color.white,
                     new Vector3(0f, 1f, -20f),
-                    spr: DivaniAssets.DemolitionistSabotageButton.LoadAsset());
+                    spr: DivaniAssets.DemolitionistIcon.LoadAsset());
                 AbortPlant();
                 yield break;
             }
@@ -194,9 +192,6 @@ public class DemolitionistPlantButton : TownOfUsButton
 
     private IEnumerator PlantNumpadCoroutine(PlayerControl player)
     {
-        // Do NOT set EffectActive during the keypad: TownOfUsButton draws Timer as the button text
-        // whenever EffectActive, and Timer clamps to -1, so an ugly "-1" shows. _isPlanting + the
-        // numpad InProgress check already keep the button disabled.
         _isPlanting = true;
 
         if (!DemolitionistNumpad.Controller.OpenPlant(player, _capturedPosition, _capturedConsoleKey, _capturedKind))
@@ -244,14 +239,12 @@ public class DemolitionistPlantButton : TownOfUsButton
             $"<b><color=#{colorHex}>Bomb arming in {delay:0}s...</color></b>",
             Color.white,
             new Vector3(0f, 1f, -20f),
-            spr: DivaniAssets.DemolitionistSabotageButton.LoadAsset());
+            spr: DivaniAssets.DemolitionistIcon.LoadAsset());
 
         Button?.OverrideText("ARMING");
 
         if (delay > 0f)
         {
-            // Same as Pickpocket: EffectActive + Timer drives the native ability-button effect
-            // (fill ring + countdown text). No custom position shake — pickpocket has none either.
             EffectActive = true;
             Timer = delay;
         }
@@ -294,9 +287,6 @@ public class DemolitionistPlantButton : TownOfUsButton
             _capturedConsoleKey,
             (byte)_capturedKind);
 
-        // Park the timer so no cooldown number ticks during the sabotage — the button just sits
-        // disabled (CanUse is false while IsActive), same look as planting. The real cooldown is
-        // started by SyncAfterSabotageEnded when the bomb is defused/explodes.
         Timer = 0f;
     }
 

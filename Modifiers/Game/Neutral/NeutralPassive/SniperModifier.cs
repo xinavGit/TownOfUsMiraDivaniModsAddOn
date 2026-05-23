@@ -19,6 +19,7 @@ public sealed class SniperModifier : TouGameModifier, IColoredModifier, IWikiDis
 
     public override string ModifierName => "Sniper";
     public override string LocaleKey => "Sniper";
+    public override string IntroInfo => "You have increased kill range.";
     public override ModifierFaction FactionType => ModifierFaction.NeutralPassive;
     public override Color FreeplayFileColor => SniperColor;
     public Color ModifierColor => SniperColor;

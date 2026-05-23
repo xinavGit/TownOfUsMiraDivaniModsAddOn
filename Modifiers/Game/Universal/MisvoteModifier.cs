@@ -17,6 +17,7 @@ public sealed class MisvoteModifier : UniversalGameModifier, IColoredModifier, I
 
     public override string ModifierName => "Misvote";
     public override string LocaleKey => "Misvote";
+    public override string IntroInfo => "Your vote is random every meeting.";
     public override ModifierFaction FactionType => ModifierFaction.UniversalPassive;
     public override Color FreeplayFileColor => MisvoteColor;
     public Color ModifierColor => MisvoteColor;

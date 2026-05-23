@@ -23,7 +23,7 @@ public class DemolitionistDefuseButton : TownOfUsButton
     // TownOfUsButton defaults ZeroIsInfinite to false; without this MaxUses=0 reads as "0 uses left"
     // and CanUse is always false (button permanently greyed). True = unlimited uses.
     public override bool ZeroIsInfinite { get; set; } = true;
-    public override LoadableAsset<Sprite> Sprite => DivaniAssets.DemolitionistSabotageButton;
+    public override LoadableAsset<Sprite> Sprite => DivaniAssets.DemolitionistDefuseButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomLeft;
     public override Color TextOutlineColor => DemolitionistRole.DemolitionistColor;
     public override BaseKeybind Keybind => Keybinds.TertiaryAction;
@@ -97,7 +97,7 @@ public class DemolitionistDefuseButton : TownOfUsButton
             $"<b><color=#{colorHex}>Defusing...</color></b>",
             Color.white,
             new Vector3(0f, 1f, -20f),
-            spr: DivaniAssets.DemolitionistSabotageButton.LoadAsset());
+            spr: DivaniAssets.DemolitionistIcon.LoadAsset());
 
         var elapsed = 0f;
         while (elapsed < defuseTime)
@@ -120,7 +120,7 @@ public class DemolitionistDefuseButton : TownOfUsButton
                     $"<b><color=#{colorHex}>Defuse aborted — too far from sabotage!</color></b>",
                     Color.white,
                     new Vector3(0f, 1f, -20f),
-                    spr: DivaniAssets.DemolitionistSabotageButton.LoadAsset());
+                    spr: DivaniAssets.DemolitionistIcon.LoadAsset());
                 AbortDefuse();
                 yield break;
             }
@@ -153,7 +153,7 @@ public class DemolitionistDefuseButton : TownOfUsButton
                 $"<b><color=#{colorHex}>Defuse aborted — too far from sabotage!</color></b>",
                 Color.white,
                 new Vector3(0f, 1f, -20f),
-                spr: DivaniAssets.DemolitionistSabotageButton.LoadAsset());
+                spr: DivaniAssets.DemolitionistIcon.LoadAsset());
             AbortDefuse();
             yield break;
         }

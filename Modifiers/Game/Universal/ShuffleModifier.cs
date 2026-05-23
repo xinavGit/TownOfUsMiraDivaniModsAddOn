@@ -18,6 +18,7 @@ public class ShuffleModifier : UniversalGameModifier, IColoredModifier, IWikiDis
 
     public override string ModifierName => "Shuffle";
     public override string LocaleKey => "Shuffle";
+    public override string IntroInfo => "Shuffle all players' positions!";
     public override ModifierFaction FactionType => ModifierFaction.UniversalUtility;
     public override Color FreeplayFileColor => ShuffleColor;
     public Color ModifierColor => ShuffleColor;
