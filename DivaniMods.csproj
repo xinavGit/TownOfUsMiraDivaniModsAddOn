@@ -141,6 +141,7 @@
     <!-- Audio clips must be WAV - loaded via MiraAPI's LoadableAudioResourceAsset,
          matching how TouMiraRolesExtension ships its sounds. -->
     <EmbeddedResource Include="Resources\FragileBreak.wav" />
+    <EmbeddedResource Include="Resources\PlagueDoctorInfect.png" />
     <EmbeddedResource Include="Resources\PlagueDoctorIntro.wav" />
     <EmbeddedResource Include="Resources\InfectSound.wav" />
     <EmbeddedResource Include="Resources\ThiefIntro.wav" />
