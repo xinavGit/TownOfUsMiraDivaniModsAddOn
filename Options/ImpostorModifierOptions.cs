@@ -1,5 +1,4 @@
 using MiraAPI.GameOptions;
-using MiraAPI.GameOptions.Attributes;
 using MiraAPI.GameOptions.OptionTypes;
 using MiraAPI.Utilities;
 using TownOfUs.Options;
@@ -15,12 +14,12 @@ public sealed class ImpostorModifierOptions : AbstractOptionGroup
     public override bool ShowInModifiersMenu => true;
     public override uint GroupPriority => 3;
 
-    [ModdedNumberOption("Ruthless Amount", 0, 5, 1)]
-    public float RuthlessAmount { get; set; } = 0;
+    public ModdedNumberOption RuthlessAmount { get; } = new(
+        "Ruthless Amount", 0f, 0f, 5f, 1f, MiraNumberSuffixes.None);
 
     public ModdedNumberOption RuthlessChance { get; } =
         new("Ruthless Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
         {
-            Visible = () => OptionGroupSingleton<ImpostorModifierOptions>.Instance.RuthlessAmount > 0
+            Visible = () => OptionGroupSingleton<ImpostorModifierOptions>.Instance.RuthlessAmount.Value > 0
         };
 }

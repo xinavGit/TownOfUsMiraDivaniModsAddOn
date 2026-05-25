@@ -71,7 +71,7 @@ public sealed class DemolitionistRole(IntPtr cppPtr)
     public StringBuilder SetTabText()
     {
         var stringB = ITownOfUsRole.SetNewTabText(this);
-        var needed = (int)OptionGroupSingleton<DemolitionistOptions>.Instance.SabotagesToWin;
+        var needed = (int)OptionGroupSingleton<DemolitionistOptions>.Instance.SabotagesToWin.Value;
         var capped = Math.Min(DemolitionistSabotageState.SuccessfulSabotages, needed);
         stringB.AppendLine(TownOfUsPlugin.Culture, $"<b>Successful sabotages: {capped}/{needed}</b>");
         return stringB;
@@ -117,7 +117,7 @@ public sealed class DemolitionistRole(IntPtr cppPtr)
 
     public bool WinConditionMet()
     {
-        var needed = (int)OptionGroupSingleton<DemolitionistOptions>.Instance.SabotagesToWin;
+        var needed = (int)OptionGroupSingleton<DemolitionistOptions>.Instance.SabotagesToWin.Value;
         return DemolitionistSabotageState.SuccessfulSabotages >= needed;
     }
 

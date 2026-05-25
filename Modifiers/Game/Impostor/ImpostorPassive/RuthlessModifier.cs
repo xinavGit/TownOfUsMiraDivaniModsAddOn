@@ -30,7 +30,7 @@ public class RuthlessModifier : TouGameModifier, IColoredModifier, IWikiDiscover
         (int)OptionGroupSingleton<ImpostorModifierOptions>.Instance.RuthlessChance.Value;
     
     public override int GetAmountPerGame() =>
-        (int)OptionGroupSingleton<ImpostorModifierOptions>.Instance.RuthlessAmount;
+        (int)OptionGroupSingleton<ImpostorModifierOptions>.Instance.RuthlessAmount.Value;
     
     public override bool IsModifierValidOn(RoleBehaviour role)
     {

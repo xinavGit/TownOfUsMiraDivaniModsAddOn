@@ -35,7 +35,7 @@ public sealed class BloodyModifier : TouGameModifier, IColoredModifier, IWikiDis
         (int)OptionGroupSingleton<CrewmateModifierOptions>.Instance.BloodyChance.Value;
 
     public override int GetAmountPerGame() =>
-        (int)OptionGroupSingleton<CrewmateModifierOptions>.Instance.BloodyAmount;
+        (int)OptionGroupSingleton<CrewmateModifierOptions>.Instance.BloodyAmount.Value;
 
     public override bool IsModifierValidOn(RoleBehaviour role)
     {

@@ -36,7 +36,7 @@ public sealed class BloodyKillerFootstepsModifier : BaseModifier
     {
         CurrentSteps = [];
         var opts = OptionGroupSingleton<BloodyOptions>.Instance;
-        PrintSize = opts.FootprintSize;
+        PrintSize = opts.FootprintSize.Value;
         PrintInterval = opts.FootprintInterval;
         CheckDistance = (BloodyPrintMode)opts.FootprintMode.Value is BloodyPrintMode.Distance;
         PrintDuration = opts.SingleFootprintFadeSeconds.Value;

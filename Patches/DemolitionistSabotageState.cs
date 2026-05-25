@@ -284,7 +284,7 @@ public static class DemolitionistSabotageState
 
         SuccessfulSabotages++;
 
-        var needed = (int)OptionGroupSingleton<DemolitionistOptions>.Instance.SabotagesToWin;
+        var needed = (int)OptionGroupSingleton<DemolitionistOptions>.Instance.SabotagesToWin.Value;
 
         var remaining = Mathf.Max(0, needed - SuccessfulSabotages);
 

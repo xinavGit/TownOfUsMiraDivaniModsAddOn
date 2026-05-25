@@ -19,12 +19,12 @@ public class FragGiveBombButton : TownOfUsTargetButton<PlayerControl>
     public static FragGiveBombButton? Instance { get; private set; }
 
     public override string Name => "Give Bomb";
-    public override float Cooldown => OptionGroupSingleton<FragOptions>.Instance.GiveBombCooldown;
+    public override float Cooldown => OptionGroupSingleton<FragOptions>.Instance.GiveBombCooldown.Value;
 
     public override float EffectDuration =>
         FragBombState.IsActive && !FragBombState.IsArmed
             ? Mathf.Max(FragBombState.ArmingDuration, 1f)
-            : Mathf.Max(OptionGroupSingleton<FragOptions>.Instance.BombTimer, 1f);
+            : Mathf.Max(OptionGroupSingleton<FragOptions>.Instance.BombTimer.Value, 1f);
     public override int MaxUses => 0;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.FragGiveButton;
     public override float Distance => 1.5f;
@@ -92,7 +92,7 @@ public class FragGiveBombButton : TownOfUsTargetButton<PlayerControl>
         if (!IsTargetValid(Target)) return;
 
         var delay = UnityEngine.Random.Range(2f, 7f);
-        var duration = OptionGroupSingleton<FragOptions>.Instance.BombTimer;
+        var duration = OptionGroupSingleton<FragOptions>.Instance.BombTimer.Value;
 
         FragBombState.PlayGivePassSoundLocal();
         FragBombButton.RpcPassBomb(localPlayer, Target.PlayerId, byte.MaxValue, duration, delay);

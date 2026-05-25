@@ -1,5 +1,4 @@
 using MiraAPI.GameOptions;
-using MiraAPI.GameOptions.Attributes;
 using MiraAPI.GameOptions.OptionTypes;
 using MiraAPI.Utilities;
 using TownOfUs.Options;
@@ -13,39 +12,39 @@ public sealed class UniversalModifierOptions : AbstractOptionGroup
     public override bool ShowInModifiersMenu => true;
     public override uint GroupPriority => 1;
 
-    [ModdedNumberOption("Fragile Amount", 0, 5, 1)]
-    public float FragileAmount { get; set; } = 0;
+    public ModdedNumberOption FragileAmount { get; } = new(
+        "Fragile Amount", 0f, 0f, 5f, 1f, MiraNumberSuffixes.None);
 
     public ModdedNumberOption FragileChance { get; } =
         new("Fragile Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
         {
-            Visible = () => OptionGroupSingleton<UniversalModifierOptions>.Instance.FragileAmount > 0
+            Visible = () => OptionGroupSingleton<UniversalModifierOptions>.Instance.FragileAmount.Value > 0
         };
 
-    [ModdedNumberOption("Shuffle Amount", 0, 5, 1)]
-    public float ShuffleAmount { get; set; } = 1;
+    public ModdedNumberOption ShuffleAmount { get; } = new(
+        "Shuffle Amount", 1f, 0f, 5f, 1f, MiraNumberSuffixes.None);
 
     public ModdedNumberOption ShuffleChance { get; } =
         new("Shuffle Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
         {
-            Visible = () => OptionGroupSingleton<UniversalModifierOptions>.Instance.ShuffleAmount > 0
+            Visible = () => OptionGroupSingleton<UniversalModifierOptions>.Instance.ShuffleAmount.Value > 0
         };
 
-    [ModdedNumberOption("Misvote Amount", 0, 5, 1)]
-    public float MisvoteAmount { get; set; } = 1;
+    public ModdedNumberOption MisvoteAmount { get; } = new(
+        "Misvote Amount", 1f, 0f, 5f, 1f, MiraNumberSuffixes.None);
 
     public ModdedNumberOption MisvoteChance { get; } =
         new("Misvote Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
         {
-            Visible = () => OptionGroupSingleton<UniversalModifierOptions>.Instance.MisvoteAmount > 0
+            Visible = () => OptionGroupSingleton<UniversalModifierOptions>.Instance.MisvoteAmount.Value > 0
         };
 
-    [ModdedNumberOption("Memento Amount", 0, 5, 1)]
-    public float MementoAmount { get; set; } = 0;
+    public ModdedNumberOption MementoAmount { get; } = new(
+        "Memento Amount", 0f, 0f, 5f, 1f, MiraNumberSuffixes.None);
 
     public ModdedNumberOption MementoChance { get; } =
         new("Memento Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
         {
-            Visible = () => OptionGroupSingleton<UniversalModifierOptions>.Instance.MementoAmount > 0
+            Visible = () => OptionGroupSingleton<UniversalModifierOptions>.Instance.MementoAmount.Value > 0
         };
 }

@@ -37,7 +37,7 @@ public class MementoModifier : UniversalGameModifier, IColoredModifier, IWikiDis
         (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.MementoChance.Value;
 
     public override int GetAmountPerGame() =>
-        (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.MementoAmount;
+        (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.MementoAmount.Value;
 
     public override void OnActivate()
     {

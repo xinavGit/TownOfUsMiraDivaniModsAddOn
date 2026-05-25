@@ -76,7 +76,7 @@ public sealed class OpportunistRole(IntPtr cppPtr)
     public StringBuilder SetTabText()
     {
         var stringB = ITownOfUsRole.SetNewTabText(this);
-        var needed = (int)OptionGroupSingleton<OpportunistOptions>.Instance.VotesNeeded;
+        var needed = (int)OptionGroupSingleton<OpportunistOptions>.Instance.VotesNeeded.Value;
         var capped = Math.Min(VotesCollected, needed);
         stringB.AppendLine(TownOfUsPlugin.Culture, $"<b>Votes collected: {capped}/{needed}</b>");
         return stringB;

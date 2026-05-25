@@ -1,5 +1,6 @@
 using MiraAPI.GameOptions;
 using MiraAPI.GameOptions.Attributes;
+using MiraAPI.GameOptions.OptionTypes;
 using MiraAPI.Utilities;
 using DivaniMods.Roles.Crewmate.CrewmateSupport;
 
@@ -9,14 +10,14 @@ public class SentinelOptions : AbstractOptionGroup<SentinelRole>
 {
     public override string GroupName => "Sentinel";
 
-    [ModdedNumberOption("Max Beacons", 1, 5, 1)]
-    public float MaxBeacons { get; set; } = 3;
+    public ModdedNumberOption MaxBeacons { get; } = new(
+        "Max Beacons", 3f, 1f, 5f, 1f, MiraNumberSuffixes.None);
 
-    [ModdedNumberOption("Place Beacon Cooldown", 5, 60, 5, MiraNumberSuffixes.Seconds)]
-    public float PlaceBeaconCooldown { get; set; } = 15;
+    public ModdedNumberOption PlaceBeaconCooldown { get; } = new(
+        "Place Beacon Cooldown", 15f, 5f, 60f, 5f, MiraNumberSuffixes.Seconds);
 
-    [ModdedNumberOption("Place Beacon Duration", 1f, 10f, 0.5f, MiraNumberSuffixes.Seconds)]
-    public float PlaceBeaconDuration { get; set; } = 3f;
+    public ModdedNumberOption PlaceBeaconDuration { get; } = new(
+        "Place Beacon Duration", 3f, 1f, 10f, 0.5f, MiraNumberSuffixes.Seconds);
 
     [ModdedToggleOption("Show Room Activity In Chat")]
     public bool ShowChatReport { get; set; } = true;

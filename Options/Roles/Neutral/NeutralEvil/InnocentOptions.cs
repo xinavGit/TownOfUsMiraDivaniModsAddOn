@@ -10,8 +10,8 @@ public class InnocentOptions : AbstractOptionGroup<InnocentRole>
 {
     public override string GroupName => "Innocent";
 
-    [ModdedNumberOption("Taunt Cooldown", 5f, 60f, 2.5f, MiraNumberSuffixes.Seconds)]
-    public float TauntCooldown { get; set; } = 25f;
+    public ModdedNumberOption TauntCooldown { get; } = new(
+        "Taunt Cooldown", 25f, 5f, 60f, 2.5f, MiraNumberSuffixes.Seconds);
 
     [ModdedToggleOption("Can Taunt in First Round")]
     public bool CanTauntFirstRound { get; set; } = false;

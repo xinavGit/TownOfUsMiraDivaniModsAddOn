@@ -42,10 +42,7 @@ public static class OpportunistPatch
         }
     }
 
-    // Capture the Opportunist's target the moment they vote, BEFORE Prosecutor's
-    // CheckForEndVoting handler wipes everyone's VoteData and re-casts 5 votes for the
-    // ProsecuteVictim. After that wipe, the Opportunist's own vote is gone from
-    // MeetingHud.VoterState[], so we can't rely on States to identify their target.
+
     [RegisterEvent]
     public static void OnHandleVote(HandleVoteEvent evt)
     {
@@ -69,25 +66,7 @@ public static class OpportunistPatch
         opp.CurrentMeetingTargetId = evt.TargetPlayerInfo.PlayerId;
     }
 
-    // Priority 200 = runs AFTER SwapperEvents.ProcessVotesEventHandler (10) and
-    // MisvoteVotePatches.ProcessVotesEventHandler (100). The Misvote handler ADDS to
-    // @event.Votes and rewrites KnightedEvents.ExtraKnightVotes in place, but the
-    // Swapper handler builds its rewritten vote list LOCALLY and only assigns
-    // @event.ExiledPlayer - it never mutates @event.Votes. So at priority 200,
-    // @event.Votes still holds the pre-swap Suspect ids.
-    //
-    // To keep the Opportunist's tally consistent with the actual exile (which IS
-    // post-swap), we mirror Swapper's swap ourselves: if the Opportunist's saved
-    // target id equals one of any active SwapperRole's Swap1/Swap2 ids, we swap
-    // it for the partner id and tally votes against the partner. That way the
-    // Opportunist gets credit for every vote that effectively lands on their
-    // chosen target's exile slot - including the votes Swapper redirected there.
-    //
-    // We tally during ProcessVotes (not VotingComplete) and DO NOT flip MetThreshold
-    // here: ExileController has not spawned yet, so flagging the win would let
-    // LogicGameFlowPatches.CheckEndCriteriaPatch end the game before the exile
-    // screen plays. Lock-in still happens in EjectionEvent / RoundStart, matching
-    // Jester/Innocent.
+
     [RegisterEvent(200)]
     public static void OnProcessVotes(ProcessVotesEvent @event)
     {
@@ -115,10 +94,7 @@ public static class OpportunistPatch
 
             votesAdded += CountVotesOnTarget(@event.Votes, oppId, oppTarget);
 
-            // Knighted bonus votes (when "Show Knighted Votes" is off) live in a
-            // separate list that TownOfUs only merges in for the final exile calc.
-            // Count those too so Knighted bonus votes onto the Opportunist's
-            // target still tick the tally up.
+
             votesAdded += CountVotesOnTarget(KnightedEvents.ExtraKnightVotes, oppId, oppTarget);
 
             if (votesAdded == 0)
@@ -130,10 +106,7 @@ public static class OpportunistPatch
         }
     }
 
-    // `target` here is ALREADY swap-adjusted: it is the pre-swap suspect id whose
-    // votes will end up on the Opportunist's chosen exile slot after Swapper rewrites.
-    // The vote.Suspect values in @event.Votes are pre-swap, so we compare directly -
-    // swap-adjusting them too would just undo the target's swap.
+
     private static int CountVotesOnTarget(System.Collections.Generic.IEnumerable<CustomVote> votes, byte oppId, byte target)
     {
         var count = 0;
@@ -159,14 +132,7 @@ public static class OpportunistPatch
         return count;
     }
 
-    // Mirrors TownOfUs.Events.Crewmate.SwapperEvents.SwapVotes: for every active
-    // SwapperRole whose Swap1 and Swap2 PlayerVoteAreas are both set and whose
-    // owner is alive, votes targeting Swap1.TargetPlayerId are treated as if they
-    // targeted Swap2.TargetPlayerId, and vice versa. We chain them in iteration
-    // order to be safe, even though vanilla SwapVotes does not actually compose
-    // multiple swaps (each swap recomputes exile from the original votes,
-    // overwriting the previous swapper's result - so chaining matches the
-    // single-swapper case, which is by far the most common scenario).
+
     private static byte ApplyActiveSwaps(byte playerId)
     {
         foreach (var swapper in CustomRoleUtils.GetActiveRolesOfType<SwapperRole>())
@@ -206,9 +172,7 @@ public static class OpportunistPatch
     [RegisterEvent]
     public static void OnEjection(EjectionEvent _)
     {
-        // Lock in the win during the exile screen. ExileController.Instance is alive here,
-        // so CheckEndCriteria will be suppressed until the exile screen finishes - then the
-        // win triggers cleanly via NeutralRoleWinCondition, matching Jester/Innocent.
+
         TryLockInWin();
     }
 
@@ -220,9 +184,7 @@ public static class OpportunistPatch
             return;
         }
 
-        // Fallback: a meeting may end without an exile (skip vote / tie). If the threshold
-        // was reached anyway, lock in the win at round start so it triggers on the next
-        // CheckEndCriteria tick.
+
         TryLockInWin();
 
         foreach (var opp in OpportunistRole.ActiveOpportunists.Values)
@@ -239,7 +201,7 @@ public static class OpportunistPatch
             return;
         }
 
-        var needed = (int)OptionGroupSingleton<OpportunistOptions>.Instance.VotesNeeded;
+        var needed = (int)OptionGroupSingleton<OpportunistOptions>.Instance.VotesNeeded.Value;
 
         foreach (var opp in OpportunistRole.ActiveOpportunists.Values)
         {

@@ -12,7 +12,7 @@ namespace DivaniMods.Buttons.Crewmate.CrewmateSupport;
 public class UsePortalButton : CustomActionButton
 {
     public override string Name => "Use Portal";
-    public override float Cooldown => OptionGroupSingleton<PortalmakerOptions>.Instance.UsePortalCooldown;
+    public override float Cooldown => OptionGroupSingleton<PortalmakerOptions>.Instance.UsePortalCooldown.Value;
     public override float EffectDuration => 0f;
     public override int MaxUses => 0;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.UsePortalButton;

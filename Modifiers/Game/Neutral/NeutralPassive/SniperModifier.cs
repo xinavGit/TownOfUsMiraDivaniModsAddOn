@@ -37,7 +37,7 @@ public sealed class SniperModifier : TouGameModifier, IColoredModifier, IWikiDis
         (int)OptionGroupSingleton<NeutralModifierOptions>.Instance.SniperChance.Value;
 
     public override int GetAmountPerGame() =>
-        (int)OptionGroupSingleton<NeutralModifierOptions>.Instance.SniperAmount;
+        (int)OptionGroupSingleton<NeutralModifierOptions>.Instance.SniperAmount.Value;
 
     public override bool IsModifierValidOn(RoleBehaviour role)
     {

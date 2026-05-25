@@ -14,8 +14,8 @@ namespace DivaniMods.Buttons.Crewmate.CrewmateSupport;
 public class PlaceBeaconButton : TownOfUsButton
 {
     public override string Name => "Place Beacon";
-    public override float Cooldown => OptionGroupSingleton<SentinelOptions>.Instance.PlaceBeaconCooldown;
-    public override float EffectDuration => OptionGroupSingleton<SentinelOptions>.Instance.PlaceBeaconDuration;
+    public override float Cooldown => OptionGroupSingleton<SentinelOptions>.Instance.PlaceBeaconCooldown.Value;
+    public override float EffectDuration => OptionGroupSingleton<SentinelOptions>.Instance.PlaceBeaconDuration.Value;
     public override int MaxUses => 0;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.SentinelPlaceBeaconButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight;
@@ -49,7 +49,7 @@ public class PlaceBeaconButton : TownOfUsButton
         
         if (_isPlacing) return false;
 
-        int maxBeacons = (int)OptionGroupSingleton<SentinelOptions>.Instance.MaxBeacons;
+        int maxBeacons = (int)OptionGroupSingleton<SentinelOptions>.Instance.MaxBeacons.Value;
         if (BeaconManager.BeaconsPlaced >= maxBeacons) return false;
 
         // Only usable when standing in a valid room
@@ -66,7 +66,7 @@ public class PlaceBeaconButton : TownOfUsButton
         var player = PlayerControl.LocalPlayer;
         if (player == null) return;
 
-        int maxBeacons = (int)OptionGroupSingleton<SentinelOptions>.Instance.MaxBeacons;
+        int maxBeacons = (int)OptionGroupSingleton<SentinelOptions>.Instance.MaxBeacons.Value;
         if (BeaconManager.BeaconsPlaced >= maxBeacons) return;
 
         var position = player.GetTruePosition();

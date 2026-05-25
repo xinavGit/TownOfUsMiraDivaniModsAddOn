@@ -199,7 +199,7 @@ public static class PortalManager
         if (!PlayerCooldowns.TryGetValue(playerId, out float lastUse))
             return true;
         
-        return Time.time - lastUse >= MiraAPI.GameOptions.OptionGroupSingleton<Options.PortalmakerOptions>.Instance.UsePortalCooldown;
+        return Time.time - lastUse >= MiraAPI.GameOptions.OptionGroupSingleton<Options.PortalmakerOptions>.Instance.UsePortalCooldown.Value;
     }
     
     public static void SetPlayerCooldown(byte playerId)
@@ -212,7 +212,7 @@ public static class PortalManager
         if (!PlayerCooldowns.TryGetValue(playerId, out float lastUse))
             return 0f;
         
-        float cooldown = MiraAPI.GameOptions.OptionGroupSingleton<Options.PortalmakerOptions>.Instance.UsePortalCooldown;
+        float cooldown = MiraAPI.GameOptions.OptionGroupSingleton<Options.PortalmakerOptions>.Instance.UsePortalCooldown.Value;
         float remaining = cooldown - (Time.time - lastUse);
         return remaining > 0 ? remaining : 0f;
     }

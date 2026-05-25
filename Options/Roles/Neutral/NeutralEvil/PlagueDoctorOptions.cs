@@ -9,20 +9,21 @@ namespace DivaniMods.Options;
 public class PlagueDoctorOptions : AbstractOptionGroup<PlagueDoctorRole>
 {
     public override string GroupName => "Plague Doctor";
-    [ModdedNumberOption("Infect Cooldown", 5, 60, 2.5f, MiraNumberSuffixes.Seconds)]
-    public float InfectCooldown { get; set; } = 25;
 
-    [ModdedNumberOption("Max Direct Infections", 1, 5, 1)]
-    public float MaxInfections { get; set; } = 2;
+    public ModdedNumberOption InfectCooldown { get; } = new(
+        "Infect Cooldown", 25f, 5f, 60f, 2.5f, MiraNumberSuffixes.Seconds);
 
-    [ModdedNumberOption("Infection Distance", 0.4f, 2f, 0.2f, MiraNumberSuffixes.Multiplier)]
-    public float InfectDistance { get; set; } = 1f;
+    public ModdedNumberOption MaxInfections { get; } = new(
+        "Max Direct Infections", 2f, 1f, 5f, 1f, MiraNumberSuffixes.None);
 
-    [ModdedNumberOption("Infection Duration", 1, 30, 1, MiraNumberSuffixes.Seconds)]
-    public float InfectDuration { get; set; } = 10;
+    public ModdedNumberOption InfectDistance { get; } = new(
+        "Infection Distance", 1f, 0.4f, 2f, 0.2f, MiraNumberSuffixes.Multiplier);
 
-    [ModdedNumberOption("Post-Meeting Immunity", 0, 30, 2.5f, MiraNumberSuffixes.Seconds)]
-    public float ImmunityTime { get; set; } = 10;
+    public ModdedNumberOption InfectDuration { get; } = new(
+        "Infection Duration", 10f, 1f, 30f, 1f, MiraNumberSuffixes.Seconds);
+
+    public ModdedNumberOption ImmunityTime { get; } = new(
+        "Post-Meeting Immunity", 10f, 0f, 30f, 2.5f, MiraNumberSuffixes.Seconds);
 
     [ModdedToggleOption("Can Use Vents")]
     public bool CanVent { get; set; } = false;
@@ -51,5 +52,4 @@ public class PlagueDoctorOptions : AbstractOptionGroup<PlagueDoctorRole>
     {
         Visible = () => OptionGroupSingleton<PlagueDoctorOptions>.Instance.NotifyPlayersWhenInfectionClose,
     };
-
 }

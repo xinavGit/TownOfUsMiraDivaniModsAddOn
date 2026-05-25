@@ -26,7 +26,7 @@ public static class SilencerPatch
         if (source == null || source.Data == null) return;
         if (source.Data.Role is not SilencerRole) return;
 
-        _totalKillSeconds += OptionGroupSingleton<SilencerOptions>.Instance.SecondsPerKill;
+        _totalKillSeconds += OptionGroupSingleton<SilencerOptions>.Instance.SecondsPerKill.Value;
     }
 
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameEnd))]
@@ -59,7 +59,7 @@ public static class SilencerPatch
                 ? GameOptionsManager.Instance.currentNormalGameOptions.VotingTime
                 : 0;
 
-            var headroom = Mathf.Max(0f, votingTime - opts.MinimumVotingTime);
+            var headroom = Mathf.Max(0f, votingTime - opts.MinimumVotingTime.Value);
             _cachedReduction = Mathf.Clamp(_totalKillSeconds, 0f, headroom);
         }
     }

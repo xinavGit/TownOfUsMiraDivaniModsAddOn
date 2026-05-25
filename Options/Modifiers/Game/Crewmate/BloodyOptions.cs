@@ -45,8 +45,8 @@ public sealed class BloodyOptions : AbstractOptionGroup<BloodyModifier>
             ? FootprintIntervalDistance.Value
             : FootprintIntervalTime.Value;
 
-    [ModdedNumberOption("Bloody Footprint Size", 1f, 10f, suffixType: MiraNumberSuffixes.Multiplier)]
-    public float FootprintSize { get; set; } = 4f;
+    public ModdedNumberOption FootprintSize { get; } = new(
+        "Bloody Footprint Size", 4f, 1f, 10f, 1f, MiraNumberSuffixes.Multiplier);
 
     public ModdedNumberOption SingleFootprintFadeSeconds { get; } = new(
         "Single Footprint Fade", 4f, 1f, 15f, 0.5f, MiraNumberSuffixes.Seconds);

@@ -1,5 +1,5 @@
 using MiraAPI.GameOptions;
-using MiraAPI.GameOptions.Attributes;
+using MiraAPI.GameOptions.OptionTypes;
 using MiraAPI.Utilities;
 using DivaniMods.Roles.Neutral.NeutralKilling;
 
@@ -9,9 +9,9 @@ public class FragOptions : AbstractOptionGroup<FragRole>
 {
     public override string GroupName => "Frag";
 
-    [ModdedNumberOption("Bomb Timer", 10, 45, 5, MiraNumberSuffixes.Seconds)]
-    public float BombTimer { get; set; } = 20;
+    public ModdedNumberOption BombTimer { get; } = new(
+        "Bomb Timer", 20f, 10f, 45f, 5f, MiraNumberSuffixes.Seconds);
 
-    [ModdedNumberOption("Give Bomb Cooldown", 10, 60, 5, MiraNumberSuffixes.Seconds)]
-    public float GiveBombCooldown { get; set; } = 25;
+    public ModdedNumberOption GiveBombCooldown { get; } = new(
+        "Give Bomb Cooldown", 25f, 10f, 60f, 5f, MiraNumberSuffixes.Seconds);
 }

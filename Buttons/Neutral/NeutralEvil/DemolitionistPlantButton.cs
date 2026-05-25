@@ -16,9 +16,9 @@ namespace DivaniMods.Buttons.Neutral.NeutralEvil;
 public class DemolitionistPlantButton : TownOfUsButton
 {
     public override string Name => "Plant";
-    public override float Cooldown => OptionGroupSingleton<DemolitionistOptions>.Instance.PlantCooldown;
+    public override float Cooldown => OptionGroupSingleton<DemolitionistOptions>.Instance.PlantCooldown.Value;
     public override float EffectDuration => _arming
-        ? OptionGroupSingleton<DemolitionistOptions>.Instance.PlantToSabotageDelay
+        ? OptionGroupSingleton<DemolitionistOptions>.Instance.PlantToSabotageDelay.Value
         : OptionGroupSingleton<DemolitionistOptions>.Instance.IsTimedSabotageStyle
             ? OptionGroupSingleton<DemolitionistOptions>.Instance.PlantTime.Value
             : 0f;
@@ -233,7 +233,7 @@ public class DemolitionistPlantButton : TownOfUsButton
         _isPlanting = false;
         _arming = true;
 
-        var delay = OptionGroupSingleton<DemolitionistOptions>.Instance.PlantToSabotageDelay;
+        var delay = OptionGroupSingleton<DemolitionistOptions>.Instance.PlantToSabotageDelay.Value;
         var colorHex = ColorUtility.ToHtmlStringRGB(DemolitionistRole.DemolitionistColor);
         MiraAPI.Utilities.Helpers.CreateAndShowNotification(
             $"<b><color=#{colorHex}>Bomb arming in {delay:0}s...</color></b>",

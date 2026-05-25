@@ -133,7 +133,7 @@ public static class PlagueDoctorPatch
 
     private static string BuildInfectionStatusText()
     {
-        var infectDuration = OptionGroupSingleton<PlagueDoctorOptions>.Instance.InfectDuration;
+        var infectDuration = OptionGroupSingleton<PlagueDoctorOptions>.Instance.InfectDuration.Value;
 
         var text = string.Empty;
 
