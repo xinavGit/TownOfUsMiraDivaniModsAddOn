@@ -34,6 +34,9 @@ public class DomesmithOptions : AbstractOptionGroup<DomesmithRole>
     public ModdedNumberOption ActiveSeconds { get; } =
         new("Dome Active Seconds", 10f, 2f, 30f, 2f, MiraNumberSuffixes.Seconds);
 
+    public ModdedToggleOption AllowCrewmateKillsInDome { get; } =
+        new("Allow Crewmate Kills In Dome", false);
+
     public ModdedEnumOption SeenBy { get; } = new(
         "Dome Visible To",
         (int)DomesmithVisibility.Domesmith,

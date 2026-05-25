@@ -134,6 +134,8 @@
     <EmbeddedResource Include="Resources\Icons\Beartrap.png" />
     <EmbeddedResource Include="Resources\Icons\Bloody.png" />
     <EmbeddedResource Include="Resources\Icons\Demolitionist.png" />
+    <EmbeddedResource Include="Resources\Icons\Domesmith.png" />
+    <EmbeddedResource Include="Resources\DomesmithPlaceDome.png" />
     <EmbeddedResource Include="Resources\Icons\Memento.png" />
     <EmbeddedResource Include="Resources\DemolitionistPlant.png" />
     <EmbeddedResource Include="Resources\DemolitionistDefuse.png" />
@@ -163,6 +165,7 @@
     <EmbeddedResource Include="Resources\Announcements\modNews-en_US.json" />
     <EmbeddedResource Include="Resources\RecruitMeetingCrewmate.png" />
     <EmbeddedResource Include="Resources\RecruitMeetingImpostor.png" />
+    <EmbeddedResource Include="Resources\DomesmithIntro.wav" />
   </ItemGroup>
 
   <Target Name="CopyToPlugins" AfterTargets="Build">

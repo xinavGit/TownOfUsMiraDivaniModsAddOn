@@ -22,4 +22,7 @@ public enum DivaniRpcCalls : uint
     DemolitionistPlantSabotage = 217,
     DemolitionistDefuseSabotage = 218,
     DemolitionistSabotageExpired = 219,
+    DomesmithPlaceDome = 220,
+    DomesmithRemoveDome = 221,
+    DomesmithBlockedKill = 222,
 }
