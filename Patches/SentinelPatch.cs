@@ -1,8 +1,8 @@
 using HarmonyLib;
 using Reactor.Utilities;
 using DivaniMods.Assets;
-using DivaniMods.Buttons.Crewmate.CrewmateSupport;
-using DivaniMods.Roles.Crewmate.CrewmateSupport;
+using DivaniMods.Buttons.Crewmate.CrewmateInvestigative;
+using DivaniMods.Roles.Crewmate.CrewmateInvestigative;
 using System.Collections;
 using UnityEngine;
 

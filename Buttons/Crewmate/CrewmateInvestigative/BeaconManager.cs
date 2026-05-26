@@ -3,11 +3,11 @@ using System.Linq;
 using System.Text;
 using Reactor.Networking.Attributes;
 using DivaniMods.Assets;
-using DivaniMods.Roles.Crewmate.CrewmateSupport;
+using DivaniMods.Roles.Crewmate.CrewmateInvestigative;
 using TownOfUs.Utilities;
 using UnityEngine;
 
-namespace DivaniMods.Buttons.Crewmate.CrewmateSupport;
+namespace DivaniMods.Buttons.Crewmate.CrewmateInvestigative;
 
 public static class BeaconManager
 {

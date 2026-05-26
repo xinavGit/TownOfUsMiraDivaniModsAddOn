@@ -7,7 +7,7 @@ using TownOfUs.Roles;
 using TownOfUs.Utilities;
 using UnityEngine;
 
-namespace DivaniMods.Roles.Crewmate.CrewmateSupport;
+namespace DivaniMods.Roles.Crewmate.CrewmateInvestigative;
 
 public sealed class SentinelRole(IntPtr cppPtr)
     : CrewmateRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IDoomable
@@ -21,7 +21,7 @@ public sealed class SentinelRole(IntPtr cppPtr)
         "During meetings you can see who\npassed through each beacon's room.";
     public Color RoleColor => SentinelColor;
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
-    public RoleAlignment RoleAlignment => RoleAlignment.CrewmateSupport;
+    public RoleAlignment RoleAlignment => RoleAlignment.CrewmateInvestigative;
 
     // Doomsayer hint category: surveillance/info fits Insight (same as Sentry/Trapper).
     public DoomableType DoomHintType => DoomableType.Insight;

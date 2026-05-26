@@ -4,12 +4,12 @@ using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using DivaniMods.Assets;
 using DivaniMods.Options;
-using DivaniMods.Roles.Crewmate.CrewmateSupport;
+using DivaniMods.Roles.Crewmate.CrewmateInvestigative;
 using System.Collections;
 using TownOfUs.Buttons;
 using UnityEngine;
 
-namespace DivaniMods.Buttons.Crewmate.CrewmateSupport;
+namespace DivaniMods.Buttons.Crewmate.CrewmateInvestigative;
 
 public class PlaceBeaconButton : TownOfUsButton
 {
