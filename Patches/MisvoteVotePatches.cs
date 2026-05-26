@@ -9,6 +9,7 @@ using MiraAPI.Roles;
 using MiraAPI.Utilities;
 using MiraAPI.Voting;
 using DivaniMods.Modifiers.Game.Universal;
+using DivaniMods.Options;
 using TownOfUs.Events.Misc;
 using TownOfUs.Modifiers;
 using TownOfUs.Options.Roles.Crewmate;
@@ -19,14 +20,7 @@ namespace DivaniMods.Patches;
 
 public static class MisvoteVotePatches
 {
-    // Priority 100 = runs AFTER MayorEvents/KnightedEvents.HandleVoteEvent (default 0).
-    // MiraEventManager.InvokeEvent runs every handler regardless of @event.Cancel(),
-    // and cancellation only blocks the default action at the end of VotingUtils.HandleVote.
-    // If we ran earlier (negative priority), Mayor's handler would still execute after us
-    // and append its 3 votes on the original TargetId on top of our random picks, producing
-    // 3 Mayor votes + 3 random votes (most visible with Skip). Running last lets us wipe
-    // whatever Mayor/Knighted wrote and replace it with the random picks, then cancel to
-    // suppress the default single-vote add.
+
     [RegisterEvent(100)]
     public static void HandleVoteEventHandler(HandleVoteEvent @event)
     {
@@ -46,8 +40,7 @@ public static class MisvoteVotePatches
             var voteCount = GetVoteCountForVoter(voter);
 
             var voteData = @event.VoteData;
-            // Drop any votes that earlier handlers (Mayor's 3x VoteForPlayer, Knighted's
-            // 1+N VoteForPlayer when ShowKnightedVotes is on, etc.) already appended.
+
             voteData.Votes.Clear();
             voteData.SetRemainingVotes(0);
 
@@ -70,16 +63,21 @@ public static class MisvoteVotePatches
         }
     }
 
-    // Priority 100 = runs AFTER KnightedEvents.ProcessVotesEventHandler (default 0).
-    // When "Show Knighted Votes" is OFF, KnightedEvents adds bonus CustomVotes to
-    // KnightedEvents.ExtraKnightVotes, all duplicating the first vote's Suspect.
-    // We re-roll each bonus vote cast by a Misvoted player so every extra ends up
-    // on an independently-chosen random target, then recompute the exiled player.
+
     [RegisterEvent(100)]
     public static void ProcessVotesEventHandler(ProcessVotesEvent @event)
     {
         try
         {
+            // When a prosecution is active this round, ProsecutorEvents.VoteEvent already
+            // cleared every player's VoteData and cast 5 votes on the victim. The other
+            // misvoted players now look "non-voting", so injecting random votes for them
+            // would override the prosecution result. Leave prosecution votes untouched.
+            if (IsActiveProsecutionRound())
+            {
+                return;
+            }
+
             var anyChanged = AddRandomVotesForNonVotingMisvotedPlayers(@event.Votes);
             for (var i = 0; i < KnightedEvents.ExtraKnightVotes.Count; i++)
             {
@@ -116,18 +114,17 @@ public static class MisvoteVotePatches
         }
     }
 
-    // Priority 100 = runs AFTER ProsecutorEvents.VoteEvent (default 0). That handler
-    // clears every player's VoteData and then casts 5 votes on the Prosecutor's
-    // chosen victim. If the Prosecutor is Misvoted, we wipe those 5 votes and
-    // re-cast 5 independently-random votes so the actual exile is chaotic.
-    // ProsecutorEvents.WrapUpEvent already punishes the Prosecutor based on the
-    // player who actually ends up exiled, so the punishment path still works.
     [RegisterEvent(100)]
     public static void CheckForEndVotingEventHandler(CheckForEndVotingEvent @event)
     {
         try
         {
             if (!@event.IsVotingComplete)
+            {
+                return;
+            }
+
+            if (!OptionGroupSingleton<MisvoteOptions>.Instance.ProsecutorVotesRandom.Value)
             {
                 return;
             }
@@ -179,9 +176,6 @@ public static class MisvoteVotePatches
         }
     }
 
-    // Matches the number of votes the voter would cast in their *normal* turn
-    // through HandleVoteEvent. Mayor (Revealed) casts 3, Knighted casts
-    // 1 + knights * VotesPerKnight when ShowVotes is enabled, everyone else 1.
     private static int GetVoteCountForVoter(PlayerControl voter)
     {
         if (voter.Data.Role is MayorRole mayor && mayor.Revealed)
@@ -233,8 +227,6 @@ public static class MisvoteVotePatches
             .Concat(KnightedEvents.ExtraKnightVotes.Select(vote => vote.Voter))
             .ToHashSet();
 
-        // Do not use AllPlayerControls.ToArray() + LINQ here: on Il2Cpp that enumeration
-        // can truncate, so Misvote would only ever see the first few players (e.g. slots 0–1).
         foreach (var voter in PlayerControl.AllPlayerControls)
         {
             if (voter == null || voter.Data == null || voter.Data.IsDead || voter.Data.Disconnected)
@@ -265,6 +257,22 @@ public static class MisvoteVotePatches
         return anyChanged;
     }
 
+    private static bool IsActiveProsecutionRound()
+    {
+        var prosecutor = CustomRoleUtils.GetActiveRolesOfType<ProsecutorRole>()
+            .FirstOrDefault(x =>
+                x != null && x.Player != null && !x.Player.HasDied() &&
+                x.HasProsecuted && x.ProsecuteVictim != byte.MaxValue);
+
+        if (prosecutor == null)
+        {
+            return false;
+        }
+
+        return prosecutor.ProsecutionsCompleted <
+            OptionGroupSingleton<ProsecutorOptions>.Instance.MaxProsecutions;
+    }
+
     private static PlayerControl? GetPlayer(byte playerId)
     {
         foreach (var p in PlayerControl.AllPlayerControls)
@@ -280,8 +288,7 @@ public static class MisvoteVotePatches
 
     private static byte PickRandomAliveTargetId()
     {
-        // Build candidates with plain foreach — AllPlayerControls.ToArray() + LINQ can fail to
-        // include every Il2Cpp player, which made random votes hit only the first 1–2 players.
+
         var candidates = new List<byte>();
         foreach (var p in PlayerControl.AllPlayerControls)
         {
