@@ -20,8 +20,8 @@ public class ShuffleOptions : AbstractOptionGroup<ShuffleModifier>
     public ModdedNumberOption ShuffleCooldown { get; } =
         new("Shuffle Cooldown", 30f, 10f, 60f, 5f, MiraNumberSuffixes.Seconds);
     
-    public ModdedToggleOption ShuffleDeadBodiesOption { get; } =
+    public ModdedToggleOption ShuffleCorpsesOption { get; } =
         new("Shuffle Dead Bodies", true);
-    
-    public bool ShuffleDeadBodies => ShuffleDeadBodiesOption.Value;
+
+    public bool ShuffleCorpses => ShuffleCorpsesOption.Value;
 }
