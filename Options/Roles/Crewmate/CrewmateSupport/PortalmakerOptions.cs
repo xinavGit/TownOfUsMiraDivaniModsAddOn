@@ -21,4 +21,7 @@ public class PortalmakerOptions : AbstractOptionGroup<PortalmakerRole>
 
     [ModdedToggleOption("Enable Portals After First Meeting")]
     public bool EnableAfterFirstMeeting { get; set; } = false;
+
+    [ModdedToggleOption("Portalmaker Can Teleport To Own Portals")]
+    public bool PortalmakerDirectTeleport { get; set; } = true;
 }

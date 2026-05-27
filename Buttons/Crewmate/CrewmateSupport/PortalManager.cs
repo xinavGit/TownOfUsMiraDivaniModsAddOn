@@ -6,6 +6,7 @@ using Reactor.Networking.Attributes;
 using MiraAPI.Modifiers;
 using DivaniMods.Assets;
 using DivaniMods.Roles.Crewmate.CrewmateSupport;
+using MiraAPI.Hud;
 using TownOfUs.Modifiers.Game.Universal;
 using TownOfUs.Utilities;
 
@@ -20,6 +21,9 @@ public static class PortalManager
     
     public static GameObject? Portal1Object { get; private set; }
     public static GameObject? Portal2Object { get; private set; }
+
+    public static string Portal1RoomName { get; private set; } = "Outside/Hallway";
+    public static string Portal2RoomName { get; private set; } = "Outside/Hallway";
     
     public static bool BothPortalsPlaced => Portal1Position.HasValue && Portal2Position.HasValue;
     public static int PortalsPlaced => (Portal1Position.HasValue ? 1 : 0) + (Portal2Position.HasValue ? 1 : 0);
@@ -34,6 +38,8 @@ public static class PortalManager
     {
         Portal1Position = null;
         Portal2Position = null;
+        Portal1RoomName = "Portal 1";
+        Portal2RoomName = "Portal 2";
         PortalsUnlocked = false;
 
         if (Portal1Object != null)
@@ -119,12 +125,46 @@ public static class PortalManager
         if (!Portal1Position.HasValue)
         {
             Portal1Position = position;
+            Portal1RoomName = RoomHelpers.GetRoomName(position) ?? "Outside/Hallway";
             CreatePortalVisual(position, 1);
         }
         else if (!Portal2Position.HasValue)
         {
             Portal2Position = position;
+            Portal2RoomName = RoomHelpers.GetRoomName(position) ?? "Outside/Hallway";
             CreatePortalVisual(position, 2);
+        }
+    }
+
+    public static string GetPortalRoomName(int index) => index == 1 ? Portal1RoomName : Portal2RoomName;
+
+    public static Vector2? GetPortalDestination(int index)
+    {
+        var pos = index == 1 ? Portal1Position : index == 2 ? Portal2Position : null;
+        if (!pos.HasValue) return null;
+        return new Vector2(pos.Value.x, pos.Value.y + PortalAnchorYOffset);
+    }
+
+    public static void SyncPortalButtonCooldowns()
+    {
+        var cd = MiraAPI.GameOptions.OptionGroupSingleton<Options.PortalmakerOptions>.Instance.UsePortalCooldown.Value;
+        TrySetButtonTimer<UsePortalButton>(cd);
+        TrySetButtonTimer<PortalTeleportButton1>(cd);
+        TrySetButtonTimer<PortalTeleportButton2>(cd);
+    }
+
+    private static void TrySetButtonTimer<T>(float cd) where T : CustomActionButton
+    {
+        try
+        {
+            var button = CustomButtonSingleton<T>.Instance;
+            if (button != null)
+            {
+                button.Timer = cd;
+            }
+        }
+        catch
+        {
         }
     }
     

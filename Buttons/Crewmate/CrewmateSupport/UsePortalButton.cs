@@ -74,5 +74,6 @@ public class UsePortalButton : TownOfUsButton
         }
 
         PortalManager.RpcUsePortal(player, destination.Value.x, destination.Value.y);
+        PortalManager.SyncPortalButtonCooldowns();
     }
 }

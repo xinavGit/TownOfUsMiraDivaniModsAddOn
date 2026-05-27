@@ -79,7 +79,11 @@
       <HintPath>$(BepInExPath)\interop\Il2Cppmscorlib.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    
+    <Reference Include="Rewired_Core">
+      <HintPath>$(BepInExPath)\interop\Rewired_Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
     <Reference Include="Unity.TextMeshPro">
       <HintPath>$(BepInExPath)\interop\Unity.TextMeshPro.dll</HintPath>
       <Private>false</Private>
