@@ -51,7 +51,7 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
     public static bool InfectionWarningShown { get; set; }
 
     public string RoleName => "Plague Doctor";
-    public string RoleDescription => "Infect everyone to win!";
+    public string RoleDescription => "Cough, cough!";
     public string RoleLongDescription => "You are a Plague Doctor.\n" +
         "Use your ability to infect players directly.\n" +
         "Infected players will spread the disease\nto others who stand near them.\n" +

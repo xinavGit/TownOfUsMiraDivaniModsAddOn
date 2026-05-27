@@ -17,7 +17,7 @@ public sealed class ThiefRole(IntPtr cppPtr)
     : CrewmateRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IDoomable
 {
     public string RoleName => "Thief";
-    public string RoleDescription => "Steal modifiers from other players!";
+    public string RoleDescription => "Steal everything!";
     public string RoleLongDescription => "Use your Pickpocket ability to steal modifiers from nearby players. You can hold a limited number of stolen modifiers.";
     public Color RoleColor => new Color(0.5f, 0.3f, 0.1f);
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;

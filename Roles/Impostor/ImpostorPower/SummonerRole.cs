@@ -24,7 +24,7 @@ public sealed class SummonerRole(IntPtr cppPtr)
 {
     public string RoleName => "Summoner";
     public string LocaleKey => "Summoner";
-    public string RoleDescription => "Recruit a dead player into a Revenant during meetings!";
+    public string RoleDescription => "Recruit dead shipmates!";
     public string RoleLongDescription =>
         "During meetings, recruit a dead Crewmate or Neutral to rise as the Impostor afterlife Revenant.";
     public Color RoleColor => Palette.ImpostorRed;

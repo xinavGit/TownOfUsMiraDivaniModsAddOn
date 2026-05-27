@@ -41,7 +41,7 @@ public sealed class OpportunistRole(IntPtr cppPtr)
     public bool CanBeGuessed => true;
 
     public string RoleName => "Opportunist";
-    public string RoleDescription => "Pile votes on a target to win!";
+    public string RoleDescription => "Benefit from others!";
     public string RoleLongDescription =>
         "After you vote a target, every other vote cast on that same target during the meeting counts toward your goal.\n" +
         "Reach the required number of collected votes to win alone.";

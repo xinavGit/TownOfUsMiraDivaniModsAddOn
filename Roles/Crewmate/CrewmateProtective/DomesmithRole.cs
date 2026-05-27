@@ -15,7 +15,7 @@ public sealed class DomesmithRole(IntPtr cppPtr)
     public static readonly Color DomesmithColor = new Color32(0x0E, 0xAA, 0xC3, 255);
 
     public string RoleName => "Domesmith";
-    public string RoleDescription => "Place domes to shield areas of the map!";
+    public string RoleDescription => "Shield the group!";
     public string RoleLongDescription =>
         "Drop protective domes on the ground to protect the group!";
     

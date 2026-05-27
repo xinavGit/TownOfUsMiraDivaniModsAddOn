@@ -24,7 +24,7 @@ public sealed class FragRole(IntPtr cppPtr)
     public static readonly Color FragColor = new Color32(232, 168, 124, 255);
 
     public string RoleName => "Frag";
-    public string RoleDescription => "Start a hot-potato time bomb!";
+    public string RoleDescription => "Hot potato time!";
     public string RoleLongDescription =>
         "Give a time bomb to a player.\n" +
         "After a short random delay the timer starts.\n" +

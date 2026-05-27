@@ -15,7 +15,7 @@ public sealed class SentinelRole(IntPtr cppPtr)
     public static readonly Color SentinelColor = new Color32(244, 169, 60, 255);
 
     public string RoleName => "Sentinel";
-    public string RoleDescription => "Place beacons to monitor rooms!";
+    public string RoleDescription => "Monitor rooms!";
     public string RoleLongDescription => "Place beacons in rooms to track who\npasses through them.\n" +
         "You will see a flash when someone\nenters a room with your beacon.\n" +
         "During meetings you can see who\npassed through each beacon's room.";

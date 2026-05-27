@@ -29,7 +29,7 @@ public sealed class DemolitionistRole(IntPtr cppPtr)
     public static readonly Color DemolitionistColor = new Color32(0x28, 0x36, 0x7D, 255);
 
     public string RoleName => "Demolitionist";
-    public string RoleDescription => "Plant Bombs at consoles to win!";
+    public string RoleDescription => "The bomb has been planted!";
     public string RoleLongDescription =>
         "Plant Bombs at consoles to win!\n" +
         "If the crew defuses in time, it fails.";

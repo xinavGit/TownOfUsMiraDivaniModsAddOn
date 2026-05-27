@@ -17,7 +17,7 @@ public sealed class DeadlockRole(IntPtr cppPtr)
 {
     public string RoleName => "Deadlock";
     public string LocaleKey => "Deadlock";
-    public string RoleDescription => "Lock down crewmate tasks!";
+    public string RoleDescription => "Disable tasks!";
     public string RoleLongDescription => "Use your Lockdown ability to temporarily\ndisable all crewmate tasks.\nDuring lockdown, crewmates cannot access\nor complete any tasks.";
     public Color RoleColor => Palette.ImpostorRed;
     public ModdedRoleTeams Team => ModdedRoleTeams.Impostor;
