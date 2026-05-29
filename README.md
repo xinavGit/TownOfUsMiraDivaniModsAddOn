@@ -16,12 +16,19 @@ new roles and modifiers on top of [Town Of Us &ndash; Mira](https://github.com/A
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#thief"><img width="10%" src="./Resources/Icons/Thief.png" alt="Thief"/></a>
   <img src="./Resources/Headers/CrewSupport.png" alt="Crewmate Support"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#portalmaker"><img width="10%" src="./Resources/Icons/PortalMaker.png" alt="Portalmaker"/></a>
+  <img src="./Resources/Headers/CrewInvestigative.png" alt="Crewmate Investigative"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#sentinel"><img width="10%" src="./Resources/Icons/Sentinel.png" alt="Sentinel"/></a>
+  <img src="./Resources/Headers/CrewProtective.png" alt="Crewmate Protective"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#domesmith"><img width="10%" src="./Resources/Icons/Domesmith.png" alt="Domesmith"/></a>
   <img src="./Resources/Headers/ImpKilling.png" alt="Impostor Killing"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#silencer"><img width="10%" src="./Resources/Icons/Silencer.png" alt="Silencer"/></a>
   <img src="./Resources/Headers/ImpSupport.png" alt="Impostor Support"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#deadlock"><img width="10%" src="./Resources/Icons/Deadlock.png" alt="Deadlock"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#recruiter"><img width="10%" src="./Resources/Icons/Recruiter.png" alt="Recruiter"/></a>
+  <img src="./Resources/Headers/ImpPower.png" alt="Impostor Power"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#summoner"><img width="10%" src="./Resources/Icons/Summoner.png" alt="Summoner"/></a>
+  <img src="./Resources/Headers/ImpAfterlife.png" alt="Impostor Afterlife"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#revenant"><img width="10%" src="./Resources/Icons/Revenant.png" alt="Revenant"/></a>
   <img src="./Resources/Headers/NeutEvil.png" alt="Neutral Evil"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#innocent"><img width="10%" src="./Resources/Icons/Innocent.png" alt="Innocent"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#plague-doctor"><img width="10%" src="./Resources/Icons/PlagueDoctor.png" alt="Plague Doctor"/></a>
@@ -34,6 +41,7 @@ new roles and modifiers on top of [Town Of Us &ndash; Mira](https://github.com/A
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#blindspot"><img width="10%" src="./Resources/Icons/Blindspot.png" alt="Blindspot"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#bloody"><img width="10%" src="./Resources/Icons/Bloody.png" alt="Bloody"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#bear-trap"><img width="10%" src="./Resources/Icons/Beartrap.png" alt="Bear Trap"/></a>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#sprout"><img width="10%" src="./Resources/Icons/Sprout.png" alt="Sprout"/></a>
   <img src="./Resources/Headers/ImpMods.png" alt="Impostor modifiers"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#ruthless"><img width="10%" src="./Resources/Icons/Ruthless.png" alt="Ruthless"/></a>
   <img src="./Resources/Headers/NeutMods.png" alt="Neutral modifiers"/>
