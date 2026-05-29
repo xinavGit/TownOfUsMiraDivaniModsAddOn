@@ -23,7 +23,7 @@ public sealed class RecruiterRole(IntPtr cppPtr)
 {
     public string RoleName => "Recruiter";
     public string LocaleKey => "Recruiter";
-    public string RoleDescription => "Recruit a non-Impostor during the first meeting!";
+    public string RoleDescription => "Pick your partner!";
     public string RoleLongDescription =>
         "During the first meeting only, recruit a non-Impostor to become an Impostor.";
     public Color RoleColor => Palette.ImpostorRed;
@@ -40,7 +40,7 @@ public sealed class RecruiterRole(IntPtr cppPtr)
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.RecruiterIcon,
-        IntroSound = DivaniAssets.SilencerIntroSound,
+        IntroSound = DivaniAssets.RecruiterIntroSound,
         MaxRoleCount = 1,
     };
 

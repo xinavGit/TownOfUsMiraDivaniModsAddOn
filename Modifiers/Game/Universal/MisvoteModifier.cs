@@ -33,5 +33,5 @@ public sealed class MisvoteModifier : UniversalGameModifier, IColoredModifier, I
         (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.MisvoteChance.Value;
 
     public override int GetAmountPerGame() =>
-        (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.MisvoteAmount;
+        (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.MisvoteAmount.Value;
 }

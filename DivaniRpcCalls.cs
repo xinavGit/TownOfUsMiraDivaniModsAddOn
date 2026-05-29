@@ -22,4 +22,13 @@ public enum DivaniRpcCalls : uint
     DemolitionistPlantSabotage = 217,
     DemolitionistDefuseSabotage = 218,
     DemolitionistSabotageExpired = 219,
+    DomesmithPlaceDome = 220,
+    DomesmithRemoveDome = 221,
+    DomesmithBlockedKill = 222,
+    SummonerSetPendingTarget = 223,
+    SummonerRecruitRevenant = 224,
+    RevenantKill = 225,
+    OpportunistWildcard = 226,
+    OpportunistWildcardRefund = 227,
+    SproutCollect = 228,
 }

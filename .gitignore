@@ -50,7 +50,7 @@ desktop.ini
 # Local-only source references (kept out of the public repo)
 # These folders ship game source trees used for reading, not building.
 # -----------------------------------------------------------------------------
-/TownOfUs/
+/TownOfUs/ 
 /TouMiraRolesExtension/
 /TheOtherRolesGMIA-main/
 /wiki/
@@ -77,6 +77,7 @@ graphify-out/
 *.tmp
 .claude/*
 .agents/*
+graphify-out/*
 skills-lock.json
 # Personal TODO scratchpads
 lockdown timer*.txt

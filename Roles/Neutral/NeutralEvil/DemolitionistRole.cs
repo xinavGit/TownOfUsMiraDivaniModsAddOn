@@ -29,7 +29,7 @@ public sealed class DemolitionistRole(IntPtr cppPtr)
     public static readonly Color DemolitionistColor = new Color32(0x28, 0x36, 0x7D, 255);
 
     public string RoleName => "Demolitionist";
-    public string RoleDescription => "Plant Bombs at consoles to win!";
+    public string RoleDescription => "The bomb has been planted!";
     public string RoleLongDescription =>
         "Plant Bombs at consoles to win!\n" +
         "If the crew defuses in time, it fails.";
@@ -71,7 +71,7 @@ public sealed class DemolitionistRole(IntPtr cppPtr)
     public StringBuilder SetTabText()
     {
         var stringB = ITownOfUsRole.SetNewTabText(this);
-        var needed = (int)OptionGroupSingleton<DemolitionistOptions>.Instance.SabotagesToWin;
+        var needed = (int)OptionGroupSingleton<DemolitionistOptions>.Instance.SabotagesToWin.Value;
         var capped = Math.Min(DemolitionistSabotageState.SuccessfulSabotages, needed);
         stringB.AppendLine(TownOfUsPlugin.Culture, $"<b>Successful sabotages: {capped}/{needed}</b>");
         return stringB;
@@ -117,7 +117,7 @@ public sealed class DemolitionistRole(IntPtr cppPtr)
 
     public bool WinConditionMet()
     {
-        var needed = (int)OptionGroupSingleton<DemolitionistOptions>.Instance.SabotagesToWin;
+        var needed = (int)OptionGroupSingleton<DemolitionistOptions>.Instance.SabotagesToWin.Value;
         return DemolitionistSabotageState.SuccessfulSabotages >= needed;
     }
 

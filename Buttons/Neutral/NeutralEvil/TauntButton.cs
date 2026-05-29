@@ -17,7 +17,7 @@ namespace DivaniMods.Buttons.Neutral.NeutralEvil;
 public sealed class TauntButton : TownOfUsTargetButton<PlayerControl>
 {
     public override string Name => "Taunt";
-    public override float Cooldown => OptionGroupSingleton<InnocentOptions>.Instance.TauntCooldown;
+    public override float Cooldown => OptionGroupSingleton<InnocentOptions>.Instance.TauntCooldown.Value;
     public override float EffectDuration => 0f;
     public override int MaxUses => 0;
     public override LoadableAsset<Sprite> Sprite => TouNeutAssets.JesterHauntSprite;

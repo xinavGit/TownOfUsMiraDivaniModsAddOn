@@ -34,7 +34,7 @@ public sealed class BearTrapModifier : TouGameModifier, IColoredModifier, IWikiD
         (int)OptionGroupSingleton<CrewmateModifierOptions>.Instance.BearTrapChance.Value;
 
     public override int GetAmountPerGame() =>
-        (int)OptionGroupSingleton<CrewmateModifierOptions>.Instance.BearTrapAmount;
+        (int)OptionGroupSingleton<CrewmateModifierOptions>.Instance.BearTrapAmount.Value;
 
     public override bool IsModifierValidOn(RoleBehaviour role)
     {

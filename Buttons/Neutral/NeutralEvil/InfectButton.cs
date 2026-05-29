@@ -14,9 +14,9 @@ namespace DivaniMods.Buttons.Neutral.NeutralEvil;
 public class InfectButton : TownOfUsTargetButton<PlayerControl>
 {
     public override string Name => "Infect";
-    public override float Cooldown => OptionGroupSingleton<PlagueDoctorOptions>.Instance.InfectCooldown;
+    public override float Cooldown => OptionGroupSingleton<PlagueDoctorOptions>.Instance.InfectCooldown.Value;
     public override float EffectDuration => 0f;
-    public override int MaxUses => (int)OptionGroupSingleton<PlagueDoctorOptions>.Instance.MaxInfections;
+    public override int MaxUses => (int)OptionGroupSingleton<PlagueDoctorOptions>.Instance.MaxInfections.Value;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.PlagueDoctorInfectButton;
     public override float Distance => 1.5f;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight;

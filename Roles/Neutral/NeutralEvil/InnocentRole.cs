@@ -35,7 +35,7 @@ public sealed class InnocentRole(IntPtr cppPtr)
     public RoleBehaviour CrewVariant => RoleManager.Instance.GetRole((RoleTypes)RoleId.Get<EngineerTouRole>());
     public bool CanBeGuessed => true;
     public string RoleName => "Innocent";
-    public string RoleDescription => "Taunt someone into killing you!";
+    public string RoleDescription => "I swear it wasn't me!";
     public string RoleLongDescription =>
         "Use Taunt on another player to make them immediately kill you.\n" +
         "If that player is voted out in the next meeting, you win.";

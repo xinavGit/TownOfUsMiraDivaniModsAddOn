@@ -8,7 +8,7 @@
     
     <AssemblyName>DivaniMods</AssemblyName>
     <RootNamespace>DivaniMods</RootNamespace>
-    <Version>1.2.3-beta</Version>
+    <Version>1.2.3</Version>
     <!--
       TownOfUs + TouMiraRolesExtension live in-repo for reference only. Do not compile them here:
       this project already references TownOfUsMira.dll from BepInEx. Compiling sources duplicates
@@ -79,7 +79,11 @@
       <HintPath>$(BepInExPath)\interop\Il2Cppmscorlib.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    
+    <Reference Include="Rewired_Core">
+      <HintPath>$(BepInExPath)\interop\Rewired_Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
     <Reference Include="Unity.TextMeshPro">
       <HintPath>$(BepInExPath)\interop\Unity.TextMeshPro.dll</HintPath>
       <Private>false</Private>
@@ -134,6 +138,12 @@
     <EmbeddedResource Include="Resources\Icons\Beartrap.png" />
     <EmbeddedResource Include="Resources\Icons\Bloody.png" />
     <EmbeddedResource Include="Resources\Icons\Demolitionist.png" />
+    <EmbeddedResource Include="Resources\Icons\Domesmith.png" />
+    <EmbeddedResource Include="Resources\Icons\Summoner.png" />
+    <EmbeddedResource Include="Resources\Icons\Revenant.png" />
+    <EmbeddedResource Include="Resources\Icons\Sprout.png" Condition="Exists('Resources\Icons\Sprout.png')" />
+    <EmbeddedResource Include="Resources\Collect.png" Condition="Exists('Resources\Collect.png')" />
+    <EmbeddedResource Include="Resources\DomesmithPlaceDome.png" />
     <EmbeddedResource Include="Resources\Icons\Memento.png" />
     <EmbeddedResource Include="Resources\DemolitionistPlant.png" />
     <EmbeddedResource Include="Resources\DemolitionistDefuse.png" />
@@ -163,6 +173,12 @@
     <EmbeddedResource Include="Resources\Announcements\modNews-en_US.json" />
     <EmbeddedResource Include="Resources\RecruitMeetingCrewmate.png" />
     <EmbeddedResource Include="Resources\RecruitMeetingImpostor.png" />
+    <EmbeddedResource Include="Resources\SummonerMeetingActive.png" />
+    <EmbeddedResource Include="Resources\SummonerMeetingInactive.png" />
+    <EmbeddedResource Include="Resources\DomesmithIntro.wav" />
+    <EmbeddedResource Include="Resources\SummonerIntro.wav" />
+    <EmbeddedResource Include="Resources\SentinelIntro.wav" />
+    <EmbeddedResource Include="Resources\RecruiterIntro.wav" />
   </ItemGroup>
 
   <Target Name="CopyToPlugins" AfterTargets="Build">

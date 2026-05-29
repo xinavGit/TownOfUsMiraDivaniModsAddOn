@@ -15,7 +15,7 @@ public sealed class PortalmakerRole(IntPtr cppPtr)
     : CrewmateRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IDoomable
 {
     public string RoleName => "Portalmaker";
-    public string RoleDescription => "Place two portals for everyone to use!";
+    public string RoleDescription => "From here, to there!";
     public string RoleLongDescription => "Place two portals on the map. Once both portals are placed, anyone can use them to teleport between the two locations.";
     public Color RoleColor => new Color(0.047f, 0.420f, 0.961f);
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;

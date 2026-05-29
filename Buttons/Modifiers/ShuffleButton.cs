@@ -81,7 +81,7 @@ public class ShuffleButton : TownOfUsButton
             originalPositions.Add(new Vector2(pos.x, pos.y + 0.3636f));
         }
         
-        var includeDeadBodies = OptionGroupSingleton<ShuffleOptions>.Instance.ShuffleDeadBodies;
+        var includeDeadBodies = OptionGroupSingleton<ShuffleOptions>.Instance.ShuffleCorpses;
         var deadBodies = new List<DeadBody>();
         var deadBodyPositions = new List<Vector2>();
         

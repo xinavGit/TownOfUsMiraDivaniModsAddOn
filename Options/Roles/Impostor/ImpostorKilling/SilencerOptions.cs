@@ -1,5 +1,6 @@
 using MiraAPI.GameOptions;
 using MiraAPI.GameOptions.Attributes;
+using MiraAPI.GameOptions.OptionTypes;
 using MiraAPI.Utilities;
 using DivaniMods.Roles.Impostor.ImpostorKilling;
 
@@ -9,11 +10,11 @@ public class SilencerOptions : AbstractOptionGroup<SilencerRole>
 {
     public override string GroupName => "Silencer";
 
-    [ModdedNumberOption("Seconds Cut Per Kill", 10, 40, 5, MiraNumberSuffixes.Seconds)]
-    public float SecondsPerKill { get; set; } = 25;
+    public ModdedNumberOption SecondsPerKill { get; } = new(
+        "Seconds Cut Per Kill", 25f, 10f, 40f, 5f, MiraNumberSuffixes.Seconds);
 
-    [ModdedNumberOption("Minimum Voting Time", 5, 25, 5, MiraNumberSuffixes.Seconds)]
-    public float MinimumVotingTime { get; set; } = 10;
+    public ModdedNumberOption MinimumVotingTime { get; } = new(
+        "Minimum Voting Time", 10f, 5f, 25f, 5f, MiraNumberSuffixes.Seconds);
 
     [ModdedToggleOption("Normal Voting Time When Dead")]
     public bool NormalVotingTimeWhenDead { get; set; } = true;

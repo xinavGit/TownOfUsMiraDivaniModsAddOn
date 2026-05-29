@@ -16,12 +16,11 @@ public class DemolitionistDefuseButton : TownOfUsButton
 {
     public override string Name => "Defuse";
     public override float Cooldown => 1f;
+    public override float InitialCooldown => 0f;
     public override float EffectDuration => OptionGroupSingleton<DemolitionistOptions>.Instance.IsTimedSabotageStyle
         ? OptionGroupSingleton<DemolitionistOptions>.Instance.DefuseTime.Value
         : 0f;
     public override int MaxUses => 0;
-    // TownOfUsButton defaults ZeroIsInfinite to false; without this MaxUses=0 reads as "0 uses left"
-    // and CanUse is always false (button permanently greyed). True = unlimited uses.
     public override bool ZeroIsInfinite { get; set; } = true;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.DemolitionistDefuseButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomLeft;
@@ -40,6 +39,30 @@ public class DemolitionistDefuseButton : TownOfUsButton
     {
         Instance = this;
         return role != null;
+    }
+    private static bool DefuseVisibleNow()
+    {
+        var player = PlayerControl.LocalPlayer;
+        if (player == null || player.Data == null || player.Data.IsDead) return false;
+        if (!DemolitionistSabotageState.IsActive) return false;
+        return DemolitionistSabotageState.IsLocalPlayerAtPlantedConsole();
+    }
+
+    public override void SetActive(bool visible, RoleBehaviour role)
+    {
+        Button?.ToggleVisible(visible && Enabled(role) && DefuseVisibleNow());
+    }
+
+    protected override void FixedUpdate(PlayerControl playerControl)
+    {
+        if (MeetingHud.Instance)
+        {
+            return;
+        }
+
+        var hudActive = HudManager.Instance.UseButton.isActiveAndEnabled ||
+                        HudManager.Instance.PetButton.isActiveAndEnabled;
+        Button?.gameObject.SetActive(hudActive && DefuseVisibleNow());
     }
 
     public override bool CanUse()
@@ -167,8 +190,6 @@ public class DemolitionistDefuseButton : TownOfUsButton
 
     private IEnumerator DefuseNumpadCoroutine(PlayerControl player)
     {
-        // No EffectActive during the keypad: TownOfUsButton would draw the clamped Timer (-1) as text.
-        // _isDefusing + the numpad InProgress check keep the button disabled.
         _isDefusing = true;
 
         if (!DemolitionistNumpad.Controller.OpenDefuse(player))
@@ -177,7 +198,6 @@ public class DemolitionistDefuseButton : TownOfUsButton
             yield break;
         }
 
-        // Same as plant: IsLocalPlayerAtPlantedConsole uses CouldUse paths that fail while KeypadGame is open.
         while (DemolitionistNumpad.Controller.InProgress)
         {
             if (player == null || player.Data == null || player.Data.IsDead
@@ -193,13 +213,6 @@ public class DemolitionistDefuseButton : TownOfUsButton
         EffectActive = false;
         Timer = Cooldown;
         _isDefusing = false;
-    }
-
-    // TownOfUsButton.FixedUpdate force-activates the button every frame (based on Use/Pet button),
-    // which would override UpdateDefuseButton's proximity hiding and leave the defuse button
-    // occupying a HUD slot when it should be gone. Empty override = visibility is solely the patch's.
-    protected override void FixedUpdate(PlayerControl playerControl)
-    {
     }
 
     private void AbortDefuse()

@@ -30,7 +30,7 @@ public class BlindspotModifier : TouGameModifier, IColoredModifier, IWikiDiscove
         (int)OptionGroupSingleton<CrewmateModifierOptions>.Instance.BlindspotChance.Value;
     
     public override int GetAmountPerGame() =>
-        (int)OptionGroupSingleton<CrewmateModifierOptions>.Instance.BlindspotAmount;
+        (int)OptionGroupSingleton<CrewmateModifierOptions>.Instance.BlindspotAmount.Value;
     
     public override bool IsModifierValidOn(RoleBehaviour role)
     {

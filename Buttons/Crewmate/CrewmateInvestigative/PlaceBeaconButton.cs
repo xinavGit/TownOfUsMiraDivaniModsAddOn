@@ -4,18 +4,18 @@ using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using DivaniMods.Assets;
 using DivaniMods.Options;
-using DivaniMods.Roles.Crewmate.CrewmateSupport;
+using DivaniMods.Roles.Crewmate.CrewmateInvestigative;
 using System.Collections;
 using TownOfUs.Buttons;
 using UnityEngine;
 
-namespace DivaniMods.Buttons.Crewmate.CrewmateSupport;
+namespace DivaniMods.Buttons.Crewmate.CrewmateInvestigative;
 
 public class PlaceBeaconButton : TownOfUsButton
 {
     public override string Name => "Place Beacon";
-    public override float Cooldown => OptionGroupSingleton<SentinelOptions>.Instance.PlaceBeaconCooldown;
-    public override float EffectDuration => OptionGroupSingleton<SentinelOptions>.Instance.PlaceBeaconDuration;
+    public override float Cooldown => OptionGroupSingleton<SentinelOptions>.Instance.PlaceBeaconCooldown.Value;
+    public override float EffectDuration => OptionGroupSingleton<SentinelOptions>.Instance.PlaceBeaconDuration.Value;
     public override int MaxUses => 0;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.SentinelPlaceBeaconButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight;
@@ -34,6 +34,32 @@ public class PlaceBeaconButton : TownOfUsButton
         return role is SentinelRole;
     }
 
+    // Visible only for a live Sentinel standing in a valid room.
+    private static bool BeaconVisibleNow()
+    {
+        var player = PlayerControl.LocalPlayer;
+        if (player == null || player.Data == null || player.Data.IsDead) return false;
+        if (player.Data.Role is not SentinelRole) return false;
+        return BeaconManager.IsInRoom(player.GetTruePosition());
+    }
+
+    public override void SetActive(bool visible, RoleBehaviour role)
+    {
+        Button?.ToggleVisible(visible && Enabled(role) && BeaconVisibleNow());
+    }
+
+    protected override void FixedUpdate(PlayerControl playerControl)
+    {
+        if (MeetingHud.Instance)
+        {
+            return;
+        }
+
+        var hudActive = HudManager.Instance.UseButton.isActiveAndEnabled ||
+                        HudManager.Instance.PetButton.isActiveAndEnabled;
+        Button?.gameObject.SetActive(hudActive && BeaconVisibleNow());
+    }
+
     public override bool CanUse()
     {
         var player = PlayerControl.LocalPlayer;
@@ -49,7 +75,7 @@ public class PlaceBeaconButton : TownOfUsButton
         
         if (_isPlacing) return false;
 
-        int maxBeacons = (int)OptionGroupSingleton<SentinelOptions>.Instance.MaxBeacons;
+        int maxBeacons = (int)OptionGroupSingleton<SentinelOptions>.Instance.MaxBeacons.Value;
         if (BeaconManager.BeaconsPlaced >= maxBeacons) return false;
 
         // Only usable when standing in a valid room
@@ -66,7 +92,7 @@ public class PlaceBeaconButton : TownOfUsButton
         var player = PlayerControl.LocalPlayer;
         if (player == null) return;
 
-        int maxBeacons = (int)OptionGroupSingleton<SentinelOptions>.Instance.MaxBeacons;
+        int maxBeacons = (int)OptionGroupSingleton<SentinelOptions>.Instance.MaxBeacons.Value;
         if (BeaconManager.BeaconsPlaced >= maxBeacons) return;
 
         var position = player.GetTruePosition();

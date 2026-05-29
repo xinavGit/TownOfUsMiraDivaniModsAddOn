@@ -7,7 +7,7 @@ using TownOfUs.Roles;
 using TownOfUs.Utilities;
 using UnityEngine;
 
-namespace DivaniMods.Roles.Crewmate.CrewmateSupport;
+namespace DivaniMods.Roles.Crewmate.CrewmateInvestigative;
 
 public sealed class SentinelRole(IntPtr cppPtr)
     : CrewmateRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IDoomable
@@ -15,13 +15,13 @@ public sealed class SentinelRole(IntPtr cppPtr)
     public static readonly Color SentinelColor = new Color32(244, 169, 60, 255);
 
     public string RoleName => "Sentinel";
-    public string RoleDescription => "Place beacons to monitor rooms!";
+    public string RoleDescription => "Monitor rooms!";
     public string RoleLongDescription => "Place beacons in rooms to track who\npasses through them.\n" +
         "You will see a flash when someone\nenters a room with your beacon.\n" +
         "During meetings you can see who\npassed through each beacon's room.";
     public Color RoleColor => SentinelColor;
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
-    public RoleAlignment RoleAlignment => RoleAlignment.CrewmateSupport;
+    public RoleAlignment RoleAlignment => RoleAlignment.CrewmateInvestigative;
 
     // Doomsayer hint category: surveillance/info fits Insight (same as Sentry/Trapper).
     public DoomableType DoomHintType => DoomableType.Insight;
@@ -31,6 +31,7 @@ public sealed class SentinelRole(IntPtr cppPtr)
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.SentinelIcon,
+        IntroSound = DivaniAssets.SentinelIntroSound,
         MaxRoleCount = 1,
     };
 }

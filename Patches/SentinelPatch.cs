@@ -1,8 +1,8 @@
 using HarmonyLib;
 using Reactor.Utilities;
 using DivaniMods.Assets;
-using DivaniMods.Buttons.Crewmate.CrewmateSupport;
-using DivaniMods.Roles.Crewmate.CrewmateSupport;
+using DivaniMods.Buttons.Crewmate.CrewmateInvestigative;
+using DivaniMods.Roles.Crewmate.CrewmateInvestigative;
 using System.Collections;
 using UnityEngine;
 
@@ -25,6 +25,13 @@ public static class SentinelPatch
         BeaconManager.Reset();
     }
 
+    [HarmonyPatch(typeof(LobbyBehaviour), nameof(LobbyBehaviour.Start))]
+    [HarmonyPostfix]
+    public static void ResetOnLobby()
+    {
+        BeaconManager.Reset();
+    }
+
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     [HarmonyPostfix]
     public static void HudManagerUpdate(HudManager __instance)
@@ -34,10 +41,7 @@ public static class SentinelPatch
 
         bool isSentinel = localPlayer.Data.Role is SentinelRole;
 
-        // Button visibility: only show when in a valid room
-        UpdateButtonVisibility(localPlayer, isSentinel);
-
-        // Only Sentinel tracks beacons
+        // Only Sentinel tracks beacons (button visibility handled by PlaceBeaconButton itself)
         if (!isSentinel) return;
         if (localPlayer.Data.IsDead) return;
 
@@ -60,43 +64,6 @@ public static class SentinelPatch
                 Color.white,
                 new Vector3(0f, 1f, -20f),
                 spr: DivaniAssets.SentinelIcon.LoadAsset());
-        }
-    }
-
-    private static void UpdateButtonVisibility(PlayerControl player, bool isSentinel)
-    {
-        var buttonInstance = PlaceBeaconButton.Instance;
-        if (buttonInstance?.Button == null) return;
-
-        if (!isSentinel || player.Data.IsDead)
-        {
-            buttonInstance.Button.gameObject.SetActive(false);
-            return;
-        }
-
-        // Hide during meetings
-        if (MeetingHud.Instance || ExileController.Instance)
-        {
-            buttonInstance.Button.gameObject.SetActive(false);
-            return;
-        }
-
-        var position = player.GetTruePosition();
-        bool inRoom = BeaconManager.IsInRoom(position);
-        
-        if (inRoom)
-        {
-            buttonInstance.Button.gameObject.SetActive(true);
-            
-            // Show disabled state during comms sabotage
-            if (PlayerTask.PlayerHasTaskOfType<IHudOverrideTask>(player))
-            {
-                buttonInstance.Button.SetDisabled();
-            }
-        }
-        else
-        {
-            buttonInstance.Button.gameObject.SetActive(false);
         }
     }
 

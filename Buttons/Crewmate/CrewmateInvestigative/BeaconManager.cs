@@ -3,11 +3,11 @@ using System.Linq;
 using System.Text;
 using Reactor.Networking.Attributes;
 using DivaniMods.Assets;
-using DivaniMods.Roles.Crewmate.CrewmateSupport;
+using DivaniMods.Roles.Crewmate.CrewmateInvestigative;
 using TownOfUs.Utilities;
 using UnityEngine;
 
-namespace DivaniMods.Buttons.Crewmate.CrewmateSupport;
+namespace DivaniMods.Buttons.Crewmate.CrewmateInvestigative;
 
 public static class BeaconManager
 {
@@ -37,18 +37,7 @@ public static class BeaconManager
         return false;
     }
 
-    public static string? GetRoomName(Vector2 position)
-    {
-        if (!ShipStatus.Instance) return null;
-
-        foreach (var room in ShipStatus.Instance.FastRooms.Values)
-        {
-            if (room.roomArea != null && room.roomArea.OverlapPoint(position))
-                return TranslationController.Instance.GetString(room.RoomId);
-        }
-
-        return null;
-    }
+    public static string? GetRoomName(Vector2 position) => RoomHelpers.GetRoomName(position);
 
     public static PlainShipRoom? GetShipRoom(Vector2 position)
     {

@@ -47,7 +47,7 @@ public class ShuffleModifier : UniversalGameModifier, IColoredModifier, IWikiDis
         (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.ShuffleChance.Value;
     
     public override int GetAmountPerGame() =>
-        (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.ShuffleAmount;
+        (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.ShuffleAmount.Value;
     
     public override bool IsModifierValidOn(RoleBehaviour role)
     {

@@ -286,6 +286,47 @@
         "\n- Added Causes of Death for Murders inside Divani mods (Silenced,Shattered,Fragged)",
         "\n- I listen to your feedback, changed some of the default values for Roles/Modifier Options"
       ]
+    },
+    {
+      "Date": "2026-05-29T12:00:00Z",
+      "Number": "10009",
+      "ShortTitle": "Divani Mods v1.2.3",
+      "Title": "Domesmith, Summoner & Revenant, Sprout",
+      "SubTitle": "Two new roles, an Impostor ghost, a new modifier, plus tuning and bugfixes",
+      "Text": [
+        "\r<size=110%><b>Divani Mods v1.2.3</b></size>",
+        "\n\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.2.3>Download v1.2.3</link>",
+        "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases>All releases</link>",
+        "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki>Wiki</link>",
+        "\n\n\r<size=108%><b>Added Role: Domesmith</b> (Crewmate Protective)</size>",
+        "\n\nUse your dome shield to protect groups (limited use).",
+        "\nWatch out for Ruthless still — they show no mercy!",
+        "\n\n\r<size=108%><b>Added Role: Summoner</b> (Impostor Power) &mdash; <b>Revenant</b> (Impostor Afterlife)</size>",
+        "\n\nBring the dead to life, and bring them to your side! Select a dead shipmate in a meeting to summon them as a ghost Impostor role (<b>Revenant</b>).",
+        "\nA Revenant can kill and vent, but can also be clicked like a Haunter — putting them to rest as an Impostor ghost.",
+        "\nOnce revented (has been Revenant), you can no longer see the roles of alive non-Impostors.",
+        "\n\n\r<size=108%><b>Added Modifier: Sprout</b> (Crewmate Utility)</size>",
+        "\n\nOne-time ability to gain a modifier from a dead body. Non-allowed modifiers turn into valid ones (Thief-like).",
+        "\n\n\r<size=108%><b>Bugfixes</b></size>",
+        "\n\n- Fixed inconsistencies with button visibilities (Demolitionist, Portalmaker).",
+        "\n- Fixed Thief Pickpocket button not being usable during Comms sabotage.",
+        "\n- Portals are properly destroyed when a game ends.",
+        "\n\n\r<size=108%><b>Role / Modifier Changes</b></size>",
+        "\n\n<b>Sentinel</b>",
+        "\n- Changed to <b>Crewmate Investigative</b>.",
+        "\n\n<b>Misvote</b>",
+        "\n- Added option to enable/disable random prosecute.",
+        "\n\n<b>Shuffle</b>",
+        "\n- Changed default for <b>Shuffle Dead Bodies</b> to <b>true</b>.",
+        "\n\n<b>Opportunist</b>",
+        "\n- Added <b>Wildcard</b> option to make skip votes count once.",
+        "\n\n<b>Portalmaker</b>",
+        "\n- Added option for the role holder to teleport to either of their portals from anywhere.",
+        "\n\n\r<size=108%><b>Misc Changes</b></size>",
+        "\n\n- Added funny role intros.",
+        "\n- Role options match the newer Mira format.",
+        "\n- Added more intro sounds for roles that didn't have one yet."
+      ]
     }
   ]
 }

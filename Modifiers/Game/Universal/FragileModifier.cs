@@ -34,7 +34,7 @@ public class FragileModifier : UniversalGameModifier, IColoredModifier, IWikiDis
         (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.FragileChance.Value;
     
     public override int GetAmountPerGame() =>
-        (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.FragileAmount;
+        (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.FragileAmount.Value;
 
     public override void OnActivate()
     {

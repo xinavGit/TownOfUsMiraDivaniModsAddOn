@@ -1,5 +1,6 @@
 using MiraAPI.GameOptions;
 using MiraAPI.GameOptions.Attributes;
+using MiraAPI.GameOptions.OptionTypes;
 using MiraAPI.Utilities;
 using DivaniMods.Roles.Crewmate.CrewmatePower;
 
@@ -9,18 +10,18 @@ public class ThiefOptions : AbstractOptionGroup<ThiefRole>
 {
     public override string GroupName => "Thief";
 
-    [ModdedNumberOption("Max Stolen Modifiers", 1, 5, 1)]
-    public float MaxStolenModifiers { get; set; } = 2;
-    
-    [ModdedNumberOption("Pickpocket Cooldown", 10, 60, 5, MiraNumberSuffixes.Seconds)]
-    public float PickpocketCooldown { get; set; } = 25;
+    public ModdedNumberOption MaxStolenModifiers { get; } = new(
+        "Max Stolen Modifiers", 2f, 1f, 5f, 1f, MiraNumberSuffixes.None);
 
-    [ModdedNumberOption("Pickpocket Duration", 1f, 10f, 0.5f, MiraNumberSuffixes.Seconds)]
-    public float PickpocketDuration { get; set; } = 3f;
+    public ModdedNumberOption PickpocketCooldown { get; } = new(
+        "Pickpocket Cooldown", 25f, 10f, 60f, 5f, MiraNumberSuffixes.Seconds);
 
-    [ModdedNumberOption("Pickpocket Range", 0.5f, 3f, 0.25f, MiraNumberSuffixes.Multiplier)]
-    public float PickpocketRange { get; set; } = 1f;
-    
+    public ModdedNumberOption PickpocketDuration { get; } = new(
+        "Pickpocket Duration", 3f, 1f, 10f, 0.5f, MiraNumberSuffixes.Seconds);
+
+    public ModdedNumberOption PickpocketRange { get; } = new(
+        "Pickpocket Range", 1f, 0.5f, 3f, 0.25f, MiraNumberSuffixes.Multiplier);
+
     [ModdedToggleOption("Stealing Lover Breaks Their Heart")]
     public bool StealingLoverHeartbreaksVictim { get; set; } = true;
 }

@@ -14,8 +14,8 @@ namespace DivaniMods.Buttons.Crewmate.CrewmateSupport;
 public class PlacePortalButton : TownOfUsButton
 {
     public override string Name => "Place Portal";
-    public override float Cooldown => OptionGroupSingleton<PortalmakerOptions>.Instance.PlacePortalCooldown;
-    public override float EffectDuration => OptionGroupSingleton<PortalmakerOptions>.Instance.PlacePortalDuration;
+    public override float Cooldown => OptionGroupSingleton<PortalmakerOptions>.Instance.PlacePortalCooldown.Value;
+    public override float EffectDuration => OptionGroupSingleton<PortalmakerOptions>.Instance.PlacePortalDuration.Value;
     public override int MaxUses => 2;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.PlacePortalButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight;

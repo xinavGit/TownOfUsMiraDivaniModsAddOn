@@ -121,139 +121,17 @@ public static class DemolitionistPatches
 
     #endregion
 
-    #region Plant / defuse button visibility
+    #region Sabotage map overlay
 
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     internal static class ButtonVisibility
     {
+        // Plant/defuse button visibility is handled by the buttons themselves (TownOfUsButton
+        // slaves the gameObject to the vanilla HUD buttons, so map/lobby/meeting are covered).
         [HarmonyPriority(Priority.Last)]
         private static void Postfix()
         {
-            UpdatePlantButton();
-            UpdateDefuseButton();
             SabotageMap.HudManagerUpdatePostfix();
-        }
-
-        private static void UpdatePlantButton()
-        {
-            var plant = ResolvePlantButton();
-            if (plant?.Button == null)
-            {
-                return;
-            }
-
-            // Always visible for the live Demolitionist (hidden only when dead / in a meeting).
-            // Usability (near a console, not arming, no active sabotage) is handled by CanUse, so
-            // the button just greys out instead of disappearing — matches the Pickpocket button.
-            // Do NOT call SyncAfterSabotageEnded here: it runs every frame and would wipe the
-            // arming effect (EffectActive/_arming) before the bomb can fire.
-            var player = PlayerControl.LocalPlayer;
-            var show = player != null
-                && player.Data != null
-                && !player.Data.IsDead
-                && IsDemolitionist(player)
-                && !MeetingHud.Instance
-                && !ExileController.Instance;
-
-            plant.Button.gameObject.SetActive(show);
-        }
-
-        private static void UpdateDefuseButton()
-        {
-            var defuse = ResolveDefuseButton();
-            if (defuse?.Button == null)
-            {
-                return;
-            }
-
-            var player = PlayerControl.LocalPlayer;
-            if (player == null || player.Data == null || player.Data.IsDead)
-            {
-                defuse.Button.gameObject.SetActive(false);
-                return;
-            }
-
-            if (MeetingHud.Instance || ExileController.Instance)
-            {
-                defuse.Button.gameObject.SetActive(false);
-                return;
-            }
-
-            if (!DemolitionistSabotageState.IsActive)
-            {
-                defuse.Button.gameObject.SetActive(false);
-                return;
-            }
-
-            var nearPlanted = DemolitionistSabotageState.IsLocalPlayerAtPlantedConsole();
-            defuse.Button.gameObject.SetActive(nearPlanted);
-            if (!nearPlanted)
-            {
-                return;
-            }
-
-            if (defuse.CanUse())
-            {
-                defuse.Button.SetEnabled();
-            }
-            else
-            {
-                defuse.Button.SetDisabled();
-            }
-        }
-
-        private static DemolitionistPlantButton? ResolvePlantButton()
-        {
-            if (DemolitionistPlantButton.Instance != null)
-            {
-                return DemolitionistPlantButton.Instance;
-            }
-
-            foreach (var button in CustomButtonManager.Buttons)
-            {
-                if (button is DemolitionistPlantButton plant)
-                {
-                    DemolitionistPlantButton.Instance = plant;
-                    return plant;
-                }
-            }
-
-            return null;
-        }
-
-        private static DemolitionistDefuseButton? ResolveDefuseButton()
-        {
-            if (DemolitionistDefuseButton.Instance != null)
-            {
-                return DemolitionistDefuseButton.Instance;
-            }
-
-            foreach (var button in CustomButtonManager.Buttons)
-            {
-                if (button is DemolitionistDefuseButton defuse)
-                {
-                    DemolitionistDefuseButton.Instance = defuse;
-                    return defuse;
-                }
-            }
-
-            return null;
-        }
-
-        private static bool IsDemolitionist(PlayerControl player)
-        {
-            var role = player.Data?.Role;
-            if (role == null)
-            {
-                return false;
-            }
-
-            if (role is DemolitionistRole)
-            {
-                return true;
-            }
-
-            return role.GetType().Name == nameof(DemolitionistRole);
         }
     }
 

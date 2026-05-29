@@ -17,7 +17,7 @@ public sealed class SilencerRole(IntPtr cppPtr)
 {
     public string RoleName => "Silencer";
     public string LocaleKey => "Silencer";
-    public string RoleDescription => "Cut meeting voting time with every kill!";
+    public string RoleDescription => "Cut meeting time!";
     public string RoleLongDescription =>
         "Each kill you make shaves seconds\n" +
         "off the voting time of every meeting for the rest of the game.";

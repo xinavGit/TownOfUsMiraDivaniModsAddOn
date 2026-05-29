@@ -13,14 +13,14 @@ public class DemolitionistOptions : AbstractOptionGroup<DemolitionistRole>, IWik
 {
     public override string GroupName => "Demolitionist";
 
-    [ModdedNumberOption("Successful Sabotages To Win", 1f, 4f, 1f)]
-    public float SabotagesToWin { get; set; } = 2f;
+    public ModdedNumberOption SabotagesToWin { get; } = new(
+        "Successful Sabotages To Win", 2f, 1f, 4f, 1f, MiraNumberSuffixes.None);
 
-    [ModdedNumberOption("Plant Cooldown", 10f, 60f, 5f, MiraNumberSuffixes.Seconds)]
-    public float PlantCooldown { get; set; } = 30f;
+    public ModdedNumberOption PlantCooldown { get; } = new(
+        "Plant Cooldown", 30f, 10f, 60f, 5f, MiraNumberSuffixes.Seconds);
 
-    [ModdedNumberOption("Plant To Sabotage Delay", 1f, 10f, 1f, MiraNumberSuffixes.Seconds)]
-    public float PlantToSabotageDelay { get; set; } = 3f;
+    public ModdedNumberOption PlantToSabotageDelay { get; } = new(
+        "Plant To Sabotage Delay", 3f, 1f, 10f, 1f, MiraNumberSuffixes.Seconds);
 
     public ModdedNumberOption SabotageDurationSkeld { get; } =
         new("Sabotage Duration (Skeld)", 30f, 10f, 120f, 5f, MiraNumberSuffixes.Seconds)

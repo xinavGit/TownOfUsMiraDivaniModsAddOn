@@ -15,9 +15,9 @@ namespace DivaniMods.Buttons.Impostor.ImpostorSupport;
 public class LockdownButton : TownOfUsButton
 {
     public override string Name => "Lockdown";
-    public override float Cooldown => OptionGroupSingleton<DeadlockOptions>.Instance.LockdownCooldown;
-    public override float EffectDuration => OptionGroupSingleton<DeadlockOptions>.Instance.LockdownDuration;
-    public override int MaxUses => (int)OptionGroupSingleton<DeadlockOptions>.Instance.InitialCharges;
+    public override float Cooldown => OptionGroupSingleton<DeadlockOptions>.Instance.LockdownCooldown.Value;
+    public override float EffectDuration => OptionGroupSingleton<DeadlockOptions>.Instance.LockdownDuration.Value;
+    public override int MaxUses => (int)OptionGroupSingleton<DeadlockOptions>.Instance.InitialCharges.Value;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.DeadlockLockdownButton;
     public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight;
     public override Color TextOutlineColor => Palette.ImpostorRed;
@@ -27,7 +27,7 @@ public class LockdownButton : TownOfUsButton
     public static float LockdownTimeRemaining { get; private set; }
     public static LockdownButton? Instance { get; private set; }
     
-    public static int ChargesPerKill => (int)OptionGroupSingleton<DeadlockOptions>.Instance.ChargesPerKill;
+    public static int ChargesPerKill => (int)OptionGroupSingleton<DeadlockOptions>.Instance.ChargesPerKill.Value;
     
     private int _currentCharges = -1;
     
@@ -111,7 +111,7 @@ public class LockdownButton : TownOfUsButton
                 CurrentCharges--;
             }
             
-            var duration = OptionGroupSingleton<DeadlockOptions>.Instance.LockdownDuration;
+            var duration = OptionGroupSingleton<DeadlockOptions>.Instance.LockdownDuration.Value;
             RpcStartLockdown(player, duration);
         }
         else

@@ -36,6 +36,15 @@ internal static class PortalResetOnGameEnd
     }
 }
 
+[HarmonyPatch(typeof(LobbyBehaviour), nameof(LobbyBehaviour.Start))]
+internal static class PortalResetOnLobby
+{
+    private static void Postfix()
+    {
+        PortalManager.Reset();
+    }
+}
+
 [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Start))]
 internal static class PortalReportOnMeetingStart
 {

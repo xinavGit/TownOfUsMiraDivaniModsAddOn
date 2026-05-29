@@ -51,7 +51,7 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
     public static bool InfectionWarningShown { get; set; }
 
     public string RoleName => "Plague Doctor";
-    public string RoleDescription => "Infect everyone to win!";
+    public string RoleDescription => "Cough, cough!";
     public string RoleLongDescription => "You are a Plague Doctor.\n" +
         "Use your ability to infect players directly.\n" +
         "Infected players will spread the disease\nto others who stand near them.\n" +
@@ -120,7 +120,7 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
         LastAccrueFrame.Clear();
         DeadPlayers.Clear();
         PlagueDoctorPlayer = null;
-        NumInfectionsRemaining = (int)OptionGroupSingleton<PlagueDoctorOptions>.Instance.MaxInfections;
+        NumInfectionsRemaining = (int)OptionGroupSingleton<PlagueDoctorOptions>.Instance.MaxInfections.Value;
         MeetingFlag = false;
         ImmunityTimer = 0f;
         InfectionWarningShown = false;
@@ -185,7 +185,7 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
             return;
         }
 
-        var infectDuration = OptionGroupSingleton<PlagueDoctorOptions>.Instance.InfectDuration;
+        var infectDuration = OptionGroupSingleton<PlagueDoctorOptions>.Instance.InfectDuration.Value;
         InfectionProgress[player.PlayerId] = infectDuration;
     }
 
@@ -208,8 +208,8 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
         }
 
         var opts = OptionGroupSingleton<PlagueDoctorOptions>.Instance;
-        var infectDistance = opts.InfectDistance;
-        var infectDuration = opts.InfectDuration;
+        var infectDistance = opts.InfectDistance.Value;
+        var infectDuration = opts.InfectDuration.Value;
 
         foreach (var target in PlayerControl.AllPlayerControls)
         {
@@ -322,7 +322,7 @@ public sealed class PlagueDoctorRole(IntPtr cppPtr)
 
     public static void OnRoundStart()
     {
-        var immunityTime = OptionGroupSingleton<PlagueDoctorOptions>.Instance.ImmunityTime;
+        var immunityTime = OptionGroupSingleton<PlagueDoctorOptions>.Instance.ImmunityTime.Value;
         ImmunityTimer = immunityTime;
         MeetingFlag = false;
 

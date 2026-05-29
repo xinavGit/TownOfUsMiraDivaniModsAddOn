@@ -1,5 +1,4 @@
 using MiraAPI.GameOptions;
-using MiraAPI.GameOptions.Attributes;
 using MiraAPI.GameOptions.OptionTypes;
 using MiraAPI.Utilities;
 using TownOfUs.Options;
@@ -15,12 +14,12 @@ public sealed class NeutralModifierOptions : AbstractOptionGroup
     public override bool ShowInModifiersMenu => true;
     public override uint GroupPriority => 4;
 
-    [ModdedNumberOption("Sniper Amount", 0, 5, 1)]
-    public float SniperAmount { get; set; } = 0;
+    public ModdedNumberOption SniperAmount { get; } = new(
+        "Sniper Amount", 0f, 0f, 5f, 1f, MiraNumberSuffixes.None);
 
     public ModdedNumberOption SniperChance { get; } =
         new("Sniper Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
         {
-            Visible = () => OptionGroupSingleton<NeutralModifierOptions>.Instance.SniperAmount > 0
+            Visible = () => OptionGroupSingleton<NeutralModifierOptions>.Instance.SniperAmount.Value > 0
         };
 }
