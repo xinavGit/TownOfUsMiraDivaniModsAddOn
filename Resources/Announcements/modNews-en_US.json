@@ -327,6 +327,29 @@
         "\n- Role options match the newer Mira format.",
         "\n- Added more intro sounds for roles that didn't have one yet."
       ]
+    },
+    {
+      "Date": "2026-05-31T12:00:00Z",
+      "Number": "10010",
+      "ShortTitle": "Divani Mods v1.2.4",
+      "Title": "Hotfixes",
+      "SubTitle": "Demolitionist sabotage and Revenant body fixes",
+      "Text": [
+        "\r<size=110%><b>Divani Mods v1.2.4</b></size>",
+        "\n\nHotfix release.",
+        "\n\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.2.4>Download v1.2.4</link>",
+        "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases>All releases</link>",
+        "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki>Wiki</link>",
+        "\n\n\r<size=108%><b>Bug fixes</b></size>",
+        "\n\n- Fixed <b>Demolitionist</b> sabotage not being destroyed on body reports.",
+        "\n- Fixed <b>Revenant</b> not creating networked bodies.",
+        "\n\n\r<size=108%><b>Coming soon</b></size>",
+        "\n\n- Starlight support",
+        "\n- Dutch translations",
+        "\n- Recruiter take one of the Impostor slots (option)",
+        "\n- Roles and modifiers",
+        "\n- Portal animations"
+      ]
     }
   ]
 }

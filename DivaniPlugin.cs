@@ -45,6 +45,6 @@ public class DivaniPlugin : BasePlugin, IMiraPlugin
         DivaniModAnnouncementPatch.EnsureLoaded();
         DivaniLocale.Register();
         DivaniWikiTermsPatch.RegisterLocale();
-        Log.LogInfo($"Divani Mods v{Version}-starlight-betatesting loaded successfully!");
+        Log.LogInfo($"Divani Mods v{Version} loaded successfully!");
     }
 }
