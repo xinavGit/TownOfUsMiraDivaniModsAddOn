@@ -343,6 +343,7 @@
         "\n\n\r<size=108%><b>Bug fixes</b></size>",
         "\n\n- Fixed <b>Demolitionist</b> sabotage not being destroyed on body reports.",
         "\n- Fixed <b>Revenant</b> not creating networked bodies.",
+        "\n- Fixed <b>Domesmith</b> not being networked properly (now uses yellow sprite from trapper).",
         "\n\n\r<size=108%><b>Coming soon</b></size>",
         "\n\n- Starlight support",
         "\n- Dutch translations",
