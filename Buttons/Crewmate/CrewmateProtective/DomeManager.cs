@@ -1,21 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
 using MiraAPI.GameOptions;
-using Reactor.Utilities;
 using DivaniMods.Options;
 using DivaniMods.Roles.Crewmate.CrewmateProtective;
 using TownOfUs.Assets;
 using TownOfUs.Utilities;
 using UnityEngine;
-using UnityEngine.Rendering;
+using Object = UnityEngine.Object;
 
 namespace DivaniMods.Buttons.Crewmate.CrewmateProtective;
 
 public static class DomeManager
 {
-    private const float ShrinkDuration = 1f;
-    private const float GrowDuration = ShrinkDuration;
-
     public sealed class Dome
     {
         public byte OwnerId { get; init; }
@@ -23,11 +18,10 @@ public static class DomeManager
         public GameObject? GameObject { get; set; }
         public float BaseDiameter { get; init; }
         public float SpawnedAt { get; init; }
-        public float ExpiresAt { get; set; } 
+        public float ExpiresAt { get; set; }
     }
 
     private static readonly List<Dome> _domes = new();
-    private static Material? _domeMaterialTemplate;
     public static IReadOnlyList<Dome> Domes => _domes;
 
     public static void PlaceDome(byte ownerId, Vector3 position)
@@ -38,28 +32,29 @@ public static class DomeManager
         }
 
         var opts = OptionGroupSingleton<DomesmithOptions>.Instance;
-        var rangeMultiplier = opts.DomeSize.Value;
-        var diameter = rangeMultiplier * ShipStatus.Instance.MaxLightRadius * 2f;
-
-        var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        go.name = $"DomesmithDome_{ownerId}_{_domes.Count}";
-        go.transform.localScale = Vector3.zero;
-        var sphereCollider = go.GetComponent("SphereCollider");
-        if (sphereCollider != null)
-        {
-            UnityEngine.Object.Destroy(sphereCollider);
-        }
-
-        var renderer = go.GetComponent<MeshRenderer>();
-        renderer.material = CreateDomeMaterial();
+        var diameter = opts.DomeSize.Value * ShipStatus.Instance.MaxLightRadius * 2f;
 
         var pos = position;
         pos.z += 0.001f;
+
+        var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        go.name = $"DomesmithDome_{ownerId}_{_domes.Count}";
+        go.transform.localScale = new Vector3(diameter, diameter, diameter);
+        var sphereCollider = go.GetComponent("SphereCollider");
+        if (sphereCollider != null)
+        {
+            Object.Destroy(sphereCollider);
+        }
+
+        var renderer = go.GetComponent<MeshRenderer>();
+        if (renderer != null)
+        {
+            renderer.material = AuAvengersAnims.TrapMaterial.LoadAsset();
+        }
+
         go.transform.position = pos;
 
         var now = Time.time;
-        var expiresAt = now + opts.ActiveSeconds.Value;
-
         var dome = new Dome
         {
             OwnerId = ownerId,
@@ -67,31 +62,12 @@ public static class DomeManager
             GameObject = go,
             BaseDiameter = diameter,
             SpawnedAt = now,
-            ExpiresAt = expiresAt,
+            ExpiresAt = now + opts.ActiveSeconds.Value,
         };
         _domes.Add(dome);
 
         ApplyVisibility(dome);
-        Coroutines.Start(GrowDome(dome));
         PlaceDomeButton.SyncDomeTimerFromManager();
-    }
-
-    private static IEnumerator GrowDome(Dome dome)
-    {
-        var elapsed = 0f;
-        while (elapsed < GrowDuration && dome.GameObject != null)
-        {
-            elapsed += Time.deltaTime;
-            var s = dome.BaseDiameter * Mathf.Clamp01(elapsed / GrowDuration);
-            dome.GameObject.transform.localScale = new Vector3(s, s, s);
-            yield return null;
-        }
-
-        if (dome.GameObject != null)
-        {
-            dome.GameObject.transform.localScale =
-                new Vector3(dome.BaseDiameter, dome.BaseDiameter, dome.BaseDiameter);
-        }
     }
 
     public static void Tick()
@@ -110,10 +86,7 @@ public static class DomeManager
             {
                 Destroy(dome);
                 _domes.RemoveAt(i);
-                continue;
             }
-
-            UpdateDomeScale(dome, now);
         }
 
         PlaceDomeButton.SyncDomeTimerFromManager();
@@ -134,23 +107,6 @@ public static class DomeManager
         }
 
         return longest;
-    }
-
-    private static void UpdateDomeScale(Dome dome, float now)
-    {
-        if (dome.GameObject == null)
-        {
-            return;
-        }
-
-        if (now < dome.ExpiresAt - ShrinkDuration)
-        {
-            return;
-        }
-
-        var t = (dome.ExpiresAt - now) / ShrinkDuration;
-        var scale = dome.BaseDiameter * Mathf.Clamp01(t);
-        dome.GameObject.transform.localScale = new Vector3(scale, scale, scale);
     }
 
     public static Dome? FindContaining(Vector2 position)
@@ -179,20 +135,18 @@ public static class DomeManager
                 return dome;
             }
         }
+
         return null;
     }
 
     public static float GetCurrentRadius(Dome dome)
     {
-        if (dome.GameObject == null || ShipStatus.Instance == null || dome.BaseDiameter <= 0f)
+        if (dome.GameObject == null || dome.BaseDiameter <= 0f)
         {
             return 0f;
         }
 
-        var baseRadius = OptionGroupSingleton<DomesmithOptions>.Instance.DomeSize.Value
-                         * ShipStatus.Instance.MaxLightRadius;
-        var scaleFactor = dome.GameObject.transform.localScale.x / dome.BaseDiameter;
-        return baseRadius * scaleFactor;
+        return dome.BaseDiameter * 0.5f;
     }
 
     public static void RefreshVisibility()
@@ -209,6 +163,7 @@ public static class DomeManager
         {
             Destroy(dome);
         }
+
         _domes.Clear();
         PlaceDomeButton.SyncDomeTimerFromManager();
     }
@@ -221,6 +176,7 @@ public static class DomeManager
             {
                 continue;
             }
+
             var renderer = dome.GameObject.GetComponent<MeshRenderer>();
             if (renderer != null)
             {
@@ -233,7 +189,7 @@ public static class DomeManager
     {
         if (dome.GameObject != null)
         {
-            UnityEngine.Object.Destroy(dome.GameObject);
+            Object.Destroy(dome.GameObject);
             dome.GameObject = null;
         }
     }
@@ -244,46 +200,14 @@ public static class DomeManager
         {
             return;
         }
+
         var renderer = dome.GameObject.GetComponent<MeshRenderer>();
         if (renderer == null)
         {
             return;
         }
+
         renderer.enabled = LocalShouldSee(dome);
-    }
-
-    private static Material CreateDomeMaterial()
-    {
-        _domeMaterialTemplate ??= BuildDomeMaterialTemplate();
-        return new Material(_domeMaterialTemplate);
-    }
-
-    private static Material BuildDomeMaterialTemplate()
-    {
-        var mat = new Material(AuAvengersAnims.TrapMaterial.LoadAsset());
-        var tint = DomesmithRole.DomesmithColor;
-        tint.a = 0.35f;
-
-        foreach (var texName in new[] { "_MainTex", "_BaseMap", "_MainTexture" })
-        {
-            if (mat.HasProperty(texName))
-            {
-                mat.SetTexture(texName, Texture2D.whiteTexture);
-            }
-        }
-
-        var shader = mat.shader;
-        for (var i = 0; i < shader.GetPropertyCount(); i++)
-        {
-            if (shader.GetPropertyType(i) != ShaderPropertyType.Color)
-            {
-                continue;
-            }
-            mat.SetColor(shader.GetPropertyName(i), tint);
-        }
-
-        mat.color = tint;
-        return mat;
     }
 
     private static bool LocalShouldSee(Dome dome)
