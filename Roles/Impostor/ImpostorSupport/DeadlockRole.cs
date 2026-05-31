@@ -23,10 +23,8 @@ public sealed class DeadlockRole(IntPtr cppPtr)
     public ModdedRoleTeams Team => ModdedRoleTeams.Impostor;
     public RoleAlignment RoleAlignment => RoleAlignment.ImpostorSupport;
 
-    // Doomsayer hint category: sabotage/disruption fits Insight (same as Blackmailer).
     public DoomableType DoomHintType => DoomableType.Insight;
 
-    // Imitator: Engineer is the closest crew equivalent (task infrastructure).
     public RoleBehaviour CrewVariant =>
         RoleManager.Instance.GetRole((RoleTypes)RoleId.Get<EngineerTouRole>());
 

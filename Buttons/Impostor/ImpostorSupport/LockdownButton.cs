@@ -59,10 +59,6 @@ public class LockdownButton : TownOfUsButton
         var player = PlayerControl.LocalPlayer;
         if (player == null || player.Data == null || player.Data.IsDead) return false;
 
-        // Inherit TownOfUsButton's meeting / chat / vent / disabled-modifier guards
-        // so keybinds can't fire mid-meeting. Don't fold the Timer/EffectActive logic
-        // below into base.CanUse() — base just checks `Timer <= 0`, but Lockdown allows
-        // the button to fire again while EffectActive (early-cancel) which we want to keep.
         if (!base.CanUse()) return false;
 
         SetUses(CurrentCharges);
@@ -171,8 +167,6 @@ public class LockdownButton : TownOfUsButton
         
         while (LockdownTimeRemaining > 0 && IsLockdownActive)
         {
-            // Pause countdown during meetings / ejection so lockdown resumes for
-            // the remaining time once gameplay restarts.
             if (!MeetingHud.Instance && !ExileController.Instance)
             {
                 LockdownTimeRemaining -= Time.deltaTime;

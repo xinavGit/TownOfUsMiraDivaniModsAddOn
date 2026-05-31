@@ -21,7 +21,6 @@ public sealed class PortalmakerRole(IntPtr cppPtr)
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
     public RoleAlignment RoleAlignment => RoleAlignment.CrewmateSupport;
 
-    // Doomsayer hint category: teleport/manipulation fits Trickster (same as Plumber).
     public DoomableType DoomHintType => DoomableType.Trickster;
 
     public string GetAdvancedDescription() => RoleLongDescription + MiscUtils.AppendOptionsText(GetType());

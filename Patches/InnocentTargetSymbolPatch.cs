@@ -59,7 +59,6 @@ internal static class InnocentTauntMeetingDisplay
             return;
         }
 
-        // Both UpdateTargetSymbols(bool) and UpdateTargetSymbols(DataVisibility) can run for the same row in one refresh.
         var chunk = TauntSymbolRichChunk;
         if (result.Contains(chunk))
         {

@@ -57,8 +57,6 @@ public sealed class RecruiterRole(IntPtr cppPtr)
 
         if (Player.AmOwner)
         {
-            // MeetingMenu defaults activeColor to green for Toggle — pass white so the imp
-            // sprite is not tinted. Same for hover (default red) and disabled.
             _meetingMenu = new MeetingMenu(
                 this,
                 OnMeetingToggle,
@@ -70,7 +68,6 @@ public sealed class RecruiterRole(IntPtr cppPtr)
                 disabledColor: Color.white,
                 hoverColor: Color.white)
             {
-                // Offset only — on-screen size comes from sprite PPU/bounds, not this vector.
                 Position = new Vector3(-0.40f, 0f, -3f),
             };
         }

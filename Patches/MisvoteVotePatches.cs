@@ -69,10 +69,7 @@ public static class MisvoteVotePatches
     {
         try
         {
-            // When a prosecution is active this round, ProsecutorEvents.VoteEvent already
-            // cleared every player's VoteData and cast 5 votes on the victim. The other
-            // misvoted players now look "non-voting", so injecting random votes for them
-            // would override the prosecution result. Leave prosecution votes untouched.
+
             if (IsActiveProsecutionRound())
             {
                 return;

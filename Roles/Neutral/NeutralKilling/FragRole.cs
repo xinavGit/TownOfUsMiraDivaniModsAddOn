@@ -49,12 +49,6 @@ public sealed class FragRole(IntPtr cppPtr)
         Icon = DivaniAssets.FragIcon,
         IntroSound = DivaniAssets.FragIntroSound,
         MaxRoleCount = 1,
-        // Required so that on death the Frag's role is swapped to NeutralGhostRole
-        // (which remains in ModdedRoleTeams.Custom and whose WinConditionMet()
-        // delegates to GetRoleWhenAlive()). Without this the dead Frag gets the
-        // default CrewmateGhost role, which is filtered out by
-        // NeutralRoleWinCondition.GetActiveRolesOfTeam(Custom) and the win
-        // never triggers.
         GhostRole = (RoleTypes)RoleId.Get<NeutralGhostRole>(),
     };
 

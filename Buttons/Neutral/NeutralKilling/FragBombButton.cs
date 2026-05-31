@@ -33,10 +33,6 @@ public class FragBombButton : TownOfUsTargetButton<PlayerControl>
         var localPlayer = PlayerControl.LocalPlayer;
         if (localPlayer == null || localPlayer.Data == null || localPlayer.Data.IsDead) return false;
 
-        // Pass Bomb is only visible once the bomb is armed. During the initial
-        // 2-7 second arming window the holder has no Pass button at all, in
-        // line with the spec that nothing about the bomb is visible/audible
-        // until it arms.
         return FragBombState.IsHolder(localPlayer.PlayerId) && FragBombState.IsArmed;
     }
 
@@ -50,8 +46,6 @@ public class FragBombButton : TownOfUsTargetButton<PlayerControl>
 
     public override void SetOutline(bool active)
     {
-        // Pass-button highlight intentionally has no outline / no name color
-        // changes. The frag UI is otherwise loud enough.
     }
 
     public override bool IsTargetValid(PlayerControl? target)

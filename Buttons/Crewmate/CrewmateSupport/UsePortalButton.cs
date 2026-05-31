@@ -54,7 +54,6 @@ public class UsePortalButton : TownOfUsButton
     {
         var player = PlayerControl.LocalPlayer;
         if (!PortalsUsableNow(player)) return false;
-        // Disabled during comms sabotage
         if (PlayerTask.PlayerHasTaskOfType<IHudOverrideTask>(player)) return false;
         if (!PortalManager.CanUsePortal(player.PlayerId)) return false;
         return base.CanUse();

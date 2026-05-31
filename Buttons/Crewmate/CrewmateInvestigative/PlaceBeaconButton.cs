@@ -34,7 +34,6 @@ public class PlaceBeaconButton : TownOfUsButton
         return role is SentinelRole;
     }
 
-    // Visible only for a live Sentinel standing in a valid room.
     private static bool BeaconVisibleNow()
     {
         var player = PlayerControl.LocalPlayer;
@@ -65,7 +64,6 @@ public class PlaceBeaconButton : TownOfUsButton
         var player = PlayerControl.LocalPlayer;
         if (player == null || player.Data == null || player.Data.IsDead) return false;
 
-        // Disabled during meetings
         if (MeetingHud.Instance || ExileController.Instance)
             return false;
 

@@ -102,7 +102,6 @@ public sealed class InnocentRole(IntPtr cppPtr)
             return false;
         }
 
-        // If impostors would win, don't trigger neutral win - we'll win with them instead
         if (WouldImpostorsWin())
         {
             return false;
@@ -118,14 +117,9 @@ public sealed class InnocentRole(IntPtr cppPtr)
             return false;
         }
 
-        // Win with impostors if their victory was triggered by target ejection
-        // Also win for neutral game over (when impostors wouldn't have won)
         return true;
     }
 
-    // Mirrors LogicGameFlowPatches.CheckEndCriteriaPatch: the game continues (no impostor win)
-    // when neutral killers, crew killers (e.g. Sheriff) alongside impostors, or game halters
-    // are alive. Otherwise vanilla impostor majority (impostors >= non-impostors) triggers the win.
     private static bool WouldImpostorsWin()
     {
         if (MiscUtils.NKillersAliveCount > 0)

@@ -566,7 +566,7 @@ public static class DemolitionistUtilityConsoles
         prefab = null;
 
         // Prefer a non-scene asset so an imp O2 sabo cannot leave animating/done stuck on the prefab we clone.
-        if (_cachedKeypadAssetPrefab && _cachedKeypadAssetPrefab.gameObject)
+        if (_cachedKeypadAssetPrefab?.gameObject != null)
         {
             prefab = _cachedKeypadAssetPrefab;
             return true;

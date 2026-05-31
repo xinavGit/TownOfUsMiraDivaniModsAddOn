@@ -86,7 +86,6 @@ public static class BeaconManager
         CreateBeaconVisual(beacon, Beacons.Count + 1);
         Beacons.Add(beacon);
 
-        // Pre-populate PlayersInRoom so players already in the room don't trigger a flash
         var beaconRoom = GetShipRoom(position);
         if (beaconRoom != null)
         {
@@ -109,7 +108,6 @@ public static class BeaconManager
     private static void CreateBeaconVisual(BeaconData beacon, int beaconNumber)
     {
         var go = new GameObject($"SentinelBeacon{beaconNumber}");
-        // Z = y / 1000f so players walk in front/behind naturally (same as sentry, dead bodies, etc.)
         go.transform.position = new Vector3(beacon.Position.x, beacon.Position.y, beacon.Position.y / 1000f);
 
         var sr = go.AddComponent<SpriteRenderer>();
@@ -136,7 +134,6 @@ public static class BeaconManager
                 if (player == null || player.Data == null || player.Data.IsDead) continue;
                 if (player.Data.Disconnected) continue;
 
-                // Don't track the Sentinel themselves
                 if (player.Data.Role is SentinelRole) continue;
 
                 var playerRoom = GetShipRoom(player.GetTruePosition());
@@ -144,7 +141,6 @@ public static class BeaconManager
                 {
                     currentPlayersInRoom.Add(player.PlayerId);
 
-                    // New entry - player wasn't in room before
                     if (!beacon.PlayersInRoom.Contains(player.PlayerId))
                     {
                         var playerName = player.Data.PlayerName;
@@ -154,7 +150,6 @@ public static class BeaconManager
                 }
             }
 
-            // Update tracked players: remove those who left, add those who entered
             beacon.PlayersInRoom.Clear();
             foreach (var id in currentPlayersInRoom)
             {
@@ -194,8 +189,6 @@ public static class BeaconManager
 
         MiscUtils.AddFakeChat(sentinel.Data, title, sb.ToString().TrimEnd(), false, true);
 
-        // Clear tracked names for next round and pre-populate PlayersInRoom
-        // so players already in the beacon room at round start don't trigger a flash
         foreach (var beacon in Beacons)
         {
             beacon.PlayersPassedThrough.Clear();
