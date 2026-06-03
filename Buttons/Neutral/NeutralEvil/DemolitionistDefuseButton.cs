@@ -40,37 +40,25 @@ public class DemolitionistDefuseButton : TownOfUsButton
         Instance = this;
         return role != null;
     }
-    private static bool DefuseVisibleNow()
+
+    public static bool ShouldDriveUseButton()
     {
         var player = PlayerControl.LocalPlayer;
         if (player == null || player.Data == null || player.Data.IsDead) return false;
+        if (MeetingHud.Instance || ExileController.Instance) return false;
         if (!DemolitionistSabotageState.IsActive) return false;
-        return DemolitionistSabotageState.IsLocalPlayerAtPlantedConsole();
+        return DemolitionistSabotageState.IsLocalPlayerInPlantedConsoleUseRange();
     }
 
     public override void SetActive(bool visible, RoleBehaviour role)
     {
-        Button?.ToggleVisible(visible && Enabled(role) && DefuseVisibleNow());
+        Instance = this;
+        Button?.ToggleVisible(false);
     }
 
     protected override void FixedUpdate(PlayerControl playerControl)
     {
-        if (MeetingHud.Instance)
-        {
-            return;
-        }
-
-        var hud = HudManager.Instance;
-        if (hud == null)
-        {
-            return;
-        }
-
-        var useButton = hud.UseButton;
-        var petButton = hud.PetButton;
-        var hudActive = (useButton != null && useButton.isActiveAndEnabled)
-            || (petButton != null && petButton.isActiveAndEnabled);
-        Button?.gameObject.SetActive(hudActive && DefuseVisibleNow());
+        Button?.gameObject.SetActive(false);
     }
 
     public override bool CanUse()
@@ -92,6 +80,20 @@ public class DemolitionistDefuseButton : TownOfUsButton
         {
             return;
         }
+
+        OnClick();
+        Button?.SetDisabled();
+    }
+
+    public void TriggerDefuseFromUseButton()
+    {
+        var player = PlayerControl.LocalPlayer;
+        if (player == null || player.Data == null || player.Data.IsDead) return;
+        if (MeetingHud.Instance || ExileController.Instance) return;
+        if (!DemolitionistSabotageState.IsActive) return;
+        if (DemolitionistNumpad.Controller.InProgress) return;
+        if (_isDefusing) return;
+        if (!DemolitionistSabotageState.IsLocalPlayerAtPlantedConsole()) return;
 
         OnClick();
         Button?.SetDisabled();

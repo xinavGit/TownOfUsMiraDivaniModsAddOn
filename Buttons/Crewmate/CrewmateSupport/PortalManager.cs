@@ -56,6 +56,8 @@ public static class PortalManager
         PlayerCooldowns.Clear();
         PortalUsers.Clear();
         ImmovablePortalUsers.Clear();
+        Portal1Materials.Clear();
+        Portal2Materials.Clear();
     }
     
     public static void ClearPortalUsers()
@@ -168,27 +170,143 @@ public static class PortalManager
         }
     }
     
+    private static readonly Color PortalOutlineColor = new Color(0.047f, 0.420f, 0.961f);
+    private const float PortalUseRange = 0.8f;
+
+    private static readonly List<Material> Portal1Materials = new();
+    private static readonly List<Material> Portal2Materials = new();
+
     private static void CreatePortalVisual(Vector2 position, int portalNumber)
     {
-        var portal = new GameObject($"Portal{portalNumber}");
+        var portal = UnityEngine.Object.Instantiate(DivaniAssets.PortalPrefab.LoadAsset());
+        portal.name = $"Portal{portalNumber}";
         portal.transform.position = new Vector3(position.x, position.y, position.y / 1000f + 1f);
-        
-        var spriteRenderer = portal.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = DivaniAssets.PortalSprite.LoadAsset();
-        
-        portal.transform.localScale = new Vector3(1.62f, 1.62f, 1f);
-        
+
+        ApplyOutline(portal, portalNumber, PortalOutlineColor);
+
         if (portalNumber == 1)
             Portal1Object = portal;
         else
             Portal2Object = portal;
     }
 
+    private static void ApplyOutline(GameObject portal, int portalNumber, Color color)
+    {
+        var mats = portalNumber == 1 ? Portal1Materials : Portal2Materials;
+        mats.Clear();
+
+        var shader = GetOutlineShader();
+        if (shader == null)
+        {
+            return;
+        }
+
+        foreach (var sr in portal.GetComponentsInChildren<SpriteRenderer>(true))
+        {
+            if (sr == null)
+            {
+                continue;
+            }
+
+            var mat = sr.material;
+            if (mat == null)
+            {
+                continue;
+            }
+
+            mat.shader = shader;
+
+            if (mat.HasProperty("_Outline"))
+            {
+                mat.SetFloat("_Outline", 0f);
+            }
+            if (mat.HasProperty("_OutlineColor"))
+            {
+                mat.SetColor("_OutlineColor", color);
+            }
+            if (mat.HasProperty("_AddColor"))
+            {
+                mat.SetColor("_AddColor", Color.clear);
+            }
+
+            mats.Add(mat);
+        }
+    }
+
+    public static void UpdatePortalOutlines()
+    {
+        if (Portal1Materials.Count == 0 && Portal2Materials.Count == 0)
+        {
+            return;
+        }
+
+        var player = PlayerControl.LocalPlayer;
+        var usable = player != null && player.Data != null && !player.Data.IsDead
+            && BothPortalsPlaced
+            && !(MiraAPI.GameOptions.OptionGroupSingleton<Options.PortalmakerOptions>.Instance.EnableAfterFirstMeeting && !PortalsUnlocked);
+
+        if (!usable)
+        {
+            SetOutline(Portal1Materials, false);
+            SetOutline(Portal2Materials, false);
+            return;
+        }
+
+        var pos = player!.GetTruePosition();
+
+        var near1 = Portal1Position.HasValue
+            && Vector2.Distance(pos, GetPortalUseAnchor(Portal1Position.Value, Portal1Object)) <= PortalUseRange;
+        var near2 = Portal2Position.HasValue
+            && Vector2.Distance(pos, GetPortalUseAnchor(Portal2Position.Value, Portal2Object)) <= PortalUseRange;
+
+        SetOutline(Portal1Materials, near1);
+        SetOutline(Portal2Materials, near2);
+    }
+
+    private static void SetOutline(List<Material> mats, bool on)
+    {
+        foreach (var mat in mats)
+        {
+            if (mat == null)
+            {
+                continue;
+            }
+
+            if (mat.HasProperty("_Outline"))
+            {
+                mat.SetFloat("_Outline", on ? 1f : 0f);
+            }
+            if (mat.HasProperty("_AddColor"))
+            {
+                mat.SetColor("_AddColor", on ? PortalOutlineColor : Color.clear);
+            }
+        }
+    }
+
+    private static Shader? GetOutlineShader()
+    {
+        var ship = ShipStatus.Instance;
+        if (ship == null || ship.AllVents == null)
+        {
+            return null;
+        }
+
+        foreach (var vent in ship.AllVents)
+        {
+            if (vent != null && vent.myRend != null && vent.myRend.sharedMaterial != null)
+            {
+                return vent.myRend.sharedMaterial.shader;
+            }
+        }
+
+        return null;
+    }
+
     private static Vector2 GetPortalUseAnchor(Vector2 fallbackPosition, GameObject? portalObject)
     {
         if (portalObject != null)
         {
-            var sr = portalObject.GetComponent<SpriteRenderer>();
+            var sr = portalObject.GetComponentInChildren<SpriteRenderer>();
             if (sr != null)
             {
                 return sr.bounds.center;
@@ -211,7 +329,7 @@ public static class PortalManager
         var portal1Destination = new Vector2(Portal1Position.Value.x, Portal1Position.Value.y + PortalAnchorYOffset);
         var portal2Destination = new Vector2(Portal2Position.Value.x, Portal2Position.Value.y + PortalAnchorYOffset);
         
-        const float useRange = 0.5f;
+        const float useRange = PortalUseRange;
         
         if (dist1 <= useRange)
             return portal2Destination;
@@ -221,7 +339,7 @@ public static class PortalManager
         return null;
     }
     
-    public static bool IsNearPortal(Vector2 playerPosition, float range = 0.5f)
+    public static bool IsNearPortal(Vector2 playerPosition, float range = PortalUseRange)
     {
         if (!BothPortalsPlaced) return false;
 

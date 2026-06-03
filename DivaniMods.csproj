@@ -62,6 +62,10 @@
       <HintPath>$(BepInExPath)\interop\UnityEngine.AudioModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>$(BepInExPath)\interop\UnityEngine.AssetBundleModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
       <HintPath>$(BepInExPath)\interop\UnityEngine.UnityWebRequestModule.dll</HintPath>
       <Private>false</Private>
@@ -114,6 +118,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\PickPocketButton.png" />
     <EmbeddedResource Include="Resources\PortalSprite.png" />
+    <EmbeddedResource Include="Resources\PortalUse.png" />
+    <EmbeddedResource Include="Resources\divanimods-bundle-win.bundle" />
+    <EmbeddedResource Include="Resources\divanimods-bundle-android.bundle" />
     <EmbeddedResource Include="Resources\PDVent.png" />
     <EmbeddedResource Include="Resources\BeaconAsset.png" />
     <EmbeddedResource Include="Resources\FragGive.png" Condition="Exists('Resources\FragGive.png')" />

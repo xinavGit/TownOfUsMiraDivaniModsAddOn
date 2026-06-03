@@ -89,6 +89,8 @@ public static class DemolitionistSabotageState
 
     private static bool _tickRunning;
 
+    private static Material? _consoleOutlineMat;
+
 
 
     public static void RegisterDemolitionist(PlayerControl demolitionist)
@@ -447,6 +449,8 @@ public static class DemolitionistSabotageState
 
         StopFlash();
 
+        ClearConsoleOutline();
+
 
 
         if (_arrow != null && !_arrow.IsDestroyedOrNull())
@@ -531,6 +535,75 @@ public static class DemolitionistSabotageState
         return DemolitionistUtilityConsoles.IsAtPlantedUtility(
             local, PlantedUtilityKind, PlantedPosition, PlantedConsoleKey);
 
+    }
+
+    public static bool IsLocalPlayerInPlantedConsoleUseRange()
+    {
+        if (!IsActive) return false;
+
+        var local = PlayerControl.LocalPlayer;
+        if (local == null) return false;
+
+        return DemolitionistUtilityConsoles.IsLocalPlayerInPlantedConsoleUseRange(
+            local, PlantedUtilityKind, PlantedPosition);
+    }
+
+    public static void UpdatePlantedConsoleOutline()
+    {
+        if (!IsActive)
+        {
+            ClearConsoleOutline();
+            return;
+        }
+
+        if (!DemolitionistUtilityConsoles.TryGetPlantedConsoleRenderer(PlantedUtilityKind, PlantedPosition, out var rend)
+            || rend == null)
+        {
+            return;
+        }
+
+        var mat = rend.material;
+        if (mat == null)
+        {
+            return;
+        }
+
+        _consoleOutlineMat = mat;
+
+        var color = DemolitionistRole.DemolitionistColor;
+        var near = IsLocalPlayerAtPlantedConsole();
+
+        if (mat.HasProperty("_Outline"))
+        {
+            mat.SetFloat("_Outline", near ? 1f : 0f);
+        }
+        if (mat.HasProperty("_OutlineColor"))
+        {
+            mat.SetColor("_OutlineColor", color);
+        }
+        if (mat.HasProperty("_AddColor"))
+        {
+            mat.SetColor("_AddColor", near ? color : Color.clear);
+        }
+    }
+
+    private static void ClearConsoleOutline()
+    {
+        if (_consoleOutlineMat == null)
+        {
+            return;
+        }
+
+        if (_consoleOutlineMat.HasProperty("_Outline"))
+        {
+            _consoleOutlineMat.SetFloat("_Outline", 0f);
+        }
+        if (_consoleOutlineMat.HasProperty("_AddColor"))
+        {
+            _consoleOutlineMat.SetColor("_AddColor", Color.clear);
+        }
+
+        _consoleOutlineMat = null;
     }
 
 
