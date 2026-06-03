@@ -25,12 +25,8 @@ public sealed class SilencerRole(IntPtr cppPtr)
     public ModdedRoleTeams Team => ModdedRoleTeams.Impostor;
     public RoleAlignment RoleAlignment => RoleAlignment.ImpostorKilling;
 
-    // Doomsayer hint category: shortening meetings is a deception/manipulation
-    // theme, same bucket as Blackmailer/Janitor.
     public DoomableType DoomHintType => DoomableType.Insight;
 
-    // Imitator: closest crew analogue is the Engineer (no obvious crew mirror
-    // for a meeting-shortener; matches Deadlock's pick).
     public RoleBehaviour CrewVariant =>
         RoleManager.Instance.GetRole((RoleTypes)RoleId.Get<EngineerTouRole>());
 

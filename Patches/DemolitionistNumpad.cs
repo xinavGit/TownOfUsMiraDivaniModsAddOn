@@ -12,6 +12,7 @@ using Reactor.Utilities.Attributes;
 using Reactor.Utilities.Extensions;
 using DivaniMods.Options;
 using DivaniMods.Utilities;
+using TMPro;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -68,18 +69,8 @@ internal static class DemolitionistNumpad
             _plantKind = DemolitionistUtilityKind.None;
         }
 
-        internal static void ResetKeypadUiState(KeypadGame game)
-        {
-            var tr = Traverse.Create(game);
-            tr.Field<bool>("animating").Value = false;
-            tr.Field<bool>("done").Value = false;
-            game.numString = string.Empty;
-            game.number = 0;
-            if (game.NumberText != null)
-            {
-                game.NumberText.text = string.Empty;
-            }
-        }
+        internal static void ResetKeypadUiState(KeypadGame game, DemolitionistKeypadNoOxyTask task) =>
+            Keypad.ApplyDemolitionistKeypadUi(game, task);
 
         public static bool TryGetDemolitionistNumpadSession(KeypadGame? keypad, out DemolitionistKeypadNoOxyTask? demolitionistNumpadSabotage)
         {
@@ -240,12 +231,23 @@ internal static class DemolitionistNumpad
 
             _action = action;
             _minigame = Object.Instantiate(prefab, parent, false);
+            if (_minigame == null)
+            {
+                CleanupTaskOnly();
+                return false;
+            }
+
             _minigame.transform.SetParent(parent, false);
             _minigame.transform.localPosition = new Vector3(0f, 0f, -50f);
+            if (!_minigame.gameObject.activeSelf)
+            {
+                _minigame.gameObject.SetActive(true);
+            }
+
             _minigame.Begin(_task);
             if (_minigame.TryCast<KeypadGame>() is KeypadGame keypad)
             {
-                ResetKeypadUiState(keypad);
+                Keypad.ApplyDemolitionistKeypadUi(keypad, _task);
             }
 
             return true;
@@ -301,6 +303,71 @@ internal static class DemolitionistNumpad
 
     internal static class Keypad
     {
+        internal static string FormatTargetCode(int targetNumber) =>
+            targetNumber.ToString("D5", CultureInfo.InvariantCulture);
+
+        internal static void ApplyDemolitionistKeypadUi(KeypadGame game, DemolitionistKeypadNoOxyTask task)
+        {
+            var tr = Traverse.Create(game);
+            tr.Field<bool>("animating").Value = false;
+            tr.Field<bool>("done").Value = false;
+            game.numString = string.Empty;
+            game.number = 0;
+
+            var code = FormatTargetCode(task.targetNumber);
+            var targetText = ResolveKeypadText(game, g => g.TargetText, "Target", "Note", "Sticky", "Code");
+            if (targetText != null)
+            {
+                targetText.text = code;
+            }
+
+            var numberText = ResolveKeypadText(game, g => g.NumberText, "Number", "Input", "Entry");
+            if (numberText != null)
+            {
+                numberText.text = string.Empty;
+            }
+        }
+
+        private static TextMeshPro? ResolveKeypadText(
+            KeypadGame game,
+            Func<KeypadGame, TextMeshPro?> primary,
+            params string[] nameHints)
+        {
+            var text = primary(game);
+            if (text != null)
+            {
+                return text;
+            }
+
+            if (game == null || game.gameObject == null)
+            {
+                return null;
+            }
+
+            var all = game.GetComponentsInChildren<TextMeshPro>(true);
+            foreach (var hint in nameHints)
+            {
+                foreach (var tmp in all)
+                {
+                    if (tmp != null && tmp.name.Contains(hint, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return tmp;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private static void SetNumberText(KeypadGame game, string value)
+        {
+            var numberText = ResolveKeypadText(game, g => g.NumberText, "Number", "Input", "Entry");
+            if (numberText != null)
+            {
+                numberText.text = value;
+            }
+        }
+
         public static void Register(Harmony harmony, ManualLogSource log)
         {
             var enterPrefix = AccessTools.Method(typeof(Keypad), nameof(KeypadGameEnterPrefix));
@@ -349,7 +416,7 @@ internal static class DemolitionistNumpad
                 return true;
             }
 
-            tk.targetNumber = UnityEngine.Random.Range(0, 100000);
+            // Open() assigns targetNumber before Begin; do not re-roll or validation won't match TargetText.
 
             if (ShipStatus.Instance != null
                 && ShipStatus.Instance.Systems != null
@@ -372,12 +439,12 @@ internal static class DemolitionistNumpad
 
         private static void KeypadGameBeginPostfix(KeypadGame __instance)
         {
-            if (!Controller.TryGetDemolitionistNumpadSession(__instance, out _))
+            if (!Controller.TryGetDemolitionistNumpadSession(__instance, out var task) || task == null)
             {
                 return;
             }
 
-            Controller.ResetKeypadUiState(__instance);
+            ApplyDemolitionistKeypadUi(__instance, task);
         }
 
         private static bool KeypadClickNumberPrefix(KeypadGame __instance, int i)
@@ -404,10 +471,7 @@ internal static class DemolitionistNumpad
                 __instance.number = parsed;
             }
 
-            if (__instance.NumberText != null)
-            {
-                __instance.NumberText.text = next;
-            }
+            SetNumberText(__instance, next);
 
             return false;
         }
@@ -424,10 +488,7 @@ internal static class DemolitionistNumpad
             tr.Field<bool>("done").Value = false;
             __instance.numString = string.Empty;
             __instance.number = 0;
-            if (__instance.NumberText != null)
-            {
-                __instance.NumberText.text = string.Empty;
-            }
+            SetNumberText(__instance, string.Empty);
 
             return false;
         }
@@ -473,7 +534,7 @@ internal static class DemolitionistNumpad
             tr.Field<bool>("animating").Value = true;
             var wait = new WaitForSeconds(0.1f);
             yield return wait;
-            game.NumberText.text = string.Empty;
+            SetNumberText(game, string.Empty);
             yield return wait;
 
             if (correct)
@@ -482,28 +543,28 @@ internal static class DemolitionistNumpad
                 if (applied)
                 {
                     tr.Field<bool>("done").Value = true;
-                    game.NumberText.text = "OK";
+                    SetNumberText(game, "OK");
                     yield return wait;
-                    game.NumberText.text = string.Empty;
+                    SetNumberText(game, string.Empty);
                     yield return wait;
-                    game.NumberText.text = "OK";
+                    SetNumberText(game, "OK");
                     yield return wait;
-                    game.NumberText.text = string.Empty;
+                    SetNumberText(game, string.Empty);
                     yield return wait;
-                    game.NumberText.text = "OK";
+                    SetNumberText(game, "OK");
                 }
             }
             else
             {
-                game.NumberText.text = "Bad";
+                SetNumberText(game, "Bad");
                 yield return wait;
-                game.NumberText.text = string.Empty;
+                SetNumberText(game, string.Empty);
                 yield return wait;
-                game.NumberText.text = "Bad";
+                SetNumberText(game, "Bad");
                 yield return wait;
                 game.numString = string.Empty;
                 game.number = 0;
-                game.NumberText.text = string.Empty;
+                SetNumberText(game, string.Empty);
             }
 
             tr.Field<bool>("animating").Value = false;

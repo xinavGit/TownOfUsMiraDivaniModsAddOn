@@ -8,7 +8,7 @@
     
     <AssemblyName>DivaniMods</AssemblyName>
     <RootNamespace>DivaniMods</RootNamespace>
-    <Version>1.2.4</Version>
+    <Version>1.2.4-starlight-testing</Version>
     <!--
       TownOfUs + TouMiraRolesExtension live in-repo for reference only. Do not compile them here:
       this project already references TownOfUsMira.dll from BepInEx. Compiling sources duplicates
@@ -60,6 +60,10 @@
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
       <HintPath>$(BepInExPath)\interop\UnityEngine.AudioModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>$(BepInExPath)\interop\UnityEngine.AssetBundleModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
@@ -114,6 +118,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\PickPocketButton.png" />
     <EmbeddedResource Include="Resources\PortalSprite.png" />
+    <EmbeddedResource Include="Resources\PortalUse.png" />
+    <EmbeddedResource Include="Resources\divanimods-bundle-win.bundle" />
+    <EmbeddedResource Include="Resources\divanimods-bundle-android.bundle" />
     <EmbeddedResource Include="Resources\PDVent.png" />
     <EmbeddedResource Include="Resources\BeaconAsset.png" />
     <EmbeddedResource Include="Resources\FragGive.png" Condition="Exists('Resources\FragGive.png')" />

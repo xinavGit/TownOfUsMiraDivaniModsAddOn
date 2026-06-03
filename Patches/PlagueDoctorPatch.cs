@@ -137,8 +137,6 @@ public static class PlagueDoctorPatch
 
         var text = string.Empty;
 
-        // Green immunity countdown sits above the infection progress list and
-        // disappears once the grace period is over.
         if (PlagueDoctorRole.ImmunityTimer > 0f)
         {
             text += $"<color=#00FF00>Players immune to non-direct infection for: {PlagueDoctorRole.ImmunityTimer:F1}seconds</color>\n";

@@ -76,18 +76,12 @@ public static class FragBombState
         }
         else
         {
-            // A pass between holders keeps the same countdown and is armed
-            // instantly: button, heartbeat and HUD all appear immediately for
-            // the new holder.
             IsArmed = true;
             ArmingRemaining = 0f;
         }
 
         HolderId = targetId;
         ImmuneId = immuneId;
-
-        // Force the heartbeat off immediately so we never get a half-frame of
-        // audio leaking from the previous holder or a stale source.
         StopHeartbeat();
 
         StartTickIfNeeded();

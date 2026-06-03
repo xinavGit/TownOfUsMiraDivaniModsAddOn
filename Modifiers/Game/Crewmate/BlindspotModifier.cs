@@ -34,8 +34,6 @@ public class BlindspotModifier : TouGameModifier, IColoredModifier, IWikiDiscove
     
     public override bool IsModifierValidOn(RoleBehaviour role)
     {
-        // role.TeamType is RoleTeamTypes.Crewmate for Neutrals too; use IsCrewmate
-        // which checks ModdedRoleTeams.Crewmate so NK/NE roles are excluded.
         return role.IsCrewmate() && base.IsModifierValidOn(role);
     }
     

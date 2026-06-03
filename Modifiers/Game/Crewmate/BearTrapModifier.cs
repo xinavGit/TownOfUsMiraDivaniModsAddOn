@@ -38,8 +38,6 @@ public sealed class BearTrapModifier : TouGameModifier, IColoredModifier, IWikiD
 
     public override bool IsModifierValidOn(RoleBehaviour role)
     {
-        // role.TeamType is RoleTeamTypes.Crewmate for Neutrals too; use IsCrewmate
-        // which checks ModdedRoleTeams.Crewmate so NK/NE roles are excluded.
         return base.IsModifierValidOn(role) && role.IsCrewmate();
     }
 

@@ -10,8 +10,6 @@ using UnityEngine;
 
 namespace DivaniMods.Buttons.Crewmate.CrewmateSupport;
 
-// Portalmaker-only direct teleport to a specific placed portal, from anywhere.
-// Shares the Use Portal cooldown with the other portal buttons.
 public abstract class PortalTeleportButtonBase : TownOfUsButton
 {
     protected abstract int PortalIndex { get; }
@@ -23,12 +21,11 @@ public abstract class PortalTeleportButtonBase : TownOfUsButton
     public override int MaxUses => 0;
     public override bool ZeroIsInfinite { get; set; } = true;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.UsePortalButton;
-    public override ButtonLocation Location => ButtonLocation.BottomLeft;
+    public override ButtonLocation Location => ButtonLocation.BottomRight;
     public override Color TextOutlineColor => new Color(0.047f, 0.420f, 0.961f);
 
     public override bool Enabled(RoleBehaviour? role) => role is PortalmakerRole;
 
-    // Shown for the Portalmaker once both portals exist and are active (option on).
     private static bool ShouldShow()
     {
         var player = PlayerControl.LocalPlayer;

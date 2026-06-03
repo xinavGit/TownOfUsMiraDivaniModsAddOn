@@ -11,7 +11,10 @@ public static class ClericCleanseExtraEffectsPatch
     {
         private static void Postfix(ClericCleanseButton __instance)
         {
-            DivaniNegativeEffects.CleanseAll(__instance.Target);
+            if (__instance.Target != null)
+            {
+                DivaniNegativeEffects.CleanseAll(__instance.Target);
+            }
         }
     }
 }

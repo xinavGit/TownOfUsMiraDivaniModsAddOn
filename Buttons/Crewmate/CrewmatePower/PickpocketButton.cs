@@ -314,10 +314,6 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
         if (modNamespace != null && ExcludedNamespaces.Any(ns => modNamespace.StartsWith(ns, StringComparison.OrdinalIgnoreCase)))
             return false;
         
-        // Reject faction-locked modifiers that belong to a side the Thief isn't on.
-        // IsModifierValidOn is NOT usable here because TouGameModifier's base implementation
-        // also encodes the "one TouGameModifier per player" assignment rule, which would
-        // falsely reject Shuffle/etc. after the thief already holds one stolen modifier.
         if (!IsFactionValidForThief(modifier))
             return false;
 
@@ -421,10 +417,6 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
             if (!allowButtonModifiers && IsButtonModifier(modifier))
                 continue;
             
-            // Skip faction-locked modifiers that aren't appropriate for a crew-aligned
-            // Thief. Covers addon impostor modifiers (e.g. Ruthless in DivaniMods.*) and
-            // TOU modifiers that sit in the generic TownOfUs.Modifiers.Game namespace but
-            // are flagged with an impostor/assailant/neutral FactionType (e.g. DoubleShot).
             if (!IsFactionValidForThief(modifier))
                 continue;
             
@@ -501,9 +493,6 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
         var shieldSourcePlayer = GetShieldSourcePlayer(modifier);
         var wasMedicShield = IsMedicShieldModifierIl2Cpp(modifier);
         
-        // Capture lover partner before remove.
-        // TryGetModifier<LoverModifier> works on Il2Cpp wrappers (pattern match against
-        // BaseModifier does not).
         PlayerControl? loverPartner = null;
         bool isStealingLover = false;
         if (target.TryGetModifier<LoverModifier>(out var existingLover) && existingLover.TypeId == modifierTypeId)
@@ -524,8 +513,6 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
         
         if (canUseModifier)
         {
-            // Lover path uses generic AddModifier<T> so we get the instance back to wire OtherLover
-            // (uint AddModifier returns void; matches LoverModifier.RpcSetOtherLover pattern).
             if (isStealingLover && loverPartner != null)
             {
                 var thiefLover = thief.AddModifier<LoverModifier>();
@@ -591,11 +578,6 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
             }
             
             
-            // Heartbreak the old Lover (victim). Deferred via coroutine so the pair-swap
-            // RPC body fully completes first; otherwise the kill cascade can fire while
-            // victim still appears linked on some client and chain through to the thief.
-            // Runs on EVERY client locally (no host gate) so each client spawns the body
-            // and registers the death — same pattern as LoverEvents.PlayerDeathEventHandler.
             if (isStealingLover
                 && OptionGroupSingleton<ThiefOptions>.Instance.StealingLoverHeartbreaksVictim
                 && target != null

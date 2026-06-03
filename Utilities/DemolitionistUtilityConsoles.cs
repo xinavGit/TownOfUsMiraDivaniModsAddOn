@@ -185,6 +185,70 @@ public static class DemolitionistUtilityConsoles
         return kind != DemolitionistUtilityKind.None;
     }
 
+    private static bool TryGetPlantedConsole(
+        DemolitionistUtilityKind kind, Vector2 plantedPosition, out Component? console)
+    {
+        console = null;
+
+        switch (kind)
+        {
+            case DemolitionistUtilityKind.Admin:
+                if (TryGetAdminConsole(plantedPosition, ConsoleSearchRadius, out var admin)) console = admin;
+                break;
+            case DemolitionistUtilityKind.Cameras:
+                if (TryGetCameraConsole(out var cam)) console = cam;
+                break;
+            case DemolitionistUtilityKind.Vitals:
+                if (TryGetVitalsConsole(out var vitals)) console = vitals;
+                break;
+            case DemolitionistUtilityKind.DoorLog:
+                if (TryGetDoorLogConsole(out var door)) console = door;
+                break;
+        }
+
+        return console != null;
+    }
+
+    public static bool TryGetPlantedConsoleRenderer(
+        DemolitionistUtilityKind kind, Vector2 plantedPosition, out SpriteRenderer? rend)
+    {
+        rend = null;
+        if (!TryGetPlantedConsole(kind, plantedPosition, out var console) || console == null)
+        {
+            return false;
+        }
+
+        rend = console.GetComponentInChildren<SpriteRenderer>();
+        return rend != null;
+    }
+    public static bool IsLocalPlayerInPlantedConsoleUseRange(
+        PlayerControl player, DemolitionistUtilityKind kind, Vector2 plantedPosition)
+    {
+        if (player?.Data == null)
+        {
+            return false;
+        }
+
+        if (!TryGetPlantedConsole(kind, plantedPosition, out var console) || console == null)
+        {
+            return false;
+        }
+
+        if (console.TryCast<MapConsole>() is MapConsole map)
+        {
+            map.CanUse(player.Data, out var canUse, out _);
+            return canUse;
+        }
+
+        if (console.TryCast<SystemConsole>() is SystemConsole sys)
+        {
+            sys.CanUse(player.Data, out var canUse, out _);
+            return canUse;
+        }
+
+        return false;
+    }
+
     public static bool IsAtPlantedUtility(
         PlayerControl player,
         DemolitionistUtilityKind plantedKind,
@@ -350,8 +414,6 @@ public static class DemolitionistUtilityConsoles
             return false;
         }
 
-        // Disabled consoles: our CanUse patch returns float.MaxValue — cannot use CanUse distance here.
-        // Proximity was already validated against UsableDistance + slack above.
         return true;
     }
 
@@ -566,7 +628,7 @@ public static class DemolitionistUtilityConsoles
         prefab = null;
 
         // Prefer a non-scene asset so an imp O2 sabo cannot leave animating/done stuck on the prefab we clone.
-        if (_cachedKeypadAssetPrefab && _cachedKeypadAssetPrefab.gameObject)
+        if (_cachedKeypadAssetPrefab?.gameObject != null)
         {
             prefab = _cachedKeypadAssetPrefab;
             return true;

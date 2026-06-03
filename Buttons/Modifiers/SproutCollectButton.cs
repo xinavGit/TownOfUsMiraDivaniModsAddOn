@@ -250,8 +250,6 @@ public class SproutCollectButton : TownOfUsTargetButton<DeadBody>
     {
         if (collector == null) return;
 
-        // Remove Sprout first so a button modifier can be gained without the
-        // one-button-per-player rule rejecting it.
         collector.RemoveModifier<SproutModifier>();
 
         if (sourceId != 0 && targetId != byte.MaxValue)

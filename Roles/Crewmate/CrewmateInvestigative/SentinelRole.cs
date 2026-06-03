@@ -23,7 +23,6 @@ public sealed class SentinelRole(IntPtr cppPtr)
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
     public RoleAlignment RoleAlignment => RoleAlignment.CrewmateInvestigative;
 
-    // Doomsayer hint category: surveillance/info fits Insight (same as Sentry/Trapper).
     public DoomableType DoomHintType => DoomableType.Insight;
 
     public string GetAdvancedDescription() => RoleLongDescription + MiscUtils.AppendOptionsText(GetType());

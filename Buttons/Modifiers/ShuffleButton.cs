@@ -181,7 +181,6 @@ public class ShuffleButton : TownOfUsButton
         }
         
         
-        // Only close minigames/vents for living players who are being shuffled
         var localPlayer = PlayerControl.LocalPlayer;
         if (localPlayer != null && localPlayer.Data != null && !localPlayer.Data.IsDead && playerCoordinates.ContainsKey(localPlayer.PlayerId))
         {
@@ -201,8 +200,6 @@ public class ShuffleButton : TownOfUsButton
         {
             var player = PlayerById(kvp.Key);
             if (player == null) continue;
-            // Defensive: if a player died between the sender's snapshot and the RPC
-            // delivery, don't teleport their ghost.
             if (player.Data == null || player.Data.IsDead || player.Data.Disconnected) continue;
             if (player.HasModifier<ImmovableModifier>()) continue;
             

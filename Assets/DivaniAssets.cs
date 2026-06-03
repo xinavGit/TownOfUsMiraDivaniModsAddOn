@@ -1,4 +1,5 @@
 using MiraAPI.Utilities.Assets;
+using Reactor.Utilities;
 using UnityEngine;
 
 namespace DivaniMods.Assets;
@@ -9,8 +10,8 @@ public static class DivaniAssets
     private const string IconPath = "DivaniMods.Resources.Icons";
     
     // Button sprites (115 ppu)
-    public static LoadableAsset<Sprite> PlacePortalButton { get; } = new LoadableResourceAsset($"{ShortPath}.PortalSprite.png", 115);
-    public static LoadableAsset<Sprite> UsePortalButton { get; } = new LoadableResourceAsset($"{ShortPath}.PortalSprite.png", 115);
+    public static LoadableAsset<Sprite> PlacePortalButton { get; } = new LoadableResourceAsset($"{ShortPath}.PortalUse.png", 100);
+    public static LoadableAsset<Sprite> UsePortalButton { get; } = new LoadableResourceAsset($"{ShortPath}.PortalUse.png", 100);
     public static LoadableAsset<Sprite> PickpocketButton { get; } = new LoadableResourceAsset($"{ShortPath}.PickPocketButton.png");
     public static LoadableAsset<Sprite> PlagueDoctorVentButton { get; } = new LoadableResourceAsset($"{ShortPath}.PDVent.png");
     public static LoadableAsset<Sprite> DemolitionistVentButton { get; } = new LoadableResourceAsset($"{ShortPath}.DemolitionistVent.png");
@@ -94,6 +95,9 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> SummonerMeetingInactive { get; } =
         new LoadableResourceAsset($"{ShortPath}.SummonerMeetingInactive.png", 440f);
 
+    // Animation bundles
+    public static readonly AssetBundle Bundle = AssetBundleManager.Load("divanimods-bundle");
+    public static LoadableBundleAsset<GameObject> PortalPrefab { get; } = new("Portal.prefab", Bundle);
     // Announcement badge
     public static LoadableAsset<Sprite> ModNewsLogo { get; } =
         new LoadableResourceAsset($"{ShortPath}.Banners.DivaniModNewsLogo.png", 220f);

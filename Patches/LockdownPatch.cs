@@ -17,21 +17,6 @@ public static class LockdownPatch
     public const string TimerId = "divani.lockdown";
     private const int TimerPriority = 10;
 
-    // Only block TASK consoles during a lockdown. Vanilla task consoles set
-    // `AllowImpostor = false` (impostors can't run crew tasks), which is the
-    // most reliable signal: several normal tasks (Refuel/gas, Trash Chute,
-    // Upload Data, Divert Power, ...) ship with an EMPTY `TaskTypes` array,
-    // so a `TaskTypes.Length` check would let them through during lockdown.
-    //
-    // The emergency-meeting button uses `SystemConsole` (not `Console`), so
-    // it never enters this prefix at all. Map systems (Admin, Cameras,
-    // Vitals, Doors, Comms, Reactor) also use SystemConsole — crew keep
-    // full access to meetings, info panels and utilities during a lockdown.
-    //
-    // Sabotage-fix consoles (reactor reset, lights, O2, comms, Fungle
-    // reactor, Mushroom Mixup) are `Console` instances with `AllowImpostor`
-    // false too, so we whitelist them explicitly — otherwise the impostor
-    // could lockdown the ship AND sabotage, trapping the crew with no way out.
     [HarmonyPatch(typeof(Console), nameof(Console.CanUse))]
     [HarmonyPrefix]
     public static bool ConsoleCanUsePrefix(Console __instance, NetworkedPlayerInfo pc, ref bool canUse, ref bool couldUse, ref float __result)
@@ -51,12 +36,6 @@ public static class LockdownPatch
         return false;
     }
 
-    // Safety net: if something bypasses Console.CanUse and tries to open a
-    // minigame, only block task minigames. `Minigame.Begin(PlayerTask task)`
-    // is invoked with a non-null task for task minigames and `null` for
-    // things like the EmergencyMinigame (meeting button). Sabotage-fix
-    // minigames are driven by SabotageTask instances - we let those through
-    // so the crew can always repair.
     [HarmonyPatch(typeof(Minigame), nameof(Minigame.Begin))]
     [HarmonyPrefix]
     public static bool MinigameBeginPrefix(Minigame __instance, PlayerTask task)
@@ -113,8 +92,6 @@ public static class LockdownPatch
             return;
         }
         
-        // Hide the timer during meetings / ejection - the countdown is also paused
-        // in LockdownButton.LockdownTimerCoroutine so it resumes after the meeting.
         bool inMeeting = MeetingHud.Instance || ExileController.Instance;
         
         if (LockdownButton.IsLockdownActive && LockdownButton.LockdownTimeRemaining > 0 && !inMeeting)
