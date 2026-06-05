@@ -17,21 +17,15 @@ public sealed class MosquitoStingButton : TownOfUsButton
 {
     public override string Name => "Sting";
     public override float Cooldown => OptionGroupSingleton<MosquitoOptions>.Instance.StingCooldown.Value;
-    public override float InitialCooldown => 0f;
     public override float EffectDuration => 0f;
-    public override int MaxUses => Infinite ? 0 : ConfiguredCharges;
-    public override bool ZeroIsInfinite { get; set; } = true;
+    public override int MaxUses => (int)OptionGroupSingleton<MosquitoOptions>.Instance.StingCharges.Value;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.MosquitoStingButton;
     public override ButtonLocation Location => ButtonLocation.BottomRight;
     public override Color TextOutlineColor => Palette.ImpostorRed;
-    public override BaseKeybind Keybind => Keybinds.PrimaryAction;
+    public override BaseKeybind Keybind => Keybinds.SecondaryAction;
 
     public static MosquitoStingButton? Instance { get; private set; }
-    private static int ConfiguredCharges => (int)OptionGroupSingleton<MosquitoOptions>.Instance.StingCharges.Value;
-    private static bool Infinite => ConfiguredCharges <= 0;
-
-    public static int ChargesPerKill =>
-        Infinite ? 0 : (int)OptionGroupSingleton<MosquitoOptions>.Instance.ChargesPerKill.Value;
+    public static int ChargesPerKill => (int)OptionGroupSingleton<MosquitoOptions>.Instance.ChargesPerKill.Value;
 
     private int _currentCharges = -1;
 
@@ -89,7 +83,7 @@ public sealed class MosquitoStingButton : TownOfUsButton
     public override bool CanUse()
     {
         var player = PlayerControl.LocalPlayer;
-        if (player?.Data?.Role is not MosquitoRole) return false;
+        if (player == null || player.Data == null || player.Data.IsDead) return false;
         if (!base.CanUse()) return false;
 
         SetUses(CurrentCharges);

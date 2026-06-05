@@ -23,13 +23,10 @@ public class MosquitoOptions : AbstractOptionGroup<MosquitoRole>
         "Sting Cooldown", 25f, 10f, 60f, 2.5f, MiraNumberSuffixes.Seconds);
 
     public ModdedNumberOption StingCharges { get; } = new(
-        "Sting Charges", 2f, 0f, 15f, 1f, "∞", "#", MiraNumberSuffixes.None, "0");
+        "Initial Charges", 1f, 0f, 5f, 1f, MiraNumberSuffixes.None);
 
     public ModdedNumberOption ChargesPerKill { get; } = new(
-        "Charges Per Kill", 1f, 0f, 3f, 1f, MiraNumberSuffixes.None)
-    {
-        Visible = () => OptionGroupSingleton<MosquitoOptions>.Instance.StingCharges.Value > 0,
-    };
+        "Charges Per Kill", 1f, 0f, 3f, 1f, MiraNumberSuffixes.None);
 
     public ModdedToggleOption AimbotMode { get; } = new("Aimbot Mode", false);
 }
