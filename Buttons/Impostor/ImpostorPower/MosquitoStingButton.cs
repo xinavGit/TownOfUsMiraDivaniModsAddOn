@@ -1,3 +1,4 @@
+using System.Linq;
 using MiraAPI.GameOptions;
 using MiraAPI.Hud;
 using MiraAPI.Modifiers;
@@ -7,6 +8,7 @@ using DivaniMods.Networking.Impostor.ImpostorPower;
 using DivaniMods.Options;
 using DivaniMods.Roles.Impostor.ImpostorPower;
 using TownOfUs.Buttons;
+using TownOfUs.Modifiers;
 using TownOfUs.Modifiers.Neutral;
 using TownOfUs.Utilities;
 using UnityEngine;
@@ -100,7 +102,8 @@ public sealed class MosquitoStingButton : TownOfUsButton
         }
 
         var player = PlayerControl.LocalPlayer;
-        if (player == null || player.HasModifier<GlitchHackedModifier>())
+        if (player == null || player.HasModifier<GlitchHackedModifier>() ||
+            player.GetModifiers<DisabledModifier>().Any(x => !x.CanUseAbilities))
         {
             return;
         }

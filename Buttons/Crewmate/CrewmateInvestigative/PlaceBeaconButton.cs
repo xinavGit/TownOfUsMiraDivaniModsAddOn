@@ -1,12 +1,16 @@
 using MiraAPI.GameOptions;
 using MiraAPI.Hud;
+using MiraAPI.Modifiers;
 using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using DivaniMods.Assets;
 using DivaniMods.Options;
 using DivaniMods.Roles.Crewmate.CrewmateInvestigative;
 using System.Collections;
+using System.Linq;
 using TownOfUs.Buttons;
+using TownOfUs.Modifiers;
+using TownOfUs.Modifiers.Neutral;
 using UnityEngine;
 
 namespace DivaniMods.Buttons.Crewmate.CrewmateInvestigative;
@@ -83,6 +87,17 @@ public class PlaceBeaconButton : TownOfUsButton
         SetUses(maxBeacons - BeaconManager.BeaconsPlaced);
 
         return base.CanUse();
+    }
+
+    public override void ClickHandler()
+    {
+        if (!CanClick() || PlayerControl.LocalPlayer.HasModifier<GlitchHackedModifier>() ||
+            PlayerControl.LocalPlayer.GetModifiers<DisabledModifier>().Any(x => !x.CanUseAbilities))
+        {
+            return;
+        }
+
+        OnClick();
     }
 
     protected override void OnClick()

@@ -1,9 +1,13 @@
+using System.Linq;
 using MiraAPI.GameOptions;
 using MiraAPI.Hud;
+using MiraAPI.Modifiers;
 using MiraAPI.Utilities.Assets;
 using DivaniMods.Assets;
 using DivaniMods.Options;
 using TownOfUs.Buttons;
+using TownOfUs.Modifiers;
+using TownOfUs.Modifiers.Neutral;
 using UnityEngine;
 
 namespace DivaniMods.Buttons.Crewmate.CrewmateSupport;
@@ -58,6 +62,8 @@ public class UsePortalButton : TownOfUsButton
     {
         var player = PlayerControl.LocalPlayer;
         if (player == null) return;
+        if (player.HasModifier<GlitchHackedModifier>() ||
+            player.GetModifiers<DisabledModifier>().Any(x => !x.CanUseAbilities)) return;
         if (!PortalsUsableNow(player)) return;
         if (PlayerTask.PlayerHasTaskOfType<IHudOverrideTask>(player)) return;
 

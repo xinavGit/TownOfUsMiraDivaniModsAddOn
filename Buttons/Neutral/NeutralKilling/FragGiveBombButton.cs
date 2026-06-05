@@ -1,5 +1,7 @@
+using System.Linq;
 using MiraAPI.GameOptions;
 using MiraAPI.Hud;
+using MiraAPI.Modifiers;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using DivaniMods.Assets;
@@ -7,6 +9,8 @@ using DivaniMods.Options;
 using DivaniMods.Patches;
 using DivaniMods.Roles.Neutral.NeutralKilling;
 using TownOfUs.Buttons;
+using TownOfUs.Modifiers;
+using TownOfUs.Modifiers.Neutral;
 using UnityEngine;
 
 namespace DivaniMods.Buttons.Neutral.NeutralKilling;
@@ -79,7 +83,8 @@ public class FragGiveBombButton : TownOfUsTargetButton<PlayerControl>
 
     public override void ClickHandler()
     {
-        if (!CanUse()) return;
+        if (!CanUse() || PlayerControl.LocalPlayer.HasModifier<GlitchHackedModifier>() ||
+            PlayerControl.LocalPlayer.GetModifiers<DisabledModifier>().Any(x => !x.CanUseAbilities)) return;
 
         OnClick();
         Button?.SetDisabled();
