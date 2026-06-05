@@ -271,7 +271,10 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
         
         if (modifier.GetType().Name == "MagicMirrorModifier")
             return true;
-        
+
+        if (modifier.GetType().Name == "KnightedModifier")
+            return true;
+
         if (IsShieldModifier(modifier))
             return false;
         

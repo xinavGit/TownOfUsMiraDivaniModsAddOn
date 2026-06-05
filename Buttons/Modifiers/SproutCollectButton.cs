@@ -189,6 +189,7 @@ public class SproutCollectButton : TownOfUsTargetButton<DeadBody>
     {
         if (modifier is ExcludedGameModifier) return true;
         if (modifier.GetType().Name == "MagicMirrorModifier") return true;
+        if (modifier.GetType().Name == "KnightedModifier") return true;
         if (IsShieldModifier(modifier)) return true;
         if (modifier.HideOnUi) return true;
         if (IsNonUniversalVisualModifier(modifier)) return true;
