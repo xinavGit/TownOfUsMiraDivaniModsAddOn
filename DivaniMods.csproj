@@ -191,6 +191,9 @@
     <EmbeddedResource Include="Resources\RecruitMeetingImpostor.png" />
     <EmbeddedResource Include="Resources\SummonerMeetingActive.png" />
     <EmbeddedResource Include="Resources\SummonerMeetingInactive.png" />
+    <EmbeddedResource Include="Resources\ObfuscateActive.png" />
+    <EmbeddedResource Include="Resources\ObfuscateDisabled.png" />
+    <EmbeddedResource Include="Resources\Icons\Obfuscator.png" />
     <EmbeddedResource Include="Resources\DomesmithIntro.wav" />
     <EmbeddedResource Include="Resources\SummonerIntro.wav" />
     <EmbeddedResource Include="Resources\SentinelIntro.wav" />
@@ -199,6 +202,7 @@
     <EmbeddedResource Include="Resources\MosquitoSting.png" />
     <EmbeddedResource Include="Resources\MosquitoIntro.wav" Condition="Exists('Resources\MosquitoIntro.wav')" />
     <EmbeddedResource Include="Resources\MosquitoSwat.wav" Condition="Exists('Resources\MosquitoSwat.wav')" />
+    <EmbeddedResource Include="Resources\ObfuscatorIntro.wav" />
   </ItemGroup>
 
   <Target Name="CopyToPlugins" AfterTargets="Build">
