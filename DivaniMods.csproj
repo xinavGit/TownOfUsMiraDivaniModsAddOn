@@ -87,6 +87,14 @@
       <HintPath>$(BepInExPath)\interop\Rewired_Core.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="Hazel">
+      <HintPath>$(BepInExPath)\interop\Hazel.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Il2CppSystem.Core">
+      <HintPath>$(BepInExPath)\interop\Il2CppSystem.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
 
     <Reference Include="Unity.TextMeshPro">
       <HintPath>$(BepInExPath)\interop\Unity.TextMeshPro.dll</HintPath>
@@ -143,6 +151,7 @@
     <EmbeddedResource Include="Resources\Icons\Recruiter.png" />
     <EmbeddedResource Include="Resources\Icons\Shuffle.png" />
     <EmbeddedResource Include="Resources\Icons\Beartrap.png" />
+    <EmbeddedResource Include="Resources\Icons\Skilled.png" />
     <EmbeddedResource Include="Resources\Icons\Bloody.png" />
     <EmbeddedResource Include="Resources\Icons\Demolitionist.png" />
     <EmbeddedResource Include="Resources\Icons\Domesmith.png" />
