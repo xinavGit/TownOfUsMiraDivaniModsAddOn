@@ -104,6 +104,11 @@ public static class DomesmithEvents
         {
             DomeManager.Clear();
         }
+
+        if (evt.Target != null && evt.Target.AmOwner)
+        {
+            DomeManager.RefreshVisibility();
+        }
     }
 
     [RegisterEvent]
