@@ -1,9 +1,11 @@
 using System.Collections;
 using MiraAPI.GameOptions;
 using MiraAPI.Hud;
+using MiraAPI.Modifiers;
 using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using DivaniMods.Assets;
+using DivaniMods.Modifiers.Game.Crewmate;
 using DivaniMods.Options;
 using DivaniMods.Patches;
 using DivaniMods.Roles.Neutral.NeutralEvil;
@@ -41,11 +43,18 @@ public class DemolitionistDefuseButton : TownOfUsButton
         return role != null;
     }
 
+    private static bool LocalIsIncompetent()
+    {
+        var player = PlayerControl.LocalPlayer;
+        return player != null && player.HasModifier<IncompetentModifier>();
+    }
+
     public static bool ShouldDriveUseButton()
     {
         var player = PlayerControl.LocalPlayer;
         if (player == null || player.Data == null || player.Data.IsDead) return false;
         if (MeetingHud.Instance || ExileController.Instance) return false;
+        if (LocalIsIncompetent()) return false;
         if (!DemolitionistSabotageState.IsActive) return false;
         return DemolitionistSabotageState.IsLocalPlayerInPlantedConsoleUseRange();
     }
@@ -66,6 +75,7 @@ public class DemolitionistDefuseButton : TownOfUsButton
         var player = PlayerControl.LocalPlayer;
         if (player == null || player.Data == null || player.Data.IsDead) return false;
         if (MeetingHud.Instance || ExileController.Instance) return false;
+        if (LocalIsIncompetent()) return false;
         if (!DemolitionistSabotageState.IsActive) return false;
         if (DemolitionistNumpad.Controller.InProgress) return false;
         if (_isDefusing) return false;
@@ -90,6 +100,7 @@ public class DemolitionistDefuseButton : TownOfUsButton
         var player = PlayerControl.LocalPlayer;
         if (player == null || player.Data == null || player.Data.IsDead) return;
         if (MeetingHud.Instance || ExileController.Instance) return;
+        if (LocalIsIncompetent()) return;
         if (!DemolitionistSabotageState.IsActive) return;
         if (DemolitionistNumpad.Controller.InProgress) return;
         if (_isDefusing) return;
@@ -103,6 +114,7 @@ public class DemolitionistDefuseButton : TownOfUsButton
     {
         var player = PlayerControl.LocalPlayer;
         if (player == null) return;
+        if (LocalIsIncompetent()) return;
         if (!DemolitionistSabotageState.IsActive) return;
         if (!DemolitionistSabotageState.IsLocalPlayerAtPlantedConsole()) return;
         if (_isDefusing) return;
