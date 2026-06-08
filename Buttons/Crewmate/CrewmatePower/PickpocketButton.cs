@@ -56,8 +56,21 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
         "TownOfUs.Modifiers.HnsImpostor",
         "TownOfUs.Modifiers.HnsGame"
     };
-    
-    
+
+    private static readonly string[] AllowedNamespacePrefixes =
+    {
+        "TownOfUs",
+        "DivaniMods",
+    };
+
+    private static bool IsAllowedSource(BaseModifier modifier)
+    {
+        var ns = modifier.GetType().Namespace;
+        if (ns == null) return false;
+        return AllowedNamespacePrefixes.Any(p => ns.StartsWith(p, StringComparison.OrdinalIgnoreCase));
+    }
+
+
 
     public override bool Enabled(RoleBehaviour? role)
     {
@@ -259,7 +272,8 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
     private static List<BaseModifier> GetTargetModifiers(PlayerControl target)
     {
         return target.GetModifiers<BaseModifier>()
-            .Where(m => !IsExcludedFromStealing(m) &&
+            .Where(m => IsAllowedSource(m) &&
+                        !IsExcludedFromStealing(m) &&
                         !IsNonStealableVisualModifier(m))
             .ToList();
     }
@@ -311,6 +325,9 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
     private static bool CanThiefUseModifier(BaseModifier modifier, PlayerControl thief)
     {
         if (thief.GetModifiers<BaseModifier>().Any(m => m.TypeId == modifier.TypeId))
+            return false;
+
+        if (!IsAllowedSource(modifier))
             return false;
 
         var modNamespace = modifier.GetType().Namespace;
@@ -411,9 +428,12 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
             if (modTypeName.StartsWith("Test", StringComparison.OrdinalIgnoreCase))
                 continue;
             
+            if (!IsAllowedSource(modifier))
+                continue;
+
             if (ExcludedNamespaces.Any(ns => modNamespace.StartsWith(ns, StringComparison.OrdinalIgnoreCase)))
                 continue;
-            
+
             if (modifier is IVisualAppearance)
                 continue;
 

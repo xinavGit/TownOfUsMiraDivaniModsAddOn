@@ -43,6 +43,19 @@ public class SproutCollectButton : TownOfUsTargetButton<DeadBody>
         "TownOfUs.Modifiers.HnsGame"
     };
 
+    private static readonly string[] AllowedNamespacePrefixes =
+    {
+        "TownOfUs",
+        "DivaniMods",
+    };
+
+    private static bool IsAllowedSource(BaseModifier modifier)
+    {
+        var ns = modifier.GetType().Namespace;
+        if (ns == null) return false;
+        return AllowedNamespacePrefixes.Any(p => ns.StartsWith(p, StringComparison.OrdinalIgnoreCase));
+    }
+
     public override bool Enabled(RoleBehaviour? role)
     {
         var player = PlayerControl.LocalPlayer;
@@ -137,6 +150,7 @@ public class SproutCollectButton : TownOfUsTargetButton<DeadBody>
     {
         var ids = deadPlayer.GetModifiers<BaseModifier>()
             .Where(m => m is GameModifier &&
+                        IsAllowedSource(m) &&
                         !m.HideOnUi &&
                         !IsShieldModifier(m) &&
                         !IsLover(m) &&
@@ -162,6 +176,7 @@ public class SproutCollectButton : TownOfUsTargetButton<DeadBody>
         foreach (var modifier in ModifierManager.Modifiers)
         {
             if (modifier is not GameModifier) continue;
+            if (!IsAllowedSource(modifier)) continue;
             if (modifier.HideOnUi) continue;
             if (modifier is ExcludedGameModifier) continue;
             if (modifier is AllianceGameModifier) continue;
@@ -187,6 +202,7 @@ public class SproutCollectButton : TownOfUsTargetButton<DeadBody>
 
     private static bool IsExcluded(BaseModifier modifier)
     {
+        if (!IsAllowedSource(modifier)) return true;
         if (modifier is ExcludedGameModifier) return true;
         if (modifier.GetType().Name == "MagicMirrorModifier") return true;
         if (modifier.GetType().Name == "KnightedModifier") return true;
