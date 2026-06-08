@@ -16,7 +16,7 @@ using TownOfUs.Roles.Crewmate;
 using TownOfUs.Utilities;
 using UnityEngine;
 
-namespace DivaniMods.Roles.Impostor.ImpostorSupport;
+namespace DivaniMods.Roles.Impostor.ImpostorPower;
 
 public sealed class RecruiterRole(IntPtr cppPtr)
     : ImpostorRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IDoomable, ICrewVariant
@@ -25,10 +25,10 @@ public sealed class RecruiterRole(IntPtr cppPtr)
     public string LocaleKey => "Recruiter";
     public string RoleDescription => "Pick your partner!";
     public string RoleLongDescription =>
-        "During the first meeting only, recruit a non-Impostor to become an Impostor.";
+        "In any meeting, recruit a non-Impostor to become an Impostor once.";
     public Color RoleColor => Palette.ImpostorRed;
     public ModdedRoleTeams Team => ModdedRoleTeams.Impostor;
-    public RoleAlignment RoleAlignment => RoleAlignment.ImpostorSupport;
+    public RoleAlignment RoleAlignment => RoleAlignment.ImpostorPower;
 
     public DoomableType DoomHintType => DoomableType.Insight;
 
@@ -57,8 +57,6 @@ public sealed class RecruiterRole(IntPtr cppPtr)
 
         if (Player.AmOwner)
         {
-            // MeetingMenu defaults activeColor to green for Toggle — pass white so the imp
-            // sprite is not tinted. Same for hover (default red) and disabled.
             _meetingMenu = new MeetingMenu(
                 this,
                 OnMeetingToggle,
@@ -70,7 +68,6 @@ public sealed class RecruiterRole(IntPtr cppPtr)
                 disabledColor: Color.white,
                 hoverColor: Color.white)
             {
-                // Offset only — on-screen size comes from sprite PPU/bounds, not this vector.
                 Position = new Vector3(-0.40f, 0f, -3f),
             };
         }
@@ -85,8 +82,9 @@ public sealed class RecruiterRole(IntPtr cppPtr)
             return;
         }
 
-        var firstMeeting = RecruiterPatch.MeetingsEnded == 0;
-        var usable = firstMeeting &&
+        _localSelectedId = 255;
+
+        var usable = !RecruiterPatch.RecruitingDisabled &&
                        !Player.HasDied() &&
                        !Player.HasModifier<JailedModifier>();
         var hud = MeetingHud.Instance;

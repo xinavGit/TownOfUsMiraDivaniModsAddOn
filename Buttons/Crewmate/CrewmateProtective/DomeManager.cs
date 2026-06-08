@@ -218,6 +218,11 @@ public static class DomeManager
             return false;
         }
 
+        if (localPlayer.Data.IsDead)
+        {
+            return true;
+        }
+
         var mode = (DomesmithVisibility)OptionGroupSingleton<DomesmithOptions>.Instance.SeenBy.Value;
         return mode switch
         {

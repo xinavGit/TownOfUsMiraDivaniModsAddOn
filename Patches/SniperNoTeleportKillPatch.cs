@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using HarmonyLib;
 using MiraAPI.Networking;
@@ -86,4 +87,76 @@ public static class SniperWerewolfKillNoTeleportPatch
 {
     public static bool Prefix(WerewolfKillButton __instance) =>
         SniperNoTeleportKill.TryMurderWithoutTeleport(__instance.Target);
+}
+public static class SniperSerialKillerKill
+{
+    private static PropertyInfo? _targetProperty;
+    private static MethodInfo? _isTargetValidMethod;
+
+    public static void Initialize(Harmony harmony)
+    {
+        try
+        {
+            var assembly = Assembly.Load("TouMiraRolesExtension");
+            if (assembly == null)
+            {
+                return;
+            }
+
+            var buttonType = assembly.GetType("TouMiraRolesExtension.Buttons.Neutral.SerialKillerKillButton");
+            if (buttonType == null)
+            {
+                return;
+            }
+
+            var onClick = AccessTools.Method(buttonType, "OnClick");
+            if (onClick == null)
+            {
+                return;
+            }
+
+            _targetProperty = AccessTools.Property(buttonType, "Target");
+            _isTargetValidMethod = AccessTools.Method(buttonType, "IsTargetValid", [typeof(PlayerControl)]);
+
+            var prefix = typeof(SniperSerialKillerKill).GetMethod(
+                nameof(Prefix), BindingFlags.Public | BindingFlags.Static);
+            harmony.Patch(onClick, prefix: new HarmonyMethod(prefix));
+        }
+        catch (Exception ex)
+        {
+            DivaniPlugin.Instance.Log.LogWarning($"Sniper: SerialKiller patch skipped: {ex.Message}");
+        }
+    }
+
+    public static bool Prefix(object __instance)
+    {
+        if (!SniperModifier.LocalPlayerHasSniper())
+        {
+            return true;
+        }
+
+        var player = PlayerControl.LocalPlayer;
+        if (player == null)
+        {
+            return true;
+        }
+
+        if (player.inVent && Vent.currentVent != null)
+        {
+            return true;
+        }
+
+        if (_targetProperty?.GetValue(__instance) is not PlayerControl target)
+        {
+            return true;
+        }
+
+        if (_isTargetValidMethod != null &&
+            _isTargetValidMethod.Invoke(__instance, [target]) is bool valid && !valid)
+        {
+            return true;
+        }
+
+        return SniperNoTeleportKill.TryMurderWithoutTeleport(target);
+    }
 }

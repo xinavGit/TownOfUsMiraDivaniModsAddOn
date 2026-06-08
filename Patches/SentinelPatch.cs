@@ -41,18 +41,15 @@ public static class SentinelPatch
 
         bool isSentinel = localPlayer.Data.Role is SentinelRole;
 
-        // Only Sentinel tracks beacons (button visibility handled by PlaceBeaconButton itself)
         if (!isSentinel) return;
         if (localPlayer.Data.IsDead) return;
 
-        // Don't track during meetings or comms sabotage
         if (MeetingHud.Instance || ExileController.Instance) return;
         if (PlayerTask.PlayerHasTaskOfType<IHudOverrideTask>(localPlayer)) return;
         if (BeaconManager.BeaconsPlaced == 0) return;
 
         var newEntries = BeaconManager.UpdatePlayerTracking();
 
-        // Flash + notification for each new room entry
         foreach (var (beacon, playerName) in newEntries)
         {
             Coroutines.Start(CoFlashSentinel());

@@ -1,9 +1,11 @@
 using System.Collections;
 using MiraAPI.GameOptions;
 using MiraAPI.Hud;
+using MiraAPI.Modifiers;
 using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using DivaniMods.Assets;
+using DivaniMods.Modifiers.Game.Crewmate;
 using DivaniMods.Options;
 using DivaniMods.Patches;
 using DivaniMods.Roles.Neutral.NeutralEvil;
@@ -40,29 +42,32 @@ public class DemolitionistDefuseButton : TownOfUsButton
         Instance = this;
         return role != null;
     }
-    private static bool DefuseVisibleNow()
+
+    private static bool LocalIsIncompetent()
+    {
+        var player = PlayerControl.LocalPlayer;
+        return player != null && player.HasModifier<IncompetentModifier>();
+    }
+
+    public static bool ShouldDriveUseButton()
     {
         var player = PlayerControl.LocalPlayer;
         if (player == null || player.Data == null || player.Data.IsDead) return false;
+        if (MeetingHud.Instance || ExileController.Instance) return false;
+        if (LocalIsIncompetent()) return false;
         if (!DemolitionistSabotageState.IsActive) return false;
-        return DemolitionistSabotageState.IsLocalPlayerAtPlantedConsole();
+        return DemolitionistSabotageState.IsLocalPlayerInPlantedConsoleUseRange();
     }
 
     public override void SetActive(bool visible, RoleBehaviour role)
     {
-        Button?.ToggleVisible(visible && Enabled(role) && DefuseVisibleNow());
+        Instance = this;
+        Button?.ToggleVisible(false);
     }
 
     protected override void FixedUpdate(PlayerControl playerControl)
     {
-        if (MeetingHud.Instance)
-        {
-            return;
-        }
-
-        var hudActive = HudManager.Instance.UseButton.isActiveAndEnabled ||
-                        HudManager.Instance.PetButton.isActiveAndEnabled;
-        Button?.gameObject.SetActive(hudActive && DefuseVisibleNow());
+        Button?.gameObject.SetActive(false);
     }
 
     public override bool CanUse()
@@ -70,6 +75,7 @@ public class DemolitionistDefuseButton : TownOfUsButton
         var player = PlayerControl.LocalPlayer;
         if (player == null || player.Data == null || player.Data.IsDead) return false;
         if (MeetingHud.Instance || ExileController.Instance) return false;
+        if (LocalIsIncompetent()) return false;
         if (!DemolitionistSabotageState.IsActive) return false;
         if (DemolitionistNumpad.Controller.InProgress) return false;
         if (_isDefusing) return false;
@@ -89,10 +95,26 @@ public class DemolitionistDefuseButton : TownOfUsButton
         Button?.SetDisabled();
     }
 
+    public void TriggerDefuseFromUseButton()
+    {
+        var player = PlayerControl.LocalPlayer;
+        if (player == null || player.Data == null || player.Data.IsDead) return;
+        if (MeetingHud.Instance || ExileController.Instance) return;
+        if (LocalIsIncompetent()) return;
+        if (!DemolitionistSabotageState.IsActive) return;
+        if (DemolitionistNumpad.Controller.InProgress) return;
+        if (_isDefusing) return;
+        if (!DemolitionistSabotageState.IsLocalPlayerAtPlantedConsole()) return;
+
+        OnClick();
+        Button?.SetDisabled();
+    }
+
     protected override void OnClick()
     {
         var player = PlayerControl.LocalPlayer;
         if (player == null) return;
+        if (LocalIsIncompetent()) return;
         if (!DemolitionistSabotageState.IsActive) return;
         if (!DemolitionistSabotageState.IsLocalPlayerAtPlantedConsole()) return;
         if (_isDefusing) return;

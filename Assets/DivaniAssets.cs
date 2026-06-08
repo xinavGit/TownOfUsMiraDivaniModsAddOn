@@ -1,4 +1,5 @@
 using MiraAPI.Utilities.Assets;
+using Reactor.Utilities;
 using UnityEngine;
 
 namespace DivaniMods.Assets;
@@ -9,8 +10,8 @@ public static class DivaniAssets
     private const string IconPath = "DivaniMods.Resources.Icons";
     
     // Button sprites (115 ppu)
-    public static LoadableAsset<Sprite> PlacePortalButton { get; } = new LoadableResourceAsset($"{ShortPath}.PortalSprite.png", 115);
-    public static LoadableAsset<Sprite> UsePortalButton { get; } = new LoadableResourceAsset($"{ShortPath}.PortalSprite.png", 115);
+    public static LoadableAsset<Sprite> PlacePortalButton { get; } = new LoadableResourceAsset($"{ShortPath}.PortalUse.png", 100);
+    public static LoadableAsset<Sprite> UsePortalButton { get; } = new LoadableResourceAsset($"{ShortPath}.PortalUse.png", 100);
     public static LoadableAsset<Sprite> PickpocketButton { get; } = new LoadableResourceAsset($"{ShortPath}.PickPocketButton.png");
     public static LoadableAsset<Sprite> PlagueDoctorVentButton { get; } = new LoadableResourceAsset($"{ShortPath}.PDVent.png");
     public static LoadableAsset<Sprite> DemolitionistVentButton { get; } = new LoadableResourceAsset($"{ShortPath}.DemolitionistVent.png");
@@ -24,6 +25,7 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> PlagueDoctorInfectButton { get; } = new LoadableResourceAsset($"{ShortPath}.PlagueDoctorInfect.png");
     public static LoadableAsset<Sprite> ShuffleAbilityButton { get; } = new LoadableResourceAsset($"{IconPath}.Shuffle.png", 250f);
     public static LoadableAsset<Sprite> SproutCollectButton { get; } = new LoadableResourceAsset($"{ShortPath}.Collect.png", 100);
+    public static LoadableAsset<Sprite> MosquitoStingButton { get; } = new LoadableResourceAsset($"{ShortPath}.MosquitoSting.png");
 
     // Role icons (200 ppu)
     public static LoadableAsset<Sprite> ThiefIcon { get; } = new LoadableResourceAsset($"{IconPath}.Thief.png", 200);
@@ -40,6 +42,7 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> DomesmithIcon { get; } = new LoadableResourceAsset($"{IconPath}.Domesmith.png", 200);
     public static LoadableAsset<Sprite> SummonerIcon { get; } = new LoadableResourceAsset($"{IconPath}.Summoner.png", 200);
     public static LoadableAsset<Sprite> RevenantIcon { get; } = new LoadableResourceAsset($"{IconPath}.Revenant.png", 200);
+    public static LoadableAsset<Sprite> MosquitoIcon { get; } = new LoadableResourceAsset($"{IconPath}.Mosquito.png", 200);
 
     // Modifier icons (200 ppu)
     public static LoadableAsset<Sprite> MementoIcon { get; } = new LoadableResourceAsset($"{IconPath}.Memento.png", 200);
@@ -49,10 +52,14 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> MisvoteIcon { get; } = new LoadableResourceAsset($"{IconPath}.Misvote.png", 200);
     public static LoadableAsset<Sprite> SniperIcon { get; } = new LoadableResourceAsset($"{IconPath}.Sniper.png", 200);
     public static LoadableAsset<Sprite> BearTrapIcon { get; } = new LoadableResourceAsset($"{IconPath}.Beartrap.png", 200);
+    public static LoadableAsset<Sprite> SkilledIcon { get; } = new LoadableResourceAsset($"{IconPath}.Skilled.png", 200);
+    public static LoadableAsset<Sprite> StrongIcon { get; } = new LoadableResourceAsset($"{IconPath}.Strong.png", 200);
     public static LoadableAsset<Sprite> BloodyIcon { get; } = new LoadableResourceAsset($"{IconPath}.Bloody.png", 200);
     public static LoadableAsset<Sprite> RuthlessIcon { get; } = new LoadableResourceAsset($"{IconPath}.Ruthless.png", 200);
     public static LoadableAsset<Sprite> SproutIcon { get; } = new LoadableResourceAsset($"{IconPath}.Sprout.png", 200);
-    
+    public static LoadableAsset<Sprite> ObfuscatorIcon { get; } = new LoadableResourceAsset($"{IconPath}.Obfuscator.png", 200);
+    public static LoadableAsset<Sprite> CunctatorIcon { get; } = new LoadableResourceAsset($"{IconPath}.Cunctator.png", 200);
+    public static LoadableAsset<Sprite> IncompetentIcon { get; } = new LoadableResourceAsset($"{IconPath}.Incompetent.png", 200);
     // Audio clips (16000hz)
     public static LoadableAsset<AudioClip> FragileBreak { get; } = new LoadableAudioResourceAsset($"{ShortPath}.FragileBreak.wav");
     public static LoadableAsset<AudioClip> PlagueDoctorIntroSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.PlagueDoctorIntro.wav");
@@ -73,6 +80,11 @@ public static class DivaniAssets
     public static LoadableAsset<AudioClip> SummonerIntroSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.SummonerIntro.wav");
     public static LoadableAsset<AudioClip> SentinelIntroSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.SentinelIntro.wav");
     public static LoadableAsset<AudioClip> RecruiterIntroSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.RecruiterIntro.wav");
+    public static LoadableAsset<AudioClip> MosquitoIntroSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.MosquitoIntro.wav");
+    public static LoadableAsset<AudioClip> CunctatorIntroSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.CunctatorIntro.wav");
+    public static LoadableAsset<AudioClip> MosquitoSwatSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.MosquitoSwat.wav");
+    public static LoadableAsset<AudioClip> ObfuscatorIntro { get; } = new LoadableAudioResourceAsset($"{ShortPath}.ObfuscatorIntro.wav");
+    public static LoadableAsset<AudioClip> InnocentIntroSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.InnocentIntro.wav");
     // Dutch Meme Soundpack door SFX - used by DutchMemeSoundpackPatch to replace
     // the vanilla door open/close audio clips when the matching lobby toggle is on.
     public static LoadableAsset<AudioClip> DutchDoorOpen { get; } = new LoadableAudioResourceAsset($"{ShortPath}.DoorOpen.wav");
@@ -93,7 +105,14 @@ public static class DivaniAssets
         new LoadableResourceAsset($"{ShortPath}.SummonerMeetingActive.png", 440f);
     public static LoadableAsset<Sprite> SummonerMeetingInactive { get; } =
         new LoadableResourceAsset($"{ShortPath}.SummonerMeetingInactive.png", 440f);
+    public static LoadableAsset<Sprite> ObfuscateActive { get; } =
+        new LoadableResourceAsset($"{ShortPath}.ObfuscateActive.png", 300f);
+    public static LoadableAsset<Sprite> ObfuscateInactive { get; } =
+        new LoadableResourceAsset($"{ShortPath}.ObfuscateDisabled.png", 300f);
 
+    // Animation bundles
+    public static readonly AssetBundle Bundle = AssetBundleManager.Load("divanimods-bundle");
+    public static LoadableBundleAsset<GameObject> PortalPrefab { get; } = new("Portal.prefab", Bundle);
     // Announcement badge
     public static LoadableAsset<Sprite> ModNewsLogo { get; } =
         new LoadableResourceAsset($"{ShortPath}.Banners.DivaniModNewsLogo.png", 220f);

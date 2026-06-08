@@ -31,4 +31,9 @@ public enum DivaniRpcCalls : uint
     OpportunistWildcard = 226,
     OpportunistWildcardRefund = 227,
     SproutCollect = 228,
+    MosquitoSpawn = 229,
+    MosquitoSting = 230,
+    MosquitoSwat = 231,
+    ObfuscatorSetSwaps = 232,
+    ObfuscatorConsumeCharge = 233,
 }

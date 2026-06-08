@@ -5,10 +5,6 @@ using UnityEngine;
 
 namespace DivaniMods.Patches;
 
-// Target the (string, PlayerControl, bool) overload explicitly. TownOfUs added
-// a second UpdateTargetSymbols(string, PlayerControl, DataVisibility) overload,
-// and without the parameter list Harmony throws AmbiguousMatchException out of
-// PatchAll -> Load, which kills the entire plugin (no credits, no patches).
 [HarmonyPatch(typeof(PlayerRoleTextExtensions), nameof(PlayerRoleTextExtensions.UpdateTargetSymbols),
     new[] { typeof(string), typeof(PlayerControl), typeof(bool) })]
 public static class PlagueDoctorMeetingPatch
@@ -22,12 +18,13 @@ public static class PlagueDoctorMeetingPatch
 
         var localPlayer = PlayerControl.LocalPlayer;
 
-        // Only the Plague Doctor should see infected symbols.
         bool isLocalPD = localPlayer.Data.Role is PlagueDoctorRole ||
                          (PlagueDoctorRole.PlagueDoctorPlayer != null &&
                           localPlayer.PlayerId == PlagueDoctorRole.PlagueDoctorPlayer.PlayerId);
 
-        if (!isLocalPD) return;
+        bool localIsDead = localPlayer.Data?.IsDead ?? false;
+
+        if (!isLocalPD && !localIsDead) return;
 
         if (player == null || player.Data == null) return;
 

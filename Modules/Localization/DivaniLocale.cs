@@ -26,5 +26,8 @@ public static class DivaniLocale
         en.TryAdd("DiedToDemolitionist", "Sabotaged");
         en.TryAdd("DiedToSummoner", "Killed");
         en.TryAdd("DiedToRevenant", "Clawed");
+        en.TryAdd("DiedToMosquito", "Stung");
+        en.TryAdd("DiedToCunctator", "Delayed");
+        en.TryAdd("DiedToObfuscator", "Obfuscated");
     }
 }

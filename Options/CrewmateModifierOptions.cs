@@ -27,7 +27,7 @@ public sealed class CrewmateModifierOptions : AbstractOptionGroup
         "Bear Trap Amount", 0f, 0f, 5f, 1f, MiraNumberSuffixes.None);
 
     public ModdedNumberOption BearTrapChance { get; } =
-        new("Bear Trap Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
+        new("Bear Trap Chance", 20f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
         {
             Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.BearTrapAmount.Value > 0
         };
@@ -48,5 +48,32 @@ public sealed class CrewmateModifierOptions : AbstractOptionGroup
         new("Sprout Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
         {
             Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.SproutAmount.Value > 0
+        };
+
+    public ModdedNumberOption SkilledAmount { get; } = new(
+        "Skilled Amount", 0f, 0f, 5f, 1f, MiraNumberSuffixes.None);
+
+    public ModdedNumberOption SkilledChance { get; } =
+        new("Skilled Chance", 10f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
+        {
+            Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.SkilledAmount.Value > 0
+        };
+
+    public ModdedNumberOption StrongAmount { get; } = new(
+        "Strong Amount", 0f, 0f, 5f, 1f, MiraNumberSuffixes.None);
+
+    public ModdedNumberOption StrongChance { get; } =
+        new("Strong Chance", 20f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
+        {
+            Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.StrongAmount.Value > 0
+        };
+
+    public ModdedNumberOption IncompetentAmount { get; } = new(
+        "Incompetent Amount", 0f, 0f, 5f, 1f, MiraNumberSuffixes.None);
+
+    public ModdedNumberOption IncompetentChance { get; } =
+        new("Incompetent Chance", 20f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
+        {
+            Visible = () => OptionGroupSingleton<CrewmateModifierOptions>.Instance.IncompetentAmount.Value > 0
         };
 }

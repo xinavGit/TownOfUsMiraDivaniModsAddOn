@@ -33,31 +33,35 @@ public class UsePortalButton : TownOfUsButton
 
     public override bool Enabled(RoleBehaviour? role) => true;
 
+    public static bool ShouldDriveUseButton() => PortalsUsableNow(PlayerControl.LocalPlayer);
+
     public override void SetActive(bool visible, RoleBehaviour role)
     {
-        Button?.ToggleVisible(visible && Enabled(role) && PortalsUsableNow(PlayerControl.LocalPlayer));
+        Button?.ToggleVisible(false);
     }
 
     protected override void FixedUpdate(PlayerControl playerControl)
     {
-        if (MeetingHud.Instance)
-        {
-            return;
-        }
-
-        var hudActive = HudManager.Instance.UseButton.isActiveAndEnabled ||
-                        HudManager.Instance.PetButton.isActiveAndEnabled;
-        Button?.gameObject.SetActive(hudActive && PortalsUsableNow(PlayerControl.LocalPlayer));
+        Button?.gameObject.SetActive(false);
     }
 
     public override bool CanUse()
     {
         var player = PlayerControl.LocalPlayer;
         if (!PortalsUsableNow(player)) return false;
-        // Disabled during comms sabotage
         if (PlayerTask.PlayerHasTaskOfType<IHudOverrideTask>(player)) return false;
         if (!PortalManager.CanUsePortal(player.PlayerId)) return false;
         return base.CanUse();
+    }
+
+    public void TriggerFromUseButton()
+    {
+        var player = PlayerControl.LocalPlayer;
+        if (player == null) return;
+        if (!PortalsUsableNow(player)) return;
+        if (PlayerTask.PlayerHasTaskOfType<IHudOverrideTask>(player)) return;
+
+        OnClick();
     }
 
     protected override void OnClick()

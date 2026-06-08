@@ -8,7 +8,7 @@
     
     <AssemblyName>DivaniMods</AssemblyName>
     <RootNamespace>DivaniMods</RootNamespace>
-    <Version>1.2.4</Version>
+    <Version>1.2.5</Version>
     <!--
       TownOfUs + TouMiraRolesExtension live in-repo for reference only. Do not compile them here:
       this project already references TownOfUsMira.dll from BepInEx. Compiling sources duplicates
@@ -62,6 +62,10 @@
       <HintPath>$(BepInExPath)\interop\UnityEngine.AudioModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>$(BepInExPath)\interop\UnityEngine.AssetBundleModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
       <HintPath>$(BepInExPath)\interop\UnityEngine.UnityWebRequestModule.dll</HintPath>
       <Private>false</Private>
@@ -81,6 +85,14 @@
     </Reference>
     <Reference Include="Rewired_Core">
       <HintPath>$(BepInExPath)\interop\Rewired_Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Hazel">
+      <HintPath>$(BepInExPath)\interop\Hazel.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Il2CppSystem.Core">
+      <HintPath>$(BepInExPath)\interop\Il2CppSystem.Core.dll</HintPath>
       <Private>false</Private>
     </Reference>
 
@@ -114,6 +126,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\PickPocketButton.png" />
     <EmbeddedResource Include="Resources\PortalSprite.png" />
+    <EmbeddedResource Include="Resources\PortalUse.png" />
+    <EmbeddedResource Include="Resources\divanimods-bundle-win.bundle" />
+    <EmbeddedResource Include="Resources\divanimods-bundle-android.bundle" />
     <EmbeddedResource Include="Resources\PDVent.png" />
     <EmbeddedResource Include="Resources\BeaconAsset.png" />
     <EmbeddedResource Include="Resources\FragGive.png" Condition="Exists('Resources\FragGive.png')" />
@@ -136,6 +151,8 @@
     <EmbeddedResource Include="Resources\Icons\Recruiter.png" />
     <EmbeddedResource Include="Resources\Icons\Shuffle.png" />
     <EmbeddedResource Include="Resources\Icons\Beartrap.png" />
+    <EmbeddedResource Include="Resources\Icons\Skilled.png" />
+    <EmbeddedResource Include="Resources\Icons\Strong.png" />
     <EmbeddedResource Include="Resources\Icons\Bloody.png" />
     <EmbeddedResource Include="Resources\Icons\Demolitionist.png" />
     <EmbeddedResource Include="Resources\Icons\Domesmith.png" />
@@ -175,10 +192,22 @@
     <EmbeddedResource Include="Resources\RecruitMeetingImpostor.png" />
     <EmbeddedResource Include="Resources\SummonerMeetingActive.png" />
     <EmbeddedResource Include="Resources\SummonerMeetingInactive.png" />
+    <EmbeddedResource Include="Resources\ObfuscateActive.png" />
+    <EmbeddedResource Include="Resources\ObfuscateDisabled.png" />
+    <EmbeddedResource Include="Resources\Icons\Obfuscator.png" />
+    <EmbeddedResource Include="Resources\Icons\Cunctator.png" />
+    <EmbeddedResource Include="Resources\Icons\Incompetent.png" />
     <EmbeddedResource Include="Resources\DomesmithIntro.wav" />
     <EmbeddedResource Include="Resources\SummonerIntro.wav" />
     <EmbeddedResource Include="Resources\SentinelIntro.wav" />
     <EmbeddedResource Include="Resources\RecruiterIntro.wav" />
+    <EmbeddedResource Include="Resources\Icons\Mosquito.png" />
+    <EmbeddedResource Include="Resources\MosquitoSting.png" />
+    <EmbeddedResource Include="Resources\MosquitoIntro.wav" Condition="Exists('Resources\MosquitoIntro.wav')" />
+    <EmbeddedResource Include="Resources\MosquitoSwat.wav" Condition="Exists('Resources\MosquitoSwat.wav')" />
+    <EmbeddedResource Include="Resources\ObfuscatorIntro.wav" />
+    <EmbeddedResource Include="Resources\CunctatorIntro.wav" />
+    <EmbeddedResource Include="Resources\InnocentIntro.wav" />
   </ItemGroup>
 
   <Target Name="CopyToPlugins" AfterTargets="Build">

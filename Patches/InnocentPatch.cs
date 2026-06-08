@@ -86,7 +86,6 @@ public static class InnocentPatch
             innocent.AboutToWin = true;
             innocent.AwaitingNextMeetingExile = false;
             innocent.TargetVoted = true;
-            // First meeting after taunt resolved with correct exile — strip marker immediately (RoundStart still clears as backup).
             RemoveInnocentTauntMarker(exiled.PlayerId, innocent.Player.PlayerId);
         }
     }

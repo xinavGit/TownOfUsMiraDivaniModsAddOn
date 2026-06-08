@@ -66,11 +66,9 @@ public static class RuthlessEventHandler
     {
         InitializeTypes();
         
-        // Fast path: Mira generic lookup matches gameplay modifiers reliably.
         if (target.HasModifier<MedicShieldModifier>())
             return true;
 
-        // First-death shield is NOT a BaseShieldModifier (ExcludedGameModifier); check option.
         if (OptionGroupSingleton<RuthlessOptions>.Instance.BypassFirstDeathShield && target.HasModifier<FirstDeadShield>())
             return true;
 
@@ -107,7 +105,6 @@ public static class RuthlessEventHandler
         bool isProtected = IsProtected(target);
         
         
-        // Only bypass shields, NOT veteran alert
         if (isProtected)
         {
             ShouldBypassProtection = true;
@@ -214,11 +211,9 @@ public static class RuthlessEventHandler
             
             int patchCount = 0;
             
-            // Bool: (event, source, target) — same parameter names/order for Medic, Mirrorcaster.
             var skipBoolKillSource = typeof(RuthlessRpcPatches).GetMethod(
                 nameof(RuthlessRpcPatches.SkipIfRuthlessBoolKillSource),
                 BindingFlags.Public | BindingFlags.Static);
-            // Cleric: (event, target, source) — attacker is the third argument.
             var skipBoolCleric = typeof(RuthlessRpcPatches).GetMethod(
                 nameof(RuthlessRpcPatches.SkipIfRuthlessBoolClericBarrier),
                 BindingFlags.Public | BindingFlags.Static);

@@ -34,7 +34,6 @@ public class PlacePortalButton : TownOfUsButton
         var player = PlayerControl.LocalPlayer;
         if (player == null || player.Data == null || player.Data.IsDead) return false;
 
-        // Disabled during comms sabotage
         if (PlayerTask.PlayerHasTaskOfType<IHudOverrideTask>(player))
             return false;
         
@@ -83,8 +82,6 @@ public class PlacePortalButton : TownOfUsButton
 
         PortalManager.RpcPlacePortal(player, capturedPosition.x, capturedPosition.y);
 
-        // Local-only SFX: RpcPlacePortal is the network broadcast, PlaySound
-        // runs only on this client so only the Portalmaker hears the drop.
         PlayPlacePortalSound();
         
         int portalNum = PortalManager.PortalsPlaced;
