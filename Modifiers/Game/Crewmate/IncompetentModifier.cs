@@ -12,7 +12,7 @@ namespace DivaniMods.Modifiers.Game.Crewmate;
 
 public class IncompetentModifier : TouGameModifier, IColoredModifier, IWikiDiscoverable
 {
-    public static readonly Color IncompetentColor = new Color32(120, 110, 70, 255);
+    public static readonly Color IncompetentColor = new Color32(119, 90, 112, 255);
 
     public override string ModifierName => "Incompetent";
     public override string LocaleKey => "Incompetent";

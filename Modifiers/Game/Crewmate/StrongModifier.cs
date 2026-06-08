@@ -12,7 +12,7 @@ namespace DivaniMods.Modifiers.Game.Crewmate;
 
 public class StrongModifier : TouGameModifier, IColoredModifier, IWikiDiscoverable
 {
-    public static readonly Color StrongColor = new Color32(150, 120, 90, 255);
+    public static readonly Color StrongColor = new Color32(50, 201, 147, 255);
 
     public override string ModifierName => "Strong";
     public override string LocaleKey => "Strong";
@@ -20,7 +20,7 @@ public class StrongModifier : TouGameModifier, IColoredModifier, IWikiDiscoverab
     public override ModifierFaction FactionType => ModifierFaction.CrewmatePassive;
     public override Color FreeplayFileColor => StrongColor;
     public Color ModifierColor => StrongColor;
-    public override LoadableAsset<Sprite>? ModifierIcon => DivaniAssets.SkilledIcon;
+    public override LoadableAsset<Sprite>? ModifierIcon => DivaniAssets.StrongIcon;
 
     public override string GetDescription() =>
         "You cannot be guessed in meetings.";

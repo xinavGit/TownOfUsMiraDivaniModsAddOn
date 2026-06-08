@@ -152,6 +152,7 @@
     <EmbeddedResource Include="Resources\Icons\Shuffle.png" />
     <EmbeddedResource Include="Resources\Icons\Beartrap.png" />
     <EmbeddedResource Include="Resources\Icons\Skilled.png" />
+    <EmbeddedResource Include="Resources\Icons\Strong.png" />
     <EmbeddedResource Include="Resources\Icons\Bloody.png" />
     <EmbeddedResource Include="Resources\Icons\Demolitionist.png" />
     <EmbeddedResource Include="Resources\Icons\Domesmith.png" />
