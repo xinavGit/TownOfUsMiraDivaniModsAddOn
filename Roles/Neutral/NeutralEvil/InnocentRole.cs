@@ -49,7 +49,7 @@ public sealed class InnocentRole(IntPtr cppPtr)
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.InnocentIcon,
-        IntroSound = TownOfUs.Assets.TouAudio.NoisemakerIntroSound,
+        IntroSound = DivaniAssets.InnocentIntroSound,
         GhostRole = (RoleTypes)RoleId.Get<NeutralGhostRole>(),
         MaxRoleCount = 1,
     };
