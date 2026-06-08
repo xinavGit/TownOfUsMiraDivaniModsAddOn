@@ -22,12 +22,16 @@ Join the Discord:
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#sentinel"><img width="10%" src="./Resources/Icons/Sentinel.png" alt="Sentinel"/></a>
   <img src="./Resources/Headers/CrewProtective.png" alt="Crewmate Protective"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#domesmith"><img width="10%" src="./Resources/Icons/Domesmith.png" alt="Domesmith"/></a>
+  <img src="./Resources/Headers/ImpConcealing.png" alt="Impostor Concealing"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#cunctator"><img width="10%" src="./Resources/Icons/Cunctator.png" alt="Cunctator"/></a>
   <img src="./Resources/Headers/ImpKilling.png" alt="Impostor Killing"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#silencer"><img width="10%" src="./Resources/Icons/Silencer.png" alt="Silencer"/></a>
   <img src="./Resources/Headers/ImpSupport.png" alt="Impostor Support"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#deadlock"><img width="10%" src="./Resources/Icons/Deadlock.png" alt="Deadlock"/></a>
-  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#recruiter"><img width="10%" src="./Resources/Icons/Recruiter.png" alt="Recruiter"/></a>
   <img src="./Resources/Headers/ImpPower.png" alt="Impostor Power"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#mosquito"><img width="10%" src="./Resources/Icons/Mosquito.png" alt="Mosquito"/></a>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#obfuscator"><img width="10%" src="./Resources/Icons/Obfuscator.png" alt="Obfuscator"/></a>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#recruiter"><img width="10%" src="./Resources/Icons/Recruiter.png" alt="Recruiter"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#summoner"><img width="10%" src="./Resources/Icons/Summoner.png" alt="Summoner"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#revenant"><img width="10%" src="./Resources/Icons/Revenant.png" alt="Revenant"/></a>
   <img src="./Resources/Headers/NeutEvil.png" alt="Neutral Evil"/>
@@ -43,6 +47,9 @@ Join the Discord:
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#bloody"><img width="10%" src="./Resources/Icons/Bloody.png" alt="Bloody"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#bear-trap"><img width="10%" src="./Resources/Icons/Beartrap.png" alt="Bear Trap"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#sprout"><img width="10%" src="./Resources/Icons/Sprout.png" alt="Sprout"/></a>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#incompetent"><img width="10%" src="./Resources/Icons/Incompetent.png" alt="Incompetent"/></a>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#skilled"><img width="10%" src="./Resources/Icons/Skilled.png" alt="Skilled"/></a>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#strong"><img width="10%" src="./Resources/Icons/Strong.png" alt="Strong"/></a>
   <img src="./Resources/Headers/ImpMods.png" alt="Impostor modifiers"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#ruthless"><img width="10%" src="./Resources/Icons/Ruthless.png" alt="Ruthless"/></a>
   <img src="./Resources/Headers/NeutMods.png" alt="Neutral modifiers"/>
@@ -74,6 +81,8 @@ Full role and modifier write-ups live on the **[project wiki](https://github.com
 
 | Game Version      | Mod Version | Town Of Us: Mira | Download link |
 | ----------------- | ----------- | ---------------- | ------------- |
+| 17.3 (2026.3.31)  | 1.2.5       | 1.6.0+           | [v1.2.5](https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.2.5) |
+| 17.3 (2026.3.31)  | 1.2.4       | 1.6.0+           | [v1.2.4](https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.2.4) |
 | 17.3 (2026.3.31)  | 1.2.3       | 1.6.0+           | [v1.2.3](https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.2.3) |
 | 17.3 (2026.3.31)  | 1.2.3-beta  | 1.6.0+           | [v1.2.3-beta](https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.2.3-beta) |
 | 17.3 (2026.3.31)  | 1.2.2       | 1.6.0+           | [v1.2.2](https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.2.2) |
@@ -98,11 +107,12 @@ Full role and modifier write-ups live on the **[project wiki](https://github.com
 ## Asset credits
 
 - [@AtonyGit](https://github.com/AtonyGit)/[Town Of Us: Mira](https://github.com/AU-Avengers/TOU-Mira) - All assets that are not specified below
-- @jaydoeswitchcraft (discord) - Bloody modifier icon and Demolitionist role icon and Button assets
+- @jaydoeswitchcraft (discord) - Bloody modifier icon and Demolitionist role icon and Button assets, Skilled, Strong and Incompetent modifier icons
 - [Freesound](https://freesound.org/) (community) -Glass&ndash;break SFX for Fragile
-- Espeon(@mystic_haze2 on discord) - Sprout Assets, Summoner role and meeting icon, providing more intro sounds
+- Espeon(@mystic_haze2 on discord) - Sprout Assets, Summoner role and meeting icon, Obfuscator role icon, Cunctator role icon, Mosquito assets, providing more intro sounds
 - @aasteriisken (discord) - Memento modifier icon, Domesmith Assets, Revenant icon
 [Follow Asterisken on GitHub](https://github.com/aasteriisken)
+- @maybe_xinav (discord) - Animated Portalmaker portals and portal button icons
 
 
 # Source inspiration

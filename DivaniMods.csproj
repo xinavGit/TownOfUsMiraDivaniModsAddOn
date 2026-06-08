@@ -8,7 +8,7 @@
     
     <AssemblyName>DivaniMods</AssemblyName>
     <RootNamespace>DivaniMods</RootNamespace>
-    <Version>1.2.4-starlight-testing</Version>
+    <Version>1.2.5</Version>
     <!--
       TownOfUs + TouMiraRolesExtension live in-repo for reference only. Do not compile them here:
       this project already references TownOfUsMira.dll from BepInEx. Compiling sources duplicates
@@ -207,6 +207,7 @@
     <EmbeddedResource Include="Resources\MosquitoSwat.wav" Condition="Exists('Resources\MosquitoSwat.wav')" />
     <EmbeddedResource Include="Resources\ObfuscatorIntro.wav" />
     <EmbeddedResource Include="Resources\CunctatorIntro.wav" />
+    <EmbeddedResource Include="Resources\InnocentIntro.wav" />
   </ItemGroup>
 
   <Target Name="CopyToPlugins" AfterTargets="Build">

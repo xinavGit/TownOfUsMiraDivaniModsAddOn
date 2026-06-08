@@ -351,6 +351,46 @@
         "\n- Roles and modifiers",
         "\n- Portal animations"
       ]
+    },
+    {
+      "Date": "2026-06-08T12:00:00Z",
+      "Number": "10011",
+      "ShortTitle": "Divani Mods v1.2.5",
+      "Title": "New roles, modifiers, and Starlight support (pending)",
+      "SubTitle": "Mosquito, Obfuscator, Cunctator plus three crew modifiers and fixes",
+      "Text": [
+        "\r<size=110%><b>Divani Mods v1.2.5</b></size>",
+        "\n\nSome new Impostor roles and modifiers join Divani Mods!",
+        "\n\nStarlight Support should be covered. This shouldn't take long now!",
+        "\n\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/releases/tag/v1.2.5>Download v1.2.5</link>",
+        "\n★ <link=https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki>Wiki</link>",
+        "\n\n\r<size=108%><b>New roles</b></size>",
+        "\n\n<b>Mosquito</b> (Impostor Power)",
+        "\nLaunch a mosquito that flies to a target and stings it to death. Auto-target the furthest player or pick one with a selection tablet; charge-based with an optional Aimbot Mode.",
+        "\n\n<b>Obfuscator</b> (Impostor Power)",
+        "\nSwap votes between two players during meetings. Always resolves after a regular Swapper.",
+        "\n\n<b>Cunctator</b> (Impostor Concealing)",
+        "\nBodies of those you kill only appear after a configurable delay.",
+        "\n\n\r<size=108%><b>New modifiers</b></size>",
+        "\n\n<b>Skilled</b> (Crewmate Utility): Fix two-part sabotages (reactor, oxygen) on your own.",
+        "\n\n<b>Strong</b> (Crewmate Passive): Cannot be guessed in meetings.",
+        "\n\n<b>Incompetent</b> (Crewmate Passive): Cannot fix sabotages.",
+        "\n\n\r<size=108%><b>Bug fixes</b></size>",
+        "\n\n- <b>Sniper</b> now works across Neutral Killing roles (Serial Killer supported) and no longer teleports on the kill.",
+        "\n- <b>Domesmith</b> domes are now visible to dead players.",
+        "\n- <b>Plague Doctor</b> infected symbol is now visible to dead players.",
+        "\n- <b>Thief</b> and <b>Sprout</b> can no longer steal/collect <b>Knighted</b>, and only interact with Town Of Us - Mira and Divani Mods modifiers.",
+        "\n\n\r<size=108%><b>Role & modifier changes</b></size>",
+        "\n\n- <b>Recruiter</b> moved to Impostor Power and now takes one of the Impostor role slots.",
+        "\n- <b>Summoner</b> description updated to cover the Revenant and the final-4 win check.",
+        "\n- <b>Portalmaker</b> portals are now animated; Use Portal uses the in-game Use button (Starlight support); teleport button moved to the right.",
+        "\n- <b>Demolitionist</b> Defuse now uses the in-game Use button (Starlight support).",
+        "\n\n\r<size=108%><b>Misc Changes</b></size>",
+        "\n\n- New <b>Rainbow Camouflaged Comms</b> lobby option: camouflage-comms colors players rainbow instead of grey.",
+        "\n- New Summoner recruit meeting icons.",
+        "\n- Innocent now has its own intro sound.",
+        "\n- Incompetent color change."
+      ]
     }
   ]
 }
