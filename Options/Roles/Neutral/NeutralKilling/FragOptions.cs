@@ -10,8 +10,8 @@ public class FragOptions : AbstractOptionGroup<FragRole>
     public override string GroupName => "Frag";
 
     public ModdedNumberOption BombTimer { get; } = new(
-        "Bomb Timer", 20f, 10f, 45f, 5f, MiraNumberSuffixes.Seconds);
+        "Frag Timer", 20f, 10f, 45f, 5f, MiraNumberSuffixes.Seconds);
 
     public ModdedNumberOption GiveBombCooldown { get; } = new(
-        "Give Bomb Cooldown", 25f, 10f, 60f, 5f, MiraNumberSuffixes.Seconds);
+        "Give Frag Cooldown", 25f, 10f, 60f, 5f, MiraNumberSuffixes.Seconds);
 }

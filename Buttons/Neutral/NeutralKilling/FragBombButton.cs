@@ -16,14 +16,14 @@ public class FragBombButton : TownOfUsTargetButton<PlayerControl>
 {
     public static FragBombButton? Instance { get; private set; }
 
-    public override string Name => "Pass Bomb";
+    public override string Name => "Pass Frag";
     public override float Cooldown => 0f;
     public override float InitialCooldown => 0f;
     public override float EffectDuration => 0f;
     public override int MaxUses => 0;
     public override LoadableAsset<Sprite> Sprite => DivaniAssets.FragPassButton;
     public override float Distance => 1.5f;
-    public override ButtonLocation Location { get; set; } = ButtonLocation.BottomLeft;
+    public override ButtonLocation Location { get; set; } = ButtonLocation.BottomRight;
     public override Color TextOutlineColor => FragRole.FragColor;
     public override BaseKeybind Keybind => Keybinds.SecondaryAction;
 
@@ -98,11 +98,11 @@ public class FragBombButton : TownOfUsTargetButton<PlayerControl>
         var localPlayer = PlayerControl.LocalPlayer;
         if (localPlayer == null) return;
 
-        instance.OverrideName("PASS BOMB");
+        instance.OverrideName("PASS FRAG");
 
         if (FragBombState.IsHolder(localPlayer.PlayerId) && FragBombState.IsArmed)
         {
-            instance.Button.buttonLabelText.text = "PASS BOMB";
+            instance.Button.buttonLabelText.text = "PASS FRAG";
             instance.Button.buttonLabelText.color = Color.white;
         }
         else

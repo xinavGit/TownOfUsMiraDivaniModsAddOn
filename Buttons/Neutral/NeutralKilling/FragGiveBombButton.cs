@@ -18,7 +18,7 @@ public class FragGiveBombButton : TownOfUsTargetButton<PlayerControl>
 
     public static FragGiveBombButton? Instance { get; private set; }
 
-    public override string Name => "Give Bomb";
+    public override string Name => "Give Frag";
     public override float Cooldown => OptionGroupSingleton<FragOptions>.Instance.GiveBombCooldown.Value;
 
     public override float EffectDuration =>
@@ -133,7 +133,7 @@ public class FragGiveBombButton : TownOfUsTargetButton<PlayerControl>
         }
         else
         {
-            instance.OverrideName("GIVE BOMB");
+            instance.OverrideName("GIVE FRAG");
             instance.TimerPaused = false;
             instance.EffectActive = false;
             if (_bombCountdownOnButton)

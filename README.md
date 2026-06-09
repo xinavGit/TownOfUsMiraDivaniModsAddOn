@@ -112,7 +112,7 @@ Full role and modifier write-ups live on the **[project wiki](https://github.com
 - Espeon(@mystic_haze2 on discord) - Sprout Assets, Summoner role and meeting icon, Obfuscator role icon, Cunctator role icon, Mosquito assets, providing more intro sounds
 - @aasteriisken (discord) - Memento modifier icon, Domesmith Assets, Revenant icon
 [Follow Asterisken on GitHub](https://github.com/aasteriisken)
-- @maybe_xinav (discord) - Animated Portalmaker portals and portal button icons
+- @maybe_xinav (discord) - Animated Portalmaker portals and portal button icons, Frag button icons, Plague Doctor button icon, Shuffle button icon
 
 
 # Source inspiration

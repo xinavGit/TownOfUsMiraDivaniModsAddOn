@@ -24,7 +24,7 @@ public class ShuffleButton : TownOfUsButton
     public override float Cooldown => OptionGroupSingleton<ShuffleOptions>.Instance.ShuffleCooldown.Value;
     public override float EffectDuration => 0f;
     public override int MaxUses => (int)OptionGroupSingleton<ShuffleOptions>.Instance.ShuffleUses.Value;
-    public override LoadableAsset<Sprite> Sprite => DivaniAssets.ShuffleAbilityButton;
+    public override LoadableAsset<Sprite> Sprite => DivaniAssets.ShuffleButton;
     public override Color TextOutlineColor => new Color32(0, 255, 30, 255);
     public override BaseKeybind Keybind => Keybinds.ModifierAction;
     public override ButtonLocation Location => ButtonLocation.BottomLeft;
@@ -257,7 +257,7 @@ public class ShuffleButton : TownOfUsButton
             $"<b><color=#808080>Everyone has been shuffled!</color></b>", 
             Color.white,
             new Vector3(0f, 1f, -20f), 
-            spr: DivaniAssets.ShuffleAbilityButton.LoadAsset());
+            spr: DivaniAssets.ShuffleIcon.LoadAsset());
         
     }
     
