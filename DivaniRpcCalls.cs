@@ -36,4 +36,5 @@ public enum DivaniRpcCalls : uint
     MosquitoSwat = 231,
     ObfuscatorSetSwaps = 232,
     ObfuscatorConsumeCharge = 233,
+    DuelistStartDuel = 234,
 }

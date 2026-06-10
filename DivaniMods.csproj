@@ -209,6 +209,8 @@
     <EmbeddedResource Include="Resources\ObfuscatorIntro.wav" />
     <EmbeddedResource Include="Resources\CunctatorIntro.wav" />
     <EmbeddedResource Include="Resources\InnocentIntro.wav" />
+    <EmbeddedResource Include="Resources\Icons\Duellist.png" />
+    <EmbeddedResource Include="Resources\DuelistDuel.png" />
 
   </ItemGroup>
 
