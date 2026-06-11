@@ -89,7 +89,7 @@ public sealed class MosquitoStingButton : TownOfUsButton
         SetUses(CurrentCharges);
 
         var hasCharges = CurrentCharges > 0 || MaxUses == 0;
-        return hasCharges && GetFarthestTarget(player) != null;
+        return hasCharges && GetFarthestTarget(player) != null && Timer <= 0;
     }
 
     public override void ClickHandler()

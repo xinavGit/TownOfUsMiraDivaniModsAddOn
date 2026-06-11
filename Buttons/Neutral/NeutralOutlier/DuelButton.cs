@@ -43,7 +43,7 @@ public sealed class DuelButton : TownOfUsRoleButton<DuelistRole>
         {
             return false;
         }
-        return HasAnyTarget(player);
+        return HasAnyTarget(player) && Timer <= 0;
     }
 
     private static bool HasAnyTarget(PlayerControl me)

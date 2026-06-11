@@ -74,7 +74,7 @@ public class FragGiveBombButton : TownOfUsTargetButton<PlayerControl>
         if (localPlayer.Data.Role is not FragRole) return false;
         if (FragBombState.IsActive) return false;
 
-        return base.CanUse();
+        return base.CanUse() && Timer <= 0;
     }
 
     public override void ClickHandler()
