@@ -131,6 +131,8 @@
     <EmbeddedResource Include="Resources\divanimods-bundle-android.bundle" />
     <EmbeddedResource Include="Resources\PDVent.png" />
     <EmbeddedResource Include="Resources\BeaconAsset.png" />
+    <EmbeddedResource Include="Resources\BeaconPlace.png" />
+    <EmbeddedResource Include="Resources\DeadlockLockdown.png" />
     <EmbeddedResource Include="Resources\FragGive.png" Condition="Exists('Resources\FragGive.png')" />
     <EmbeddedResource Include="Resources\FragPass.png" Condition="Exists('Resources\FragPass.png')" />
     <EmbeddedResource Include="Resources\FragVentButton.png" Condition="Exists('Resources\FragVentButton.png')" />

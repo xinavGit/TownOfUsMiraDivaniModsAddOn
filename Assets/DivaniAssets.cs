@@ -18,10 +18,10 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> FragVentButton { get; } = new LoadableResourceAsset($"{ShortPath}.FragVentButton.png");
     public static LoadableAsset<Sprite> FragGiveButton { get; } = new LoadableResourceAsset($"{ShortPath}.FragGive.png");
     public static LoadableAsset<Sprite> FragPassButton { get; } = new LoadableResourceAsset($"{ShortPath}.FragPass.png");
-    public static LoadableAsset<Sprite> DeadlockLockdownButton { get; } = new LoadableResourceAsset($"{IconPath}.Deadlock.png", 300f);
+    public static LoadableAsset<Sprite> DeadlockLockdownButton { get; } = new LoadableResourceAsset($"{ShortPath}.DeadlockLockdown.png");
     public static LoadableAsset<Sprite> DemolitionistPlantButton { get; } = new LoadableResourceAsset($"{ShortPath}.DemolitionistPlant.png");
     public static LoadableAsset<Sprite> DemolitionistDefuseButton { get; } = new LoadableResourceAsset($"{ShortPath}.DemolitionistDefuse.png");
-    public static LoadableAsset<Sprite> SentinelPlaceBeaconButton { get; } = new LoadableResourceAsset($"{IconPath}.Sentinel.png", 250f);
+    public static LoadableAsset<Sprite> SentinelPlaceBeaconButton { get; } = new LoadableResourceAsset($"{ShortPath}.BeaconPlace.png");
     public static LoadableAsset<Sprite> DomesmithPlaceDomeButton { get; } = new LoadableResourceAsset($"{ShortPath}.DomesmithPlaceDome.png");
     public static LoadableAsset<Sprite> PlagueDoctorInfectButton { get; } = new LoadableResourceAsset($"{ShortPath}.PlagueDoctorInfect.png");
     public static LoadableAsset<Sprite> SproutCollectButton { get; } = new LoadableResourceAsset($"{ShortPath}.Collect.png", 100);
