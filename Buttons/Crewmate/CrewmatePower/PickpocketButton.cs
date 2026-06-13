@@ -16,6 +16,7 @@ using DivaniMods.Buttons.Neutral.NeutralKilling;
 using DivaniMods.Options;
 using DivaniMods.Patches;
 using DivaniMods.Roles.Crewmate.CrewmatePower;
+using DivaniMods.Roles.Neutral.NeutralKilling;
 using DivaniMods.Utilities;
 using TownOfUs;
 using TownOfUs.Assets;
@@ -229,6 +230,7 @@ public class PickpocketButton : TownOfUsButton
         {
             FragBombState.PlayGivePassSoundLocal();
             FragBombButton.RpcPassBomb(thief, thief.PlayerId, target.PlayerId, 0f, 0f);
+            RpcNotifyFragStolen(thief, target.PlayerId);
             return;
         }
 
@@ -677,6 +679,28 @@ public class PickpocketButton : TownOfUsButton
             var showAnim = !MeetingHud.Instance && !ExileController.Instance;
             var flags = MurderResultFlags.DecisionByHost | MurderResultFlags.Succeeded;
             victim.CustomMurder(victim, flags, false, showAnim, false, showAnim, false);
+        }
+    }
+
+    [MethodRpc((uint)DivaniRpcCalls.FragStolenNotify)]
+    public static void RpcNotifyFragStolen(PlayerControl thief, byte targetId)
+    {
+        if (thief == PlayerControl.LocalPlayer)
+        {
+            MiraAPI.Utilities.Helpers.CreateAndShowNotification(
+                "<b><color=#e8a87c>You stole the Frag!</color></b>",
+                FragRole.FragColor,
+                new Vector3(0f, 1f, -20f),
+                spr: DivaniAssets.FragIcon.LoadAsset());
+        }
+
+        if (PlayerControl.LocalPlayer != null && PlayerControl.LocalPlayer.PlayerId == targetId)
+        {
+            MiraAPI.Utilities.Helpers.CreateAndShowNotification(
+                "<b><color=#e8a87c>Your Frag was stolen by the Thief!</color></b>",
+                FragRole.FragColor,
+                new Vector3(0f, 1f, -20f),
+                spr: DivaniAssets.FragIcon.LoadAsset());
         }
     }
 

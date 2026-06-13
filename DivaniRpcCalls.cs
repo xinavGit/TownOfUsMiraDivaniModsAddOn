@@ -37,4 +37,5 @@ public enum DivaniRpcCalls : uint
     ObfuscatorSetSwaps = 232,
     ObfuscatorConsumeCharge = 233,
     DuelistStartDuel = 234,
+    FragStolenNotify = 235,
 }
