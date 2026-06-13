@@ -18,7 +18,8 @@ public sealed class MosquitoRole(IntPtr cppPtr)
     public string LocaleKey => "Mosquito";
     public string RoleDescription => "Bzzzzz..Splat!";
     public string RoleLongDescription =>
-        "Launch a mosquito that flies to a target and stings it to death.";
+        "Launch a mosquito that flies to a target and stings it to death.\n" +
+        "Everyone can swat mosquitos to kill them!";
     public Color RoleColor => Palette.ImpostorRed;
     public ModdedRoleTeams Team => ModdedRoleTeams.Impostor;
     public RoleAlignment RoleAlignment => RoleAlignment.ImpostorKilling;
