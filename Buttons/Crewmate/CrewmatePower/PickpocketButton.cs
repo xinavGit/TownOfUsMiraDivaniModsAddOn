@@ -274,7 +274,7 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
         return target.GetModifiers<BaseModifier>()
             .Where(m => IsAllowedSource(m) &&
                         !IsExcludedFromStealing(m) &&
-                        !IsNonStealableVisualModifier(m))
+                        !IsVisualModifier(m))
             .ToList();
     }
 
@@ -382,23 +382,6 @@ public class PickpocketButton : TownOfUsTargetButton<PlayerControl>
     private static bool IsVisualModifier(BaseModifier modifier)
     {
         return modifier is IVisualAppearance;
-    }
-    
-    private static bool IsUniversalVisualModifier(BaseModifier modifier)
-    {
-        if (!(modifier is IVisualAppearance))
-            return false;
-        
-        var modNamespace = modifier.GetType().Namespace;
-        return modNamespace != null && modNamespace == "TownOfUs.Modifiers.Game.Universal";
-    }
-    
-    private static bool IsNonStealableVisualModifier(BaseModifier modifier)
-    {
-        if (!(modifier is IVisualAppearance))
-            return false;
-        
-        return !IsUniversalVisualModifier(modifier);
     }
 
     private static List<uint> GetGivableModifierIds(bool allowButtonModifiers)
