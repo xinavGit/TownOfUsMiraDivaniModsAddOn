@@ -3,7 +3,7 @@ Duelist and Armored join Divani Mods!
 Fixed a major bug with mosquito sting cooldown + some other tweaks
 ## Added
 
-### Added Role: Duelist (Neutral)
+### Added Role: Duelist (Neutral Outlier)
 
 Challenge a shipmate to a duel! You are anonymous to the challenger and are seperated from the other shipmates
 Both you and the challenger get teleported to the closest two rooms and then you have to fight it out. If you win a set amount of duels you win alone or leave in victory. But watch out. You also have a limited amnount of lives. If you lost your last life, you die (and pray for an altruist)
