@@ -41,6 +41,7 @@ Join the Discord:
   <img src="./Resources/Headers/NeutKilling.png" alt="Neutral Killing"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#frag"><img width="10%" src="./Resources/Icons/Frag.png" alt="Frag"/></a>
     <img src="./Resources/Headers/NeutOutlier.png" alt="Neutral Outlier"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#duelist"><img width="10%" src="./Resources/Icons/Duellist.png" alt="Duelist"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#opportunist"><img width="10%" src="./Resources/Icons/Opportunist.png" alt="Opportunist"/></a>
   <img src="./Resources/Headers/CrewMods.png" alt="Crewmate modifiers"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#blindspot"><img width="10%" src="./Resources/Icons/Blindspot.png" alt="Blindspot"/></a>
@@ -55,6 +56,7 @@ Join the Discord:
   <img src="./Resources/Headers/NeutMods.png" alt="Neutral modifiers"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#sniper"><img width="10%" src="./Resources/Icons/Sniper.png" alt="Sniper"/></a>
   <img src="./Resources/Headers/UniMods.png" alt="Universal modifiers"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#armored"><img width="10%" src="./Resources/Icons/Armored.png" alt="Armored"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#fragile"><img width="10%" src="./Resources/Icons/Fragile.png" alt="Fragile"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#shuffle"><img width="10%" src="./Resources/Icons/Shuffle.png" alt="Shuffle"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#memento"><img width="10%" src="./Resources/Icons/Memento.png" alt="Memento"/></a>
@@ -109,10 +111,10 @@ Full role and modifier write-ups live on the **[project wiki](https://github.com
 - [@AtonyGit](https://github.com/AtonyGit)/[Town Of Us: Mira](https://github.com/AU-Avengers/TOU-Mira) - All assets that are not specified below
 - @jaydoeswitchcraft (discord) - Bloody modifier icon and Demolitionist role icon and Button assets, Skilled, Strong and Incompetent modifier icons
 - [Freesound](https://freesound.org/) (community) -Glass&ndash;break SFX for Fragile
-- Espeon(@mystic_haze2 on discord) - Sprout Assets, Summoner role and meeting icon, Obfuscator role icon, Cunctator role icon, Mosquito assets, providing more intro sounds
+- Espeon(@mystic_haze2 on discord) - Sprout Assets, Summoner role and meeting icon, Obfuscator role icon, Cunctator role icon, Mosquito assets, providing more intro sounds, Duelist assets, Armored assets
 - @aasteriisken (discord) - Memento modifier icon, Domesmith Assets, Revenant icon
 [Follow Asterisken on GitHub](https://github.com/aasteriisken)
-- @maybe_xinav (discord) - Animated Portalmaker portals and portal button icons, Frag button icons, Plague Doctor button icon, Shuffle button icon
+- @maybe_xinav (discord) - Animated Portalmaker portals and portal button icons, Frag button icons, Plague Doctor button icon, Shuffle button icon, Sentinel beacon sprite, Sentinel palce beacon button,Lockdown button sprite
 
 
 # Source inspiration
