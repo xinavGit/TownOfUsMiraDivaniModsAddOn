@@ -201,6 +201,7 @@
     <EmbeddedResource Include="Resources\Icons\Obfuscator.png" />
     <EmbeddedResource Include="Resources\Icons\Cunctator.png" />
     <EmbeddedResource Include="Resources\Icons\Incompetent.png" />
+    <EmbeddedResource Include="Resources\Icons\Armored.png" />
     <EmbeddedResource Include="Resources\DomesmithIntro.wav" />
     <EmbeddedResource Include="Resources\SummonerIntro.wav" />
     <EmbeddedResource Include="Resources\SentinelIntro.wav" />

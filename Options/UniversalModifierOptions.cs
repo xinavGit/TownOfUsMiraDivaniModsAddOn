@@ -47,4 +47,13 @@ public sealed class UniversalModifierOptions : AbstractOptionGroup
         {
             Visible = () => OptionGroupSingleton<UniversalModifierOptions>.Instance.MementoAmount.Value > 0
         };
+
+    public ModdedNumberOption ArmoredAmount { get; } = new(
+        "Armored Amount", 0f, 0f, 5f, 1f, MiraNumberSuffixes.None);
+
+    public ModdedNumberOption ArmoredChance { get; } =
+        new("Armored Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
+        {
+            Visible = () => OptionGroupSingleton<UniversalModifierOptions>.Instance.ArmoredAmount.Value > 0
+        };
 }

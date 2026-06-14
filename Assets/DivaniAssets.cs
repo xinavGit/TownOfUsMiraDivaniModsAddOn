@@ -63,6 +63,7 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> ObfuscatorIcon { get; } = new LoadableResourceAsset($"{IconPath}.Obfuscator.png", 200);
     public static LoadableAsset<Sprite> CunctatorIcon { get; } = new LoadableResourceAsset($"{IconPath}.Cunctator.png", 200);
     public static LoadableAsset<Sprite> IncompetentIcon { get; } = new LoadableResourceAsset($"{IconPath}.Incompetent.png", 200);
+    public static LoadableAsset<Sprite> ArmoredIcon { get; } = new LoadableResourceAsset($"{IconPath}.Armored.png", 200);
     // Audio clips (16000hz)
     public static LoadableAsset<AudioClip> FragileBreak { get; } = new LoadableAudioResourceAsset($"{ShortPath}.FragileBreak.wav");
     public static LoadableAsset<AudioClip> PlagueDoctorIntroSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.PlagueDoctorIntro.wav");
