@@ -28,6 +28,8 @@ public sealed class MosquitoObject : MonoBehaviour
     private const float BeanBaseSpeed = 2.5f;
     private const float SpeedMultiplier = 1f;
 
+    public static byte PendingStingTargetId { get; set; } = byte.MaxValue;
+
     public byte ShooterId { get; set; } = byte.MaxValue;
     public byte TargetId { get; set; } = byte.MaxValue;
     public Vector2 Destination { get; set; }
@@ -137,6 +139,7 @@ public sealed class MosquitoObject : MonoBehaviour
                 var shooter = GetPlayer(ShooterId);
                 if (shooter != null && !shooter.HasDied() && !target.HasDied())
                 {
+                    PendingStingTargetId = target.PlayerId;
                     shooter.RpcSpecialMurder(
                         target,
                         MeetingCheck.OutsideMeeting,
@@ -146,13 +149,6 @@ public sealed class MosquitoObject : MonoBehaviour
                         playKillSound: true,
                         causeOfDeath: "Mosquito");
                     MosquitoRpc.ResetStingCooldown(ShooterId);
-
-                    var colorHex = ColorUtility.ToHtmlStringRGB(Palette.ImpostorRed);
-                    MiraAPI.Utilities.Helpers.CreateAndShowNotification(
-                        $"<b><color=#{colorHex}>Your mosquito stung {target.Data.PlayerName}</color></b>",
-                        Color.white,
-                        new Vector3(0f, 1f, -20f),
-                        spr: DivaniAssets.MosquitoIcon.LoadAsset());
                 }
             }
 
@@ -254,6 +250,8 @@ public sealed class MosquitoObject : MonoBehaviour
     [HideFromIl2Cpp]
     public static void DestroyAll()
     {
+        PendingStingTargetId = byte.MaxValue;
+
         foreach (var mosquito in UnityEngine.Object.FindObjectsOfType<MosquitoObject>())
         {
             if (mosquito != null)

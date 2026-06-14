@@ -6,6 +6,10 @@ using DivaniMods.Assets;
 using DivaniMods.Roles.Crewmate.CrewmateInvestigative;
 using TownOfUs.Utilities;
 using UnityEngine;
+using DivaniMods.Modifiers.Neutral.NeutralOutlier;
+using DivaniMods.Modules.Duelist;
+using MiraAPI.Modifiers;
+using TownOfUs.Modifiers.Impostor;
 
 namespace DivaniMods.Buttons.Crewmate.CrewmateInvestigative;
 
@@ -93,7 +97,10 @@ public static class BeaconManager
             {
                 if (player == null || player.Data == null || player.Data.IsDead) continue;
                 if (player.Data.Disconnected) continue;
-                if (player.Data.Role is SentinelRole) continue;
+                if (player.Data.Role is SentinelRole) continue; 
+                var duelmodifiers = player.GetModifiers<DuelModifier>()?.ToList();
+                if (duelmodifiers == null || duelmodifiers.Count == 0)
+                    continue;
 
                 var playerRoom = GetShipRoom(player.GetTruePosition());
                 if (playerRoom != null && playerRoom.RoomId == beaconRoom.RoomId)
@@ -133,20 +140,22 @@ public static class BeaconManager
             {
                 if (player == null || player.Data == null || player.Data.IsDead) continue;
                 if (player.Data.Disconnected) continue;
-
                 if (player.Data.Role is SentinelRole) continue;
 
                 var playerRoom = GetShipRoom(player.GetTruePosition());
-                if (playerRoom != null && playerRoom.RoomId == beaconRoom.RoomId)
-                {
-                    currentPlayersInRoom.Add(player.PlayerId);
+                if (playerRoom == null || playerRoom.RoomId != beaconRoom.RoomId) continue;
 
-                    if (!beacon.PlayersInRoom.Contains(player.PlayerId))
-                    {
-                        var playerName = player.Data.PlayerName;
-                        beacon.PlayersPassedThrough.Add(playerName);
-                        newEntries.Add((beacon, playerName));
-                    }
+                // Track presence even for duellists, so when their modifier is later removed
+                // (duel ends / teleport back) they aren't treated as a fresh entry and flashed.
+                currentPlayersInRoom.Add(player.PlayerId);
+
+                if (player.HasModifier<DuelModifier>() || DuelManager.IsInDuel(player.PlayerId)) continue; // in a duel: no flash, no report
+
+                if (!beacon.PlayersInRoom.Contains(player.PlayerId))
+                {
+                    var playerName = player.Data.PlayerName;
+                    beacon.PlayersPassedThrough.Add(playerName);
+                    newEntries.Add((beacon, playerName));
                 }
             }
 

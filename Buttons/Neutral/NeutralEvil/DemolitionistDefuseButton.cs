@@ -81,7 +81,7 @@ public class DemolitionistDefuseButton : TownOfUsButton
         if (_isDefusing) return false;
         if (!DemolitionistSabotageState.IsLocalPlayerAtPlantedConsole()) return false;
 
-        return base.CanUse();
+        return base.CanUse() && Timer <= 0;
     }
 
     public override void ClickHandler()

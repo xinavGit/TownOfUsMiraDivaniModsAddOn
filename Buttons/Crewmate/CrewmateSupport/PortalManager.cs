@@ -9,6 +9,7 @@ using DivaniMods.Roles.Crewmate.CrewmateSupport;
 using MiraAPI.Hud;
 using TownOfUs.Modifiers.Game.Universal;
 using TownOfUs.Utilities;
+using DivaniMods.Modifiers.Neutral.NeutralOutlier;
 
 namespace DivaniMods.Buttons.Crewmate.CrewmateSupport;
 
@@ -69,7 +70,7 @@ public static class PortalManager
     public static void AddPortalUser(PlayerControl player)
     {
         if (player?.Data == null) return;
-        
+        if (player.HasModifier<DuelModifier>()) return;
         var playerName = player.Data.PlayerName;
         PortalUsers.Add(playerName);
     }
@@ -77,7 +78,7 @@ public static class PortalManager
     private static void AddImmovablePortalUser(PlayerControl player)
     {
         if (player?.Data == null) return;
-
+        if (player.HasModifier<DuelModifier>()) return;
         ImmovablePortalUsers.Add(player.Data.PlayerName);
     }
     

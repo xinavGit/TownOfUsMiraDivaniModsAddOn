@@ -13,6 +13,12 @@ public static class DivaniLocale
         }
 
         RegisterDeathCauses(en);
+        RegisterLocalSettings(en);
+    }
+
+    private static void RegisterLocalSettings(Dictionary<string, string> en)
+    {
+        en.TryAdd("DivaniLocalSettingDisableRainbowComms", "Disable Rainbow Comms");
     }
 
     private static void RegisterDeathCauses(Dictionary<string, string> en)
@@ -29,5 +35,6 @@ public static class DivaniLocale
         en.TryAdd("DiedToMosquito", "Stung");
         en.TryAdd("DiedToCunctator", "Delayed");
         en.TryAdd("DiedToObfuscator", "Obfuscated");
+        en.TryAdd("DiedToDuelist", "Defeated");
     }
 }

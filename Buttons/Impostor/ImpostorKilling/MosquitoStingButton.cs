@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace DivaniMods.Buttons.Impostor.ImpostorKilling;
 
-public sealed class MosquitoStingButton : TownOfUsButton
+public sealed class MosquitoStingButton : TownOfUsButton, IDiseaseableButton
 {
     public override string Name => "Sting";
     public override float Cooldown => OptionGroupSingleton<MosquitoOptions>.Instance.StingCooldown.Value;
@@ -50,6 +50,11 @@ public sealed class MosquitoStingButton : TownOfUsButton
     {
         Instance = this;
         return role is MosquitoRole;
+    }
+
+    public void SetDiseasedTimer(float multiplier)
+    {
+        SetTimer(Cooldown * multiplier);
     }
 
     private static MosquitoTargetMode Mode =>
@@ -89,7 +94,7 @@ public sealed class MosquitoStingButton : TownOfUsButton
         SetUses(CurrentCharges);
 
         var hasCharges = CurrentCharges > 0 || MaxUses == 0;
-        return hasCharges && GetFarthestTarget(player) != null;
+        return hasCharges && GetFarthestTarget(player) != null && Timer <= 0;
     }
 
     public override void ClickHandler()
@@ -162,7 +167,12 @@ public sealed class MosquitoStingButton : TownOfUsButton
         MosquitoRpc.RpcSpawnMosquito(shooter, target.PlayerId, dest.x, dest.y, aimbot);
 
         // Sync with the kill button: launching a sting also puts the stab on cooldown.
-        shooter.SetKillTimer(shooter.GetKillCooldown());
+        var killButton = CustomButtonSingleton<MosquitoKillButton>.Instance;
+        if (killButton != null)
+        {
+            killButton.SetTimer(killButton.Cooldown);
+        }
+        shooter.SetKillTimer(killButton?.Cooldown ?? shooter.GetKillCooldown());
     }
 
     private void OpenTargetMenu(PlayerControl player)

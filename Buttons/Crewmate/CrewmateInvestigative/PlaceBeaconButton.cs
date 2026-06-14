@@ -110,7 +110,7 @@ public class PlaceBeaconButton : TownOfUsButton
             $"<b><color=#{colorHex}>Placing beacon...</color></b>",
             Color.white,
             new Vector3(0f, 1f, -20f),
-            spr: DivaniAssets.SentinelPlaceBeaconButton.LoadAsset());
+            spr: DivaniAssets.SentinelIcon.LoadAsset());
         
         yield return new WaitForSeconds(EffectDuration);
         
@@ -132,7 +132,7 @@ public class PlaceBeaconButton : TownOfUsButton
             message,
             Color.white,
             new Vector3(0f, 1f, -20f),
-            spr: DivaniAssets.SentinelPlaceBeaconButton.LoadAsset());
+            spr: DivaniAssets.SentinelIcon.LoadAsset());
 
         
         _isPlacing = false;

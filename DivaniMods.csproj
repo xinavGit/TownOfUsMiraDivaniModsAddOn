@@ -8,7 +8,7 @@
     
     <AssemblyName>DivaniMods</AssemblyName>
     <RootNamespace>DivaniMods</RootNamespace>
-    <Version>1.2.6</Version>
+    <Version>1.2.7</Version>
     <!--
       TownOfUs + TouMiraRolesExtension live in-repo for reference only. Do not compile them here:
       this project already references TownOfUsMira.dll from BepInEx. Compiling sources duplicates
@@ -131,8 +131,11 @@
     <EmbeddedResource Include="Resources\divanimods-bundle-android.bundle" />
     <EmbeddedResource Include="Resources\PDVent.png" />
     <EmbeddedResource Include="Resources\BeaconAsset.png" />
+    <EmbeddedResource Include="Resources\BeaconPlace.png" />
+    <EmbeddedResource Include="Resources\DeadlockLockdown.png" />
     <EmbeddedResource Include="Resources\FragGive.png" Condition="Exists('Resources\FragGive.png')" />
     <EmbeddedResource Include="Resources\FragPass.png" Condition="Exists('Resources\FragPass.png')" />
+    <EmbeddedResource Include="Resources\FragVentButton.png" Condition="Exists('Resources\FragVentButton.png')" />
     <!-- Role / modifier icons (logical name DivaniMods.Resources.Icons.* — see DivaniAssets.IconPath) -->
     <EmbeddedResource Include="Resources\Icons\Thief.png" />
     <EmbeddedResource Include="Resources\Icons\Blindspot.png" />
@@ -198,6 +201,7 @@
     <EmbeddedResource Include="Resources\Icons\Obfuscator.png" />
     <EmbeddedResource Include="Resources\Icons\Cunctator.png" />
     <EmbeddedResource Include="Resources\Icons\Incompetent.png" />
+    <EmbeddedResource Include="Resources\Icons\Armored.png" />
     <EmbeddedResource Include="Resources\DomesmithIntro.wav" />
     <EmbeddedResource Include="Resources\SummonerIntro.wav" />
     <EmbeddedResource Include="Resources\SentinelIntro.wav" />
@@ -209,6 +213,10 @@
     <EmbeddedResource Include="Resources\ObfuscatorIntro.wav" />
     <EmbeddedResource Include="Resources\CunctatorIntro.wav" />
     <EmbeddedResource Include="Resources\InnocentIntro.wav" />
+    <EmbeddedResource Include="Resources\Icons\Duellist.png" />
+    <EmbeddedResource Include="Resources\DuelistDuel.png" />
+    <EmbeddedResource Include="Resources\DuelStrikeButton.png" />
+    <EmbeddedResource Include="Resources\DuelistIntro.wav" />
 
   </ItemGroup>
 

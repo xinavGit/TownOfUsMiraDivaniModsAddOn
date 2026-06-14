@@ -67,7 +67,7 @@ public class PlacePortalButton : TownOfUsButton
         
         
         MiraAPI.Utilities.Helpers.CreateAndShowNotification(
-            "<b><color=#6633CC>Placing portal...</color></b>",
+            "<b><color=#0C6BF5>Placing portal...</color></b>",
             Color.white,
             new Vector3(0f, 1f, -20f),
             spr: DivaniAssets.PortalmakerIcon.LoadAsset());
@@ -87,10 +87,10 @@ public class PlacePortalButton : TownOfUsButton
         int portalNum = PortalManager.PortalsPlaced;
         var afterMeeting = OptionGroupSingleton<PortalmakerOptions>.Instance.EnableAfterFirstMeeting;
         string message = portalNum == 1
-            ? "<b><color=#6633CC>Portal 1 placed! Place another portal to complete the link.</color></b>"
+            ? "<b><color=#0C6BF5>Portal 1 placed! Place another portal to complete the link.</color></b>"
             : afterMeeting
-                ? "<b><color=#6633CC>Portal 2 placed! Portals will be enabled after the next meeting.</color></b>"
-                : "<b><color=#6633CC>Portal 2 placed! Portals are now active!</color></b>";
+                ? "<b><color=#0C6BF5>Portal 2 placed! Portals will be enabled after the next meeting.</color></b>"
+                : "<b><color=#0C6BF5>Portal 2 placed! Portals are now active!</color></b>";
         
         MiraAPI.Utilities.Helpers.CreateAndShowNotification(
             message,
