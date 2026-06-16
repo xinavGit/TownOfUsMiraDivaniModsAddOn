@@ -219,6 +219,9 @@
     <EmbeddedResource Include="Resources\DuelStrikeButton.png" />
     <EmbeddedResource Include="Resources\DuelistIntro.wav" />
     <EmbeddedResource Include="Resources\ClockstopperIntro.wav" />
+    <EmbeddedResource Include="Resources\RetributionistIntro.wav" />
+    <EmbeddedResource Include="Resources\Icons\Retributionist.png" />
+    <EmbeddedResource Include="Resources\VengefulSoulRevenge.png" />
 
   </ItemGroup>
 

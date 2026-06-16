@@ -40,4 +40,7 @@ public enum DivaniRpcCalls : uint
     FragStolenNotify = 235,
     ArmoredAttacked = 236,
     ClockstopperResetCooldowns = 237,
+    RetributionistStartRevenge = 238,
+    RetributionistRevenge = 239,
+    RetributionistRevengeFailed = 240,
 }
