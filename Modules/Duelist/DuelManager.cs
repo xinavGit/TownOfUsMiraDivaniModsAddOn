@@ -130,7 +130,7 @@ public static class DuelManager
     private static Vector2 GetRoomDest(PlainShipRoom room)
     {
         return DuelRoomPositions.TryGet(room.RoomId, out var pos)
-            ? pos
+            ? new Vector2(pos.x, pos.y + 0.3636f)
             : room.roomArea.bounds.center;
     }
 
