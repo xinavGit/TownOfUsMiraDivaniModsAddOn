@@ -113,13 +113,16 @@ Full role and modifier write-ups live on the **[project wiki](https://github.com
 ## Asset credits
 
 - [@AtonyGit](https://github.com/AtonyGit)/[Town Of Us: Mira](https://github.com/AU-Avengers/TOU-Mira) - All assets that are not specified below
-- @jaydoeswitchcraft (discord) - Bloody modifier icon and Demolitionist role icon and Button assets, Skilled, Strong and Incompetent modifier icons
+- @jaydoeswitchcraft (discord) - Bloody modifier icon and Demolitionist role icon and Button assets, Skilled, Strong and Incompetent modifier icons, Retributionist assets
 - [Freesound](https://freesound.org/) (community) -Glass&ndash;break SFX for Fragile
 - Espeon(@mystic_haze2 on discord) - Sprout Assets, Summoner role and meeting icon, Obfuscator role icon, Cunctator role icon, Mosquito assets, providing more intro sounds, Duelist assets, Armored assets
-- @aasteriisken (discord) - Memento modifier icon, Domesmith Assets, Revenant icon
+- @aasteriisken (discord) - Memento modifier icon, Domesmith Assets, Revenant icon, UAV Assets, Clockstopper icon
 [Follow Asterisken on GitHub](https://github.com/aasteriisken)
 - @maybe_xinav (discord) - Animated Portalmaker portals and portal button icons, Frag button icons, Plague Doctor button icon, Shuffle button icon, Sentinel beacon sprite, Sentinel palce beacon button,Lockdown button sprite
 
+## Idea box Ideas (Divani Mods Discord)
+
+@jaydoeswitchcraft - Retributionist
 
 # Source inspiration
 
