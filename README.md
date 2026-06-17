@@ -17,11 +17,14 @@ Join the Discord:
   <img src="./Resources/Headers/CrewPower.png" alt="Crewmate Power"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#thief"><img width="10%" src="./Resources/Icons/Thief.png" alt="Thief"/></a>
   <img src="./Resources/Headers/CrewSupport.png" alt="Crewmate Support"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#clockstopper"><img width="10%" src="./Resources/Icons/Clockstopper.png" alt="Clockstopper"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#portalmaker"><img width="10%" src="./Resources/Icons/PortalMaker.png" alt="Portalmaker"/></a>
   <img src="./Resources/Headers/CrewInvestigative.png" alt="Crewmate Investigative"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#sentinel"><img width="10%" src="./Resources/Icons/Sentinel.png" alt="Sentinel"/></a>
   <img src="./Resources/Headers/CrewProtective.png" alt="Crewmate Protective"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#domesmith"><img width="10%" src="./Resources/Icons/Domesmith.png" alt="Domesmith"/></a>
+  <img src="./Resources/Headers/CrewKilling.png" alt="Crewmate Killing"/>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#retributionist"><img width="10%" src="./Resources/Icons/Retributionist.png" alt="Retributionist"/></a>
   <img src="./Resources/Headers/ImpConcealing.png" alt="Impostor Concealing"/>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#cunctator"><img width="10%" src="./Resources/Icons/Cunctator.png" alt="Cunctator"/></a>
   <img src="./Resources/Headers/ImpKilling.png" alt="Impostor Killing"/>
@@ -61,6 +64,7 @@ Join the Discord:
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#shuffle"><img width="10%" src="./Resources/Icons/Shuffle.png" alt="Shuffle"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#memento"><img width="10%" src="./Resources/Icons/Memento.png" alt="Memento"/></a>
   <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#misvote"><img width="10%" src="./Resources/Icons/Misvote.png" alt="Misvote"/></a>
+  <a href="https://github.com/DivaniNL/TownOfUsMiraDivaniModsAddOn/wiki/Home#uav"><img width="10%" src="./Resources/Icons/UAV.png" alt="UAV"/></a>
 </p>
 
 ---
