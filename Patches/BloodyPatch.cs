@@ -24,6 +24,11 @@ public static class BloodyPatch
             return;
         }
 
+        if (NullifiedPatch.ShouldNullify(evt.Source))
+        {
+            return;
+        }
+
         var killer = evt.Source;
         var comp = killer.GetModifierComponent();
         if (comp == null)

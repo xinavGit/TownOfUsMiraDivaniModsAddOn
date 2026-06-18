@@ -35,6 +35,11 @@ public static class BearTrapPatch
             return;
         }
 
+        if (NullifiedPatch.ShouldNullify(evt.Source))
+        {
+            return;
+        }
+
         var duration = OptionGroupSingleton<BearTrapOptions>.Instance.FreezeDuration.Value;
         var trap = new ActiveTrap(evt.Source.PlayerId, evt.Target.PlayerId, Time.time + duration);
         ActiveTraps[evt.Source.PlayerId] = trap;

@@ -68,6 +68,7 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> StrongIcon { get; } = new LoadableResourceAsset($"{IconPath}.Strong.png", 200);
     public static LoadableAsset<Sprite> BloodyIcon { get; } = new LoadableResourceAsset($"{IconPath}.Bloody.png", 200);
     public static LoadableAsset<Sprite> RuthlessIcon { get; } = new LoadableResourceAsset($"{IconPath}.Ruthless.png", 200);
+    public static LoadableAsset<Sprite> NullifiedIcon { get; } = new LoadableResourceAsset($"{IconPath}.Nullified.png", 200);
     public static LoadableAsset<Sprite> SproutIcon { get; } = new LoadableResourceAsset($"{IconPath}.Sprout.png", 200);
     public static LoadableAsset<Sprite> ObfuscatorIcon { get; } = new LoadableResourceAsset($"{IconPath}.Obfuscator.png", 200);
     public static LoadableAsset<Sprite> CunctatorIcon { get; } = new LoadableResourceAsset($"{IconPath}.Cunctator.png", 200);

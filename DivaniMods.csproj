@@ -143,6 +143,7 @@
     <EmbeddedResource Include="Resources\Icons\Deadlock.png" />
     <EmbeddedResource Include="Resources\Icons\PortalMaker.png" />
     <EmbeddedResource Include="Resources\Icons\Ruthless.png" />
+    <EmbeddedResource Include="Resources\Icons\Nullified.png" />
     <EmbeddedResource Include="Resources\Icons\PlagueDoctor.png" />
     <EmbeddedResource Include="Resources\Icons\Innocent.png" />
     <EmbeddedResource Include="Resources\Icons\Sentinel.png" />

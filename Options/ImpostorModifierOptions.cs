@@ -22,4 +22,13 @@ public sealed class ImpostorModifierOptions : AbstractOptionGroup
         {
             Visible = () => OptionGroupSingleton<ImpostorModifierOptions>.Instance.RuthlessAmount.Value > 0
         };
+
+    public ModdedNumberOption NullifiedAmount { get; } = new(
+        "Nullified Amount", 0f, 0f, 5f, 1f, MiraNumberSuffixes.None);
+
+    public ModdedNumberOption NullifiedChance { get; } =
+        new("Nullified Chance", 50f, 0, 100f, 10f, MiraNumberSuffixes.Percent)
+        {
+            Visible = () => OptionGroupSingleton<ImpostorModifierOptions>.Instance.NullifiedAmount.Value > 0
+        };
 }
