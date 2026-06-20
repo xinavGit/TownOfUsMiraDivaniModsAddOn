@@ -7,6 +7,7 @@ using DivaniMods.Networking.Crewmate.CrewmateKilling;
 using DivaniMods.Options;
 using DivaniMods.Roles.Crewmate.CrewmateAfterlife;
 using DivaniMods.Roles.Crewmate.CrewmateKilling;
+using TownOfUs.Events.TouEvents;
 using TownOfUs.Modules;
 using TownOfUs.Utilities;
 using TownOfUs.Roles.Neutral;
@@ -56,6 +57,25 @@ public static class RetributionistEvents
 
             var pos = target.transform.position;
             RetributionistRpc.RpcStartRevenge(target, killer, pos.x, pos.y);
+        }
+    }
+
+    [RegisterEvent]
+    public static void OnChangeRole(ChangeRoleEvent evt)
+    {
+        if (evt.OldRole is not VengefulSoulRole || evt.NewRole is not RetributionistRole)
+        {
+            return;
+        }
+
+        var soulId = evt.Player.PlayerId;
+        var externalRevive = RetributionistManager.IsRevengeActive(soulId);
+
+        RetributionistManager.EndRevenge(soulId);
+
+        if (externalRevive)
+        {
+            RetributionistManager.RestoreRevengeCharge(soulId);
         }
     }
 
