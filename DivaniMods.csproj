@@ -233,6 +233,7 @@
     <EmbeddedResource Include="Resources\CupidProtect.png" />
     <EmbeddedResource Include="Resources\CupidProtectOne.png" />
     <EmbeddedResource Include="Resources\CupidProtectTwo.png" />
+    <EmbeddedResource Include="Resources\CupidIntro.wav" Condition="Exists('Resources\CupidIntro.wav')" />
 
   </ItemGroup>
 

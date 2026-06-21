@@ -44,11 +44,11 @@ public sealed class CupidRole(IntPtr cppPtr)
 
     public string LocaleKey => "Cupid";
     public string RoleName => "Cupid";
-    public string RoleDescription => "Bind two players together in love.";
+    public string RoleDescription => "Spread the love!";
     public string RoleLongDescription =>
-        "Use Matchmake to mark two players as provisional lovers.\n" +
-        "When a meeting ends, they become Lovers forever.\n" +
-        "You then Bestow protection upon them. You win if they win.";
+        "Use Matchmake to make two people fall in love next round\n" +
+        "You can Bestow your lovers to protect them";
+
     public Color RoleColor => CupidColor;
     public ModdedRoleTeams Team => ModdedRoleTeams.Custom;
     public RoleAlignment RoleAlignment => RoleAlignment.NeutralBenign;
@@ -63,7 +63,7 @@ public sealed class CupidRole(IntPtr cppPtr)
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.CupidIcon,
-        IntroSound = TouAudio.GuardianAngelSound,
+        IntroSound = DivaniAssets.CupidIntroSound,
         MaxRoleCount = 1,
         GhostRole = (RoleTypes)RoleId.Get<NeutralGhostRole>()
     };
@@ -225,7 +225,7 @@ public sealed class CupidRole(IntPtr cppPtr)
 
         if (!Finalized)
         {
-            stringB.Append(TownOfUsPlugin.Culture, $"\n<b>{CupidColor.ToTextColor()}Provisional lovers</color></b>");
+            stringB.Append(TownOfUsPlugin.Culture, $"\n<b>{CupidColor.ToTextColor()}Provisional lovers:</color></b>");
             foreach (var id in ProvisionalTargets)
             {
                 var plr = MiscUtils.PlayerById(id);
