@@ -147,11 +147,10 @@ public sealed class UAVButton : TownOfUsButton
         }
         else
         {
-            // Enemies always see the timer and hear the sound.
-            PlaySound(DivaniAssets.UavEnemySound.LoadAsset());
-            ShowTimer(caller, "<b><color=#FF4040>Enemy UAV Active</color></b>", duration);
             if (opts.NotifyOthers)
             {
+                PlaySound(DivaniAssets.UavEnemySound.LoadAsset());
+                ShowTimer(caller, "<b><color=#FF4040>Enemy UAV Active</color></b>", duration);
                 Notify("<b><color=#FF4040>Enemy UAV overhead</color></b>");
             }
         }

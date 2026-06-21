@@ -15,6 +15,7 @@ using DivaniMods.Roles.Crewmate.CrewmateKilling;
 using TownOfUs.Events;
 using TownOfUs.Modifiers;
 using TownOfUs.Modifiers.Game.Alliance;
+using TownOfUs.Options.Modifiers.Alliance;
 using TownOfUs.Modules;
 using TownOfUs.Modules.Localization;
 using TownOfUs.Utilities;
@@ -160,25 +161,25 @@ public static class RetributionistRpc
 
     private static void ReviveHeartbrokenLover(PlayerControl soul, Vector2 revivePos)
     {
-        if (!soul.TryGetModifier<LoverModifier>(out var love) || love.OtherLover == null)
+        if (!OptionGroupSingleton<LoversOptions>.Instance.BothLoversDie)
         {
             return;
         }
 
-        var lover = love.OtherLover;
-        if (!lover.HasDied())
-        {
-            return;
-        }
-
-        if (!lover.TryGetModifier<DeathHandlerModifier>(out var loverDeath) ||
-            loverDeath.CauseOfDeath != TouLocale.Get("DiedToHeartbreak"))
+        var lover = FindLover(soul);
+        if (lover == null || !lover.HasDied())
         {
             return;
         }
 
         var loverRoleWhenAlive = lover.GetRoleWhenAlive();
-        if (loverRoleWhenAlive == null)
+        if (loverRoleWhenAlive is null)
+        {
+            return;
+        }
+
+        var liveRole = RoleManager.Instance.GetRole(loverRoleWhenAlive.Role);
+        if (liveRole is null)
         {
             return;
         }
@@ -189,11 +190,31 @@ public static class RetributionistRpc
             reviver: soul,
             revived: lover,
             position: loverPos,
-            roleWhenAlive: loverRoleWhenAlive,
+            roleWhenAlive: liveRole,
             flashColor: RetributionistRole.RetributionistColor,
             revivedOwnerNotificationText: "Your lover took their revenge. You returned to the ship",
             reviverOwnerNotificationText: null,
             notificationIcon: DivaniAssets.RetributionistIcon.LoadAsset());
+    }
+
+    private static PlayerControl? FindLover(PlayerControl soul)
+    {
+        if (soul.TryGetModifier<LoverModifier>(out var love) && love.OtherLover != null)
+        {
+            return love.OtherLover;
+        }
+
+        foreach (var pc in PlayerControl.AllPlayerControls)
+        {
+            if (pc != null && pc != soul &&
+                pc.TryGetModifier<LoverModifier>(out var otherLove) &&
+                otherLove.OtherLover == soul)
+            {
+                return pc;
+            }
+        }
+
+        return null;
     }
 
     [MethodRpc((uint)DivaniRpcCalls.RetributionistRevengeFailed, LocalHandling = RpcLocalHandling.Before)]
