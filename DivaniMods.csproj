@@ -233,7 +233,6 @@
     <EmbeddedResource Include="Resources\CupidProtect.png" />
     <EmbeddedResource Include="Resources\CupidProtectOne.png" />
     <EmbeddedResource Include="Resources\CupidProtectTwo.png" />
-    <!-- Dreamer role assets -->
     <EmbeddedResource Include="Resources\Icons\Dreamer.png" />
     <EmbeddedResource Include="Resources\DreamerMeetingDream.png" />
     <EmbeddedResource Include="Resources\DreamerIntro.wav" />
