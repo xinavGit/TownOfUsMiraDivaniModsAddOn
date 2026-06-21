@@ -1,7 +1,14 @@
 using DivaniMods.Assets;
+using DivaniMods.Modifiers.Crewmate.CrewmatePower;
+using DivaniMods.Options;
 using Il2CppInterop.Runtime.Attributes;
+using MiraAPI.GameOptions;
+using MiraAPI.Modifiers;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
+using MiraAPI.Utilities;
+using Reactor.Networking.Attributes;
+using TownOfUs;
 using TownOfUs.Extensions;
 using TownOfUs.Modules;
 using TownOfUs.Modules.Components;
@@ -32,11 +39,8 @@ public sealed class DreamerRole(IntPtr cppPtr)
 
     public string GetAdvancedDescription() => RoleLongDescription + MiscUtils.AppendOptionsText(GetType());
 
-    public int DreamTargetId;
-
-    public RoleBehaviour? dreamTargetDreamRole;
-    public RoleBehaviour? dreamTargetOriginalRole;
-
+    public byte DreamTargetId { get; set; } = byte.MaxValue;
+    public ushort DreamRole { get; set; }
 
     public CustomRoleConfiguration Configuration => new(this)
     {
@@ -50,7 +54,7 @@ public sealed class DreamerRole(IntPtr cppPtr)
 
         if (Player.AmOwner)
         {
-            DreamTargetId = byte.MaxValue;
+            DreamTargetId = byte.MaxValue; // is this needed??
 
             meetingMenu = new MeetingMenu(
                 this,
@@ -63,19 +67,42 @@ public sealed class DreamerRole(IntPtr cppPtr)
         }
     }
 
+    public override void OnMeetingStart()
+    {
+        RoleBehaviourStubs.OnMeetingStart(this);
+
+        var meeting = MeetingHud.Instance;
+        if (Player.AmOwner && meeting != null && !Player.HasDied())
+        {
+            meetingMenu?.GenButtons(meeting, true);
+        }
+    }
+
+    public override void OnVotingComplete()
+    {
+        RoleBehaviourStubs.OnVotingComplete(this);
+
+        if (Player.AmOwner)
+        {
+            meetingMenu?.HideButtons();
+        }
+    }
+
     [HideFromIl2Cpp]
     public bool IsExempt(PlayerVoteArea voteArea)
     {
-        // hide on dreamer
         if (voteArea == null || voteArea.TargetPlayerId == Player.PlayerId)
         {
             return true;
         }
 
-        // hide on dreaming players
+        var target = GameData.Instance.GetPlayerById(voteArea.TargetPlayerId)?.Object;
 
-        // hide on insomniac players
-        return false;
+        // hide on dead players, already dreaming players, and insomniac players
+        return target == null
+            || target.HasDied()
+            || target.HasModifier<DreamerTargetDreamingModifier>()
+            || target.HasModifier<DreamerInsomniaModifier>();
     }
 
     [HideFromIl2Cpp]
@@ -98,23 +125,91 @@ public sealed class DreamerRole(IntPtr cppPtr)
         }
 
         dreamMenu = GuesserMenu.Create();
-        dreamMenu.Begin(IsRoleValid, OnRoleSelected);
+        // Tiny lambda so we can also hand the clicked target's id to OnRoleSelected
+        // (a plain method can't see this local 'dreamTarget' on its own).
+        dreamMenu.Begin(IsRoleValid, role => OnRoleSelected(role, dreamTarget.PlayerId));
     }
 
+    [HideFromIl2Cpp]
     public static bool IsRoleValid(RoleBehaviour role)
     {
-        //
+        if (role is not ITownOfUsRole { Team: ModdedRoleTeams.Crewmate } touRole || role is DreamerRole)
+        {
+            return false;
+        }
+
+        var restriction = (DreamerReimagineRestriction)OptionGroupSingleton<DreamerOptions>.Instance.CannotReimagineInto.Value;
+        return restriction switch
+        {
+            DreamerReimagineRestriction.CrewmateKilling => touRole.RoleAlignment != RoleAlignment.CrewmateKilling,
+            DreamerReimagineRestriction.CrewmatePower => touRole.RoleAlignment != RoleAlignment.CrewmatePower,
+            _ => true,
+        };
+    }
+
+    [HideFromIl2Cpp]
+    public void OnRoleSelected(RoleBehaviour role, byte targetId)
+    {
+        dreamMenu?.Close();
+
+        RpcSetReimagineTarget(Player, targetId, RoleId.Get(role.GetType()));
+    }
+
+    [MethodRpc((uint)DivaniRpcCalls.DreamerSetReimagineTarget)]
+    public static void RpcSetReimagineTarget(PlayerControl dreamer, byte targetId, ushort roleId)
+    {
+        if (dreamer?.Data?.Role is not DreamerRole dreamerRole)
+        {
+            return;
+        }
+
+        dreamerRole.DreamTargetId = targetId;
+        dreamerRole.DreamRole = roleId;
+    }
+
+    [MethodRpc((uint)DivaniRpcCalls.DreamerNotifyDreamFailed)]
+    public static void RpcNotifyDreamFailed(PlayerControl dreamer, PlayerControl target)
+    {
+        var options = OptionGroupSingleton<DreamerOptions>.Instance;
+
+        if (target != null && target.AmOwner && options.NotifyNonCrewOnAttempt.Value)
+        {
+            Helpers.CreateAndShowNotification(
+                "<b>The Dreamer tried to <color=#804D19>reimagine</color> you but failed!</b>",
+                Color.white, spr: DivaniAssets.DreamerIcon.LoadAsset());
+        }
+
+        if (dreamer != null && dreamer.AmOwner && options.NotifyDreamerOnFail.Value)
+        {
+            Helpers.CreateAndShowNotification(
+                $"<b>Your dream on {target?.Data?.PlayerName ?? "them"} failed! They are not a Crew Role!</b>",
+                Color.white, spr: DivaniAssets.DreamerIcon.LoadAsset());
+        }
+    }
+
+    public static bool IsValidDreamTarget(PlayerControl? target, PlayerControl dreamer)
+    {
+        if (target == null || dreamer == null)
+        {
+            return false;
+        }
+
+        if (target.Data == null || target.Data.Disconnected)
+        {
+            return false;
+        }
+
+        if (target.HasDied() || target.PlayerId == dreamer.PlayerId)
+        {
+            return false;
+        }
+
         return true;
     }
 
-    public void OnRoleSelected(RoleBehaviour role)
+    public void ClearDream()
     {
-        if (dreamMenu != null)
-        {
-            dreamMenu.Close();
-        }
-
-        dreamTargetDreamRole = (RoleBehaviour?)RoleId.Get(role.GetType());
+        DreamTargetId = byte.MaxValue;
+        DreamRole = default;
     }
 }
-    
