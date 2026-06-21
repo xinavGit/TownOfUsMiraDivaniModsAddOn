@@ -18,6 +18,7 @@ public class IncompetentModifier : TouGameModifier, IColoredModifier, IWikiDisco
     public override string LocaleKey => "Incompetent";
     public override string IntroInfo => "You cannot fix sabotages.";
     public override ModifierFaction FactionType => ModifierFaction.CrewmatePassive;
+    public override bool HideFromGuessing => true;
     public override Color FreeplayFileColor => IncompetentColor;
     public Color ModifierColor => IncompetentColor;
     public override LoadableAsset<Sprite>? ModifierIcon => DivaniAssets.IncompetentIcon;

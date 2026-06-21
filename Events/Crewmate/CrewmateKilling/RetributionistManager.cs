@@ -56,6 +56,16 @@ public static class RetributionistManager
         return -1;
     }
 
+    public static bool IsRevengeActive(byte soulId)
+    {
+        return Killers.ContainsKey(soulId);
+    }
+
+    public static void RestoreRevengeCharge(byte soulId)
+    {
+        UsedRevenge.Remove(soulId);
+    }
+
     public static bool IsCursed(byte playerId)
     {
         var player = GameData.Instance?.GetPlayerById(playerId)?.Object;

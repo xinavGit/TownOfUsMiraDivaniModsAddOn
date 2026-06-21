@@ -51,7 +51,8 @@ public sealed class OpportunistRole(IntPtr cppPtr)
     public string RoleDescription => "Benefit from others!";
     public string RoleLongDescription =>
         "After you vote a target, every other vote cast on that same target during the meeting counts toward your goal.\n" +
-        "Reach the required number of collected votes to win alone.";
+        "Reach the required number of collected votes to win alone.\n" +
+        "If enabled by host, use wildcard to make skip votes count towards your tally once.";
     public Color RoleColor => OpportunistColor;
     public ModdedRoleTeams Team => ModdedRoleTeams.Custom;
     public RoleAlignment RoleAlignment => RoleAlignment.NeutralOutlier;
