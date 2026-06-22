@@ -29,6 +29,11 @@ public class SproutModifier : TouGameModifier, IColoredModifier, IWikiDiscoverab
 
     public string GetAdvancedDescription() => GetDescription() + MiscUtils.AppendOptionsText(GetType());
 
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Collect", "Use near a dead body to gain one random modifier that player had.", DivaniAssets.SproutCollectButton)
+    ];
+
     public override int GetAssignmentChance() =>
         (int)OptionGroupSingleton<CrewmateModifierOptions>.Instance.SproutChance.Value;
 

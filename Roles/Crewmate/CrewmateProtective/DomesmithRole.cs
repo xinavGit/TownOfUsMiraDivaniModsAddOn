@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MiraAPI.Roles;
 using DivaniMods.Assets;
 using TownOfUs.Extensions;
@@ -26,6 +27,11 @@ public sealed class DomesmithRole(IntPtr cppPtr)
     public DoomableType DoomHintType => DoomableType.Insight;
 
     public string GetAdvancedDescription() => RoleLongDescription + MiscUtils.AppendOptionsText(GetType());
+
+    public List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Place Dome", "Drop a dome to protect players inside from kills.", DivaniAssets.DomesmithPlaceDomeButton)
+    ];
 
     public CustomRoleConfiguration Configuration => new(this)
     {

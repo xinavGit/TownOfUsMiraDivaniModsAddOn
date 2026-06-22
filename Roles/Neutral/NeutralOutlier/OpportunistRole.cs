@@ -60,6 +60,11 @@ public sealed class OpportunistRole(IntPtr cppPtr)
 
     public string GetAdvancedDescription() => RoleLongDescription + MiscUtils.AppendOptionsText(GetType());
 
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Wildcard", "One-time meeting button that counts Skip votes toward your win goal.", DivaniAssets.OpportunistIcon)
+    ];
+
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.OpportunistIcon,

@@ -27,6 +27,11 @@ public sealed class SentinelRole(IntPtr cppPtr)
 
     public string GetAdvancedDescription() => RoleLongDescription + MiscUtils.AppendOptionsText(GetType());
 
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Place Beacon", "Place a Beacon in a room to monitor it's activity", DivaniAssets.SentinelPlaceBeaconButton)
+    ];
+
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.SentinelIcon,

@@ -30,6 +30,11 @@ public sealed class DeadlockRole(IntPtr cppPtr)
 
     public string GetAdvancedDescription() => RoleLongDescription + MiscUtils.AppendOptionsText(GetType());
 
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Lockdown", "Temporarily disable all crewmate tasks.", DivaniAssets.DeadlockLockdownButton)
+    ];
+
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.DeadlockIcon,

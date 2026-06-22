@@ -58,6 +58,11 @@ public sealed class SummonerRole(IntPtr cppPtr)
         return sb;
     }
 
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Summon", "In a meeting, mark a dead player to become a Revenant from next round.", DivaniAssets.SummonerMeetingActive)
+    ];
+
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.SummonerIcon,

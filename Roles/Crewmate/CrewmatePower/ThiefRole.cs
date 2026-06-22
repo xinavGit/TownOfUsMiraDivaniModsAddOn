@@ -35,6 +35,11 @@ public sealed class ThiefRole(IntPtr cppPtr)
     
     public bool CanStealMore => StolenModifierIds.Count < MaxStolenModifiers;
 
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Pickpocket", "Steal a modifier from a nearby player. Trying to steal a non-crewmate or universal modifier, as well as stealing from a player which has none will give you a random Crew/Universal modifier", DivaniAssets.PickpocketButton)
+    ];
+
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.ThiefIcon,

@@ -31,6 +31,11 @@ public class UAVModifier : UniversalGameModifier, IColoredModifier, IWikiDiscove
         "Call in a UAV: while active, open the map to see everyone walking around." +
         MiscUtils.AppendOptionsText(GetType());
 
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Call UAV", "Call in a UAV to see your shipmates' locations.", DivaniAssets.UavButton)
+    ];
+
     public override int GetAssignmentChance() =>
         (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.UavChance.Value;
 

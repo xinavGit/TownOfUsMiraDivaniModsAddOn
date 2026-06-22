@@ -37,6 +37,11 @@ public sealed class RecruiterRole(IntPtr cppPtr)
 
     public string GetAdvancedDescription() => RoleLongDescription + MiscUtils.AppendOptionsText(GetType());
 
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Recruit", "During the first meeting, mark one non-Impostor to convert them into an vanilla Impostor.", DivaniAssets.RecruitMeetingImpostor)
+    ];
+
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.RecruiterIcon,

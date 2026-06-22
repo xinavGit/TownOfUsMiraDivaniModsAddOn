@@ -42,6 +42,11 @@ public class ShuffleModifier : UniversalGameModifier, IColoredModifier, IWikiDis
     public override string GetDescription() => $"Shuffle all players' positions! ({UsesRemaining} uses left)";
 
     public string GetAdvancedDescription() => "Shuffle all players' positions!" + MiscUtils.AppendOptionsText(GetType());
+
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Shuffle", "Teleport every living player to a random other player's position.", DivaniAssets.ShuffleButton)
+    ];
     
     public override int GetAssignmentChance() =>
         (int)OptionGroupSingleton<UniversalModifierOptions>.Instance.ShuffleChance.Value;

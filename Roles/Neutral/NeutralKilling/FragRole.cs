@@ -50,6 +50,12 @@ public sealed class FragRole(IntPtr cppPtr)
 
     public bool HasImpostorVision => true;
 
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Give Frag", "Give the Frag to someone.", DivaniAssets.FragGiveButton),
+        new("Pass Frag", "While holding the Frag, pass it on to another player before it explodes.", DivaniAssets.FragPassButton)
+    ];
+
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.FragIcon,

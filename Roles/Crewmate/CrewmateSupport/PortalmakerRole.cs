@@ -25,6 +25,12 @@ public sealed class PortalmakerRole(IntPtr cppPtr)
 
     public string GetAdvancedDescription() => RoleLongDescription + MiscUtils.AppendOptionsText(GetType());
 
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Place Portal", "Place a portal on the ground. Place two to open a route.", DivaniAssets.PlacePortalButton),
+        new("Use Portal", "Teleport from one portal to another.", DivaniAssets.UsePortalButton)
+    ];
+
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.PortalmakerIcon,

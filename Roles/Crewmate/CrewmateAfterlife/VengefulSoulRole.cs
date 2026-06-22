@@ -49,6 +49,11 @@ public sealed class VengefulSoulRole(IntPtr cppPtr)
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
     public RoleAlignment RoleAlignment => RoleAlignment.CrewmateAfterlife;
 
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Revenge", "Hunt down and kill your killer before your time runs out to get revived.", DivaniAssets.VengefulSoulRevengeButton)
+    ];
+
     public CustomRoleConfiguration Configuration => new(this)
     {
         Icon = DivaniAssets.RetributionistIcon,

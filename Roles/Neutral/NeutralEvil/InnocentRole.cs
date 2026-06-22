@@ -6,6 +6,7 @@ using MiraAPI.Roles;
 using DivaniMods.Assets;
 using DivaniMods.Options;
 using TownOfUs;
+using TownOfUs.Assets;
 using TownOfUs.Extensions;
 using TownOfUs.Interfaces;
 using TownOfUs.Modules.Localization;
@@ -45,6 +46,11 @@ public sealed class InnocentRole(IntPtr cppPtr)
     public bool HasImpostorVision => false;
 
     public string GetAdvancedDescription() => RoleLongDescription + MiscUtils.AppendOptionsText(GetType());
+
+    public System.Collections.Generic.List<CustomButtonWikiDescription> Abilities { get; } =
+    [
+        new("Taunt", "Force a player to immediately kill you.You will win if that player is voted out in the next meeting.", TouNeutAssets.JesterHauntSprite)
+    ];
 
     public CustomRoleConfiguration Configuration => new(this)
     {
