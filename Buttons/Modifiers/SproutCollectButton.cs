@@ -140,7 +140,8 @@ public class SproutCollectButton : TownOfUsTargetButton<DeadBody>
             .Where(m => !IsExcluded(m) &&
                         !IsLover(m) &&
                         IsFactionValidForCrew(m) &&
-                        !collectorIds.Contains(m.TypeId))
+                        !collectorIds.Contains(m.TypeId) &&
+                        !ModifierExclusions.ConflictsWithOwned(collector, m))
             .Select(m => m.TypeId)
             .Distinct()
             .ToList();
@@ -190,7 +191,8 @@ public class SproutCollectButton : TownOfUsTargetButton<DeadBody>
             if (!IsFactionValidForCrew(modifier)) continue;
 
             var typeId = ModifierManager.GetModifierTypeId(modifier.GetType());
-            if (typeId.HasValue && !existingIds.Contains(typeId.Value))
+            if (typeId.HasValue && !existingIds.Contains(typeId.Value) &&
+                !ModifierExclusions.ConflictsWithOwned(collector, typeId.Value))
             {
                 availableIds.Add(typeId.Value);
             }

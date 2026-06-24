@@ -2,6 +2,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Utilities.Assets;
 using DivaniMods.Assets;
 using DivaniMods.Options;
+using DivaniMods.Utilities;
 using TownOfUs.Interfaces;
 using TownOfUs.Modifiers.Game;
 using TownOfUs.Modules.Wiki;
@@ -35,7 +36,8 @@ public class SkilledModifier : TouGameModifier, IColoredModifier, IWikiDiscovera
 
     public override bool IsModifierValidOn(RoleBehaviour role)
     {
-        return role.IsCrewmate() && base.IsModifierValidOn(role);
+        return role.IsCrewmate() && base.IsModifierValidOn(role) &&
+            !ModifierExclusions.ConflictsWithOwned(role.Player, this);
     }
 
     public override void OnActivate()

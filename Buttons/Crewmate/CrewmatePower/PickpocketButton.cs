@@ -299,7 +299,9 @@ public class PickpocketButton : TownOfUsButton
         var existingIds = thief.GetModifiers<BaseModifier>()
             .Select(m => m.TypeId)
             .ToHashSet();
-        var availableIds = givableIds.Where(id => !existingIds.Contains(id)).ToList();
+        var availableIds = givableIds
+            .Where(id => !existingIds.Contains(id) && !ModifierExclusions.ConflictsWithOwned(thief, id))
+            .ToList();
         if (availableIds.Count == 0) return 0;
         return availableIds[random.Next(availableIds.Count)];
     }
@@ -363,6 +365,9 @@ public class PickpocketButton : TownOfUsButton
             return false;
 
         if (!IsAllowedSource(modifier))
+            return false;
+
+        if (ModifierExclusions.ConflictsWithOwned(thief, modifier))
             return false;
 
         var modNamespace = modifier.GetType().Namespace;
