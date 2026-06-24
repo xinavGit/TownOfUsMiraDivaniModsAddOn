@@ -9,6 +9,7 @@ using MiraAPI.Hud;
 using MiraAPI.Roles;
 using Reactor.Utilities;
 using DivaniMods.Buttons.Crewmate.CrewmateProtective;
+using DivaniMods.Modifiers.Game.Impostor.ImpostorPassive;
 using DivaniMods.Networking.Crewmate.CrewmateProtective;
 using DivaniMods.Options;
 using DivaniMods.Patches;
@@ -16,6 +17,7 @@ using DivaniMods.Roles.Crewmate.CrewmateProtective;
 using TownOfUs.Buttons;
 using TownOfUs.Options;
 using TownOfUs.Utilities;
+using MiraAPI.Modifiers;
 
 namespace DivaniMods.Events.Crewmate.CrewmateProtective;
 
@@ -153,7 +155,7 @@ public static class DomesmithEvents
             return false;
         }
 
-        if (RuthlessRpcPatches.IsRuthlessAttacker(source))
+        if (source.HasModifier<RuthlessModifier>())
         {
             return false;
         }
