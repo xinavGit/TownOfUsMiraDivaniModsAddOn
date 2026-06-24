@@ -185,7 +185,7 @@ public static class DomesmithEvents
             return false;
         }
 
-        if (domeOwner.HasModifier<CrewpostorModifier>() && !target.IsImpostorAligned() && !source.Is(RoleAlignment.CrewmateKilling))
+        if (domeOwner.HasModifier<CrewpostorModifier>() && !target.IsImpostorAligned() && source.IsImpostorAligned())
         {
             return false;
         }
