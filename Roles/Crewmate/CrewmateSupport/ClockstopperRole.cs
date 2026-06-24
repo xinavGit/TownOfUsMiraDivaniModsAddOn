@@ -19,8 +19,6 @@ namespace DivaniMods.Roles.Crewmate.CrewmateSupport;
 public sealed class ClockstopperRole(IntPtr cppPtr)
     : CrewmateRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IDoomable
 {
-    public bool CanBeEgotist => true;
-
     public string RoleName => "Clockstopper";
     public string RoleDescription => "Reset, Rinse and Repeat!";
     public string RoleLongDescription =>

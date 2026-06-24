@@ -18,7 +18,7 @@ public static class ClockstopperRpc
     [MethodRpc((uint)DivaniRpcCalls.ClockstopperResetCooldowns, LocalHandling = RpcLocalHandling.Before)]
     public static void RpcResetCooldowns(PlayerControl clockstopper)
     {
-        if (clockstopper == null || clockstopper.Data?.Role is not ClockstopperRole cr || clockstopper.HasDied())
+        if (clockstopper == null || clockstopper.Data?.Role is not ClockstopperRole || clockstopper.HasDied())
         {
             return;
         }
