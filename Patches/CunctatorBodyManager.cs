@@ -3,11 +3,13 @@ using HarmonyLib;
 using MiraAPI.Modifiers;
 using MiraAPI.Networking;
 using Reactor.Utilities;
+using DivaniMods.Roles.Crewmate.CrewmateKilling;
 using DivaniMods.Roles.Impostor.ImpostorConcealing;
 using TownOfUs.Modifiers.Game.Crewmate;
 using TownOfUs.Utilities;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using TownOfUs.Modules;
 
 namespace DivaniMods.Patches;
 
@@ -114,6 +116,7 @@ public static class CunctatorBodyManager
                 target != null &&
                 source.PlayerId != target.PlayerId &&
                 source.Data?.Role is CunctatorRole &&
+                target.GetRoleWhenAlive() is not RetributionistRole &&
                 !MeetingHud.Instance &&
                 !ExileController.Instance)
             {
