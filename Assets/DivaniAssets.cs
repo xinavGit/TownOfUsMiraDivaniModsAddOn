@@ -37,6 +37,10 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> CupidProtectButton { get; } = new LoadableResourceAsset($"{ShortPath}.CupidProtect.png");
     public static LoadableAsset<Sprite> CupidProtectOneButton { get; } = new LoadableResourceAsset($"{ShortPath}.CupidProtectOne.png");
     public static LoadableAsset<Sprite> CupidProtectTwoButton { get; } = new LoadableResourceAsset($"{ShortPath}.CupidProtectTwo.png");
+    public static LoadableAsset<Sprite> MageChangeSpellButton { get; } = new LoadableResourceAsset($"{ShortPath}.MageChangeSpell.png");
+    public static LoadableAsset<Sprite> MageShockShieldButton { get; } = new LoadableResourceAsset($"{ShortPath}.MageShockShield.png");
+    public static LoadableAsset<Sprite> MageEnergizeButton { get; } = new LoadableResourceAsset($"{ShortPath}.MageEnergize.png");
+    public static LoadableAsset<Sprite> MageIllusionButton { get; } = new LoadableResourceAsset($"{ShortPath}.MageIllusion.png");
     // Role icons (200 ppu)
     public static LoadableAsset<Sprite> ThiefIcon { get; } = new LoadableResourceAsset($"{IconPath}.Thief.png", 200);
     public static LoadableAsset<Sprite> DeadlockIcon { get; } = new LoadableResourceAsset($"{IconPath}.Deadlock.png", 200);
@@ -58,6 +62,7 @@ public static class DivaniAssets
     public static LoadableAsset<Sprite> ClockstopperIcon { get; } = new LoadableResourceAsset($"{IconPath}.Clockstopper.png", 200);
     public static LoadableAsset<Sprite> RetributionistIcon { get; } = new LoadableResourceAsset($"{IconPath}.Retributionist.png", 200);
     public static LoadableAsset<Sprite> CupidIcon { get; } = new LoadableResourceAsset($"{IconPath}.Cupid.png", 200);
+    public static LoadableAsset<Sprite> MageIcon { get; } = new LoadableResourceAsset($"{IconPath}.Mage.png", 200);
 
     // Modifier icons (200 ppu)
     public static LoadableAsset<Sprite> MementoIcon { get; } = new LoadableResourceAsset($"{IconPath}.Memento.png", 200);
@@ -112,6 +117,7 @@ public static class DivaniAssets
     public static LoadableAsset<AudioClip> UavEnemySound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.UAVEnemy.wav");
     public static LoadableAsset<AudioClip> UavEndSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.UAVEnd.wav");
     public static LoadableAsset<AudioClip> CupidIntroSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.CupidIntro.wav");
+    public static LoadableAsset<AudioClip> MageIntroSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.MageIntro.wav");
     public static LoadableAsset<AudioClip> TacInsertHoverSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.TacInsertHover.wav");
     public static LoadableAsset<AudioClip> TacInsertPlaceSound { get; } = new LoadableAudioResourceAsset($"{ShortPath}.TacInsertPlace.wav");
     // Dutch Meme Soundpack door SFX - used by DutchMemeSoundpackPatch to replace
@@ -142,6 +148,7 @@ public static class DivaniAssets
     // Animation bundles
     public static readonly AssetBundle Bundle = AssetBundleManager.Load("divanimods-bundle");
     public static LoadableBundleAsset<GameObject> PortalPrefab { get; } = new("Portal.prefab", Bundle);
+    public static LoadableBundleAsset<GameObject> ShockShieldPrefab { get; } = new("shockshieldprefab.prefab", Bundle);
     public static LoadableBundleAsset<AnimationClip> FlareHover { get; } = new("FlareHover.anim", Bundle);
     // Announcement badge
     public static LoadableAsset<Sprite> ModNewsLogo { get; } =
@@ -184,4 +191,6 @@ public static class DivaniAssets
         new LoadableResourceAsset($"{ShortPath}.OptionBanners.SilencerBanner.png");
     public static LoadableAsset<Sprite> SummonerBanner { get; } =
         new LoadableResourceAsset($"{ShortPath}.OptionBanners.SummonerBanner.png");
+    public static LoadableAsset<Sprite> MageBanner { get; } =
+        new LoadableResourceAsset($"{ShortPath}.OptionBanners.MageBanner.png");
 }

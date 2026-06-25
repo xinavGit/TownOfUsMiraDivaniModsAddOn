@@ -50,4 +50,6 @@ public enum DivaniRpcCalls : uint
     OpportunistVotesSync = 245,
     DuelistAddWin = 246,
     TacticalInsertionMark = 247,
+    MageEnergize = 248,
+    MageShockShieldAttacked = 249,
 }

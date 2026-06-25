@@ -207,6 +207,7 @@
     <EmbeddedResource Include="Resources\OptionBanners\SentinelBanner.png" />
     <EmbeddedResource Include="Resources\OptionBanners\SilencerBanner.png" />
     <EmbeddedResource Include="Resources\OptionBanners\SummonerBanner.png" />
+    <EmbeddedResource Include="Resources\OptionBanners\MageBanner.png" />
     <EmbeddedResource Include="Resources\OpportunistIntro.wav" />
     <EmbeddedResource Include="Resources\DemolitionistIntro.wav" />
     <EmbeddedResource Include="Resources\DemolitionistExplosion.wav" />
@@ -252,6 +253,12 @@
     <EmbeddedResource Include="Resources\UAVEnemy.wav" />
     <EmbeddedResource Include="Resources\UAVEnd.wav" />
     <EmbeddedResource Include="Resources\Icons\Cupid.png" />
+    <EmbeddedResource Include="Resources\Icons\Mage.png" />
+    <EmbeddedResource Include="Resources\MageChangeSpell.png" />
+    <EmbeddedResource Include="Resources\MageShockShield.png" />
+    <EmbeddedResource Include="Resources\MageEnergize.png" />
+    <EmbeddedResource Include="Resources\MageIllusion.png" />
+    <EmbeddedResource Include="Resources\MageIntro.wav" />
     <EmbeddedResource Include="Resources\CupidMatchmake.png" />
     <EmbeddedResource Include="Resources\CupidProtect.png" />
     <EmbeddedResource Include="Resources\CupidProtectOne.png" />
