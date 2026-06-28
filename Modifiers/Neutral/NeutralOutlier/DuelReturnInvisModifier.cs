@@ -19,7 +19,7 @@ public sealed class DuelReturnInvisModifier : ConcealedModifier, IVisualAppearan
     public VisualAppearance GetVisualAppearance()
     {
         var observer = PlayerControl.LocalPlayer;
-        var canSee = Player.AmOwner || (observer != null && observer.HasDied());
+        var canSee = Player.AmOwner || (observer != null && DeathHandlerModifier.IsFullyDead(observer));
         var playerColor = canSee ? new Color(0f, 0f, 0f, 0.1f) : Color.clear;
 
         var app = new VisualAppearance(Player.GetDefaultAppearance(), TownOfUsAppearances.PlayerNameOnly)

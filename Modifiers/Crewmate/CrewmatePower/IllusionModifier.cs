@@ -7,6 +7,7 @@ using DivaniMods.Modifiers.Neutral.NeutralOutlier;
 using DivaniMods.Options;
 using DivaniMods.Roles.Crewmate.CrewmatePower;
 using DivaniMods.Utilities;
+using TownOfUs.Modifiers;
 using TownOfUs.Patches;
 using TownOfUs.Roles;
 using TownOfUs.Utilities;
@@ -37,7 +38,7 @@ public sealed class IllusionModifier(PlayerControl mage) : TimedModifier, IVisua
         {
             return false;
         }
-        if (obs.PlayerId == Player.PlayerId || obs.HasDied())
+        if (obs.PlayerId == Player.PlayerId || DeathHandlerModifier.IsFullyDead(obs))
         {
             return false;
         }

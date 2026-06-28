@@ -7,6 +7,7 @@ using Reactor.Utilities.Extensions;
 using DivaniMods.Assets;
 using DivaniMods.Modifiers.Neutral.NeutralOutlier;
 using DivaniMods.Options;
+using TownOfUs.Modifiers;
 using TownOfUs.Modules.Anims;
 using TownOfUs.Options;
 using TownOfUs.Utilities;
@@ -35,7 +36,7 @@ public sealed class ShockShieldModifier(PlayerControl mage) : TimedModifier
         var genOpt = OptionGroupSingleton<GeneralOptions>.Instance;
         var seesSelf = Player.AmOwner && OptionGroupSingleton<MageOptions>.Instance.TargetSeesShockShield.Value;
         var seesMage = Mage != null && Mage.AmOwner;
-        var seesDead = PlayerControl.LocalPlayer.HasDied() && genOpt.TheDeadKnow;
+        var seesDead = DeathHandlerModifier.IsFullyDead(PlayerControl.LocalPlayer) && genOpt.TheDeadKnow;
         return seesSelf || seesMage || seesDead;
     }
 

@@ -105,7 +105,7 @@ public sealed class MageRole(IntPtr cppPtr)
         if (mage.AmOwner)
         {
             MiraAPI.Utilities.Helpers.CreateAndShowNotification(
-                $"<b><color=#1586a2>Energized {target.Data.PlayerName}</color></b>",
+                $"<b><color=#1586a2>Energized {target.Data?.PlayerName}</color></b>",
                 Color.white,
                 new Vector3(0f, 1f, -20f),
                 spr: DivaniAssets.MageIcon.LoadAsset());

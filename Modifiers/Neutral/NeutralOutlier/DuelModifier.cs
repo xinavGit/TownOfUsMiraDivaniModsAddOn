@@ -47,7 +47,7 @@ public sealed class DuelModifier(byte opponentId, bool isDuelist, Vector2 return
         var observer = PlayerControl.LocalPlayer;
         var isParticipant = observer != null &&
             (observer.PlayerId == Player.PlayerId || observer.PlayerId == OpponentId);
-        var isDeadSpectator = observer != null && !isParticipant && observer.HasDied();
+        var isDeadSpectator = observer != null && !isParticipant && DeathHandlerModifier.IsFullyDead(observer);
 
         if (!isParticipant && !isDeadSpectator)
         {
@@ -153,7 +153,7 @@ public sealed class DuelModifier(byte opponentId, bool isDuelist, Vector2 return
         var observer = PlayerControl.LocalPlayer;
         var isParticipant = observer != null &&
             (observer.PlayerId == Player.PlayerId || observer.PlayerId == OpponentId);
-        var isDeadSpectator = observer != null && !isParticipant && observer.HasDied();
+        var isDeadSpectator = observer != null && !isParticipant && DeathHandlerModifier.IsFullyDead(observer);
         if (!isParticipant && !isDeadSpectator)
         {
             SetAnimHoldersActive(false);
