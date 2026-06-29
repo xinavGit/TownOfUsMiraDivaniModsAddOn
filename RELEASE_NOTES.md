@@ -18,7 +18,7 @@ Mark your current position. After the next meeting you respawn at the marked spo
 ## General changes
 
 - Added support to newer versions of Town of Us Mira
-- Added better checks for stuff visible if dead (now proper chgecks if dead for a round. Prevents revive cheese)
+- Added better checks for stuff visible if dead (now proper checks if dead for a round. Prevents revive cheese)
 - Added a tool to make sure two modifiers cannot be assigned together and the counterpart cannot be stolen by thief or Sprout. Added for:
 1.Tactical Insertion and Immovable
 2.Incompetent and Skilled
@@ -37,7 +37,7 @@ Mark your current position. After the next meeting you respawn at the marked spo
 
 ### Retributionist
 
-- Fixed a bug where a Lov er Retributionist being kille dby its Lover teammate caused the Lover state to break. Now Killing your Lover teammate Retributionist will dissalow the Retributionist to Revenge (because there is noone to revenge)
+- Fixed a bug where a Lover Retributionist being killed by its Lover teammate caused the Lover state to break. Now Killing your Lover teammate Retributionist will disallow the Retributionist to Revenge (because there is no one to revenge)
 
 ### Revenant
 
@@ -46,7 +46,7 @@ Mark your current position. After the next meeting you respawn at the marked spo
 
 ### UAV
 
-- Fixed a bug where a UAV sees people in Duel. Duellers now alsoonly only see it's opponent if the duel starts with an active UAV
+- Fixed a bug where a UAV sees people in Duel. Duelers now also only only see it's opponent if the duel starts with an active UAV
 
 ## Role/Modifier Changes:
 
@@ -56,16 +56,16 @@ Mark your current position. After the next meeting you respawn at the marked spo
 
 ### Plague Doctor (Nerf)
 
-- Plague Doctor can now no longer become a Neutral Afterlife role if the setting to allow Plague Doctor to win whhile dead is enabled.
+- Plague Doctor can now no longer become a Neutral Afterlife role if the setting to allow Plague Doctor to win while dead is enabled.
 
 ### Sentinel (Buff)
 
-- Added a option to see the names of dead bodies if they were ever present in your room. THis also still tracks a body even if it was cleaned/dragged after (default: false) 
+- Added a option to see the names of dead bodies if they were ever present in your room. This also still tracks a body even if it was cleaned/dragged after (default: false) 
 
 ### Ruthless (Refactor/Rework)
 
 Ruthless' code has been cleaned to work in a more generic way. This changes the following:
-- Pestillence is no longer killed by Ruthless killers (Nerf)
+- Pestilence is no longer killed by Ruthless killers (Nerf)
 - Shield sources (Medic role holder etc.) now get alerted by the flash, even though their target still dies (Nerf)
 - Veteran (And Mage Shock Shield) now make sure both the Ruthless attacker, as the Alerted shipmate, die (Buff)
 - Mirrorcaster can now unleash after a Ruthless impostor killed the Magic Mirrored player
